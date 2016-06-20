@@ -1,0 +1,44 @@
+
+* Aircraft-set.xml
+<PropertyList>
+	<sim>
+		<splash>
+		<model>
+			<path>Aircraft/name/Models/aircrafmodel.xml
+
+
+* aircraftmodel.xml
+	<PropertyList>
+		<path>xxx.ac
+		<animation>
+			<object-name>
+			<object-name>
+			...
+
+		<model>
+			<name>
+			<path>Aircraft/name/Models/modelpart.xml
+			#<offset>
+
+* modelpart.xml
+	<PropertyList>
+		<path>xxx.ac
+		<model>
+			<name>
+			<path>
+		<animation>
+		
+	
+
+* File dependencies:
+Bell-412-set.xml
+	Bell-412-yasim.xml
+	Splash/412.png
+	Models/bell-412.xml
+
+Models/bell-412.xml
+	412.ac
+	Models/Callsign/callsign.xml
+
+callsign.xml
+	callsign.ac

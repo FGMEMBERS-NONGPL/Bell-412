@@ -1,0 +1,53 @@
+***********************************************
+                BELL 412 
+                   for 
+	    Flightgear Flight Simulator
+***********************************************
+
+Author			: Valéry Seys
+Release Date	: 2016
+
+Softwares use:
+	- Blender 2.76
+		- YASim XML Importer by Cem Aydin
+		- AC3D Import/Export by Chris Marr
+	- Adobe CS3
+	- Sweep 0.9.3 Audio editor - sweep.sourceforge.net
+	- Yed 3.14 Graph editor - YWorks Gmbh 2016
+	- Vim editor
+	- Eclipse IDE.
+
+Sounds Sources:
+Air conditionning 	: https://www.youtube.com/watch?v=meE8z_19J6M
+Battery/Engine		: https://www.youtube.com/watch?v=zl51qoP4ZOQ
+
+Licensing:
+This software is not free. All rights reserved to Valéry Seys / Paris.
+You cannot fork, redistribute, duplicate or sell any of the contents of this
+software without the permission of the author.
+This software is intended to be used with the Flightgear simulator software
+in a private ....
+
+Acknowledgment:
+With the help of thejabberwocky.net (aka FGMEMBERS) community members that support 
+and encourage me all along the development of this aircraft.
+
+How to start the Bell:
+- OH Panel: activate bus1 and bus2, then inverter1 and inverter2
+- once the power is activated, you must hear the power unit and the air conditionner
+- Console panel: activate Bat1 and Aft (2 buttons below the airspeed instrument), console will illuminate
+  following the "Pilot Instr" Overhead Knob/dimmer.
+- Pedestal: 
+	
+FAQ.:
+q: the sounds are very loud, why ?
+a: sounds level are designed from the actual Bell cockpit.
+   tips: find and put your headphone on your head.
+q: how many time do you spend for this model ?
+a: 2 months full time
+q: how many meshe objects are needed to modelize the aircraft ?
+a: arround 300
+q: what was the most difficult to do ?
+a: naming and managing all pieces of data/objects/lights/... making a framework that works
+   and not too difficult to maintain.
+

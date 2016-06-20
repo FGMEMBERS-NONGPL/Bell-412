@@ -1,0 +1,48 @@
+* startup
+	time(s)		condition		r/sec. 	tacho/rpm	comment
+	0			warm up			0		0
+	7.02		rotor unlock	0		1
+	15			rotor start 	2		3
+	20									12
+	25			rotor rotate	5		22			vibrating
+	32									30
+	45									40
+	55									50
+	1:15								60
+
+after 1:30, moving collective power engine to max then tacho goes up to 80-90
+
+starting engine 1 with collect. thrust at 0, 
+then start engine 1, then up to collect thrust to 50%,
+then tacho eng.1 up to 90 in 10 sec., follow tacho and increase collect.
+thrust for eng 1 to 100%
+
+* Collective
+- position down (FG UP), blade 0°
+- position up (fg down), blade 45°
+At startup, pos blade at 20°
+- FG :
+	/controls/engines/engine/throttle:
+	from 1 down (fg up)
+	to   0 up   (fg down)
+
+* Cyclic
+- FG:
+	/controls/flight/aileron
+	/controls/flight/elevator
+
+	/controls/flight/aileron-trim
+	/controls/flight/elevator-trim
+
+* Rudder
+- FG: 
+	/control/flight/rudder
+	/control/flight/rudder-trim
+
+* Inverter
+Q11. What is the function of static inverter? And to which BUS will it supply?
+A11. A Static Inverter transforms DC Power from Battery 1 in to One KVA of
+single phase 115 Volt 400 Hertz AC power, which is then supplied to part of
+the AC ESS BUS. When the aircraft speed is above 50 knots, the inverter is
+automatically activated, if nothing but the batteries are supplying electrical
+power to the aircraft, regardless of the BAT 1 and BAT 2 P/b positions.

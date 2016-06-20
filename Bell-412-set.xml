@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<PropertyList>
+	<sim>
+		<description>Bell-412</description>
+		<author>vslash.com</author>
+		<status>V0.1</status>
+    	<license>free</license>
+
+		<flight-model>yasim</flight-model>
+		<aero>Bell-412-yasim</aero>
+    	<fuel-fraction>0.5</fuel-fraction>
+
+		<startup>
+			<splash-texture>Aircraft/Bell-412/Splash/412.png</splash-texture>
+		</startup>
+
+		<model>
+			<path archive="y">Aircraft/Bell-412/Models/Bell-412.xml</path>
+			<immat>FGX412</immat>
+      		<bell412>
+        		<state type="int">0</state>
+        		<engine type="float">0</engine>
+        		<rotor-step-deg type="float">-1</rotor-step-deg>
+			</bell412>
+		</model>
+
+		<view>
+			<name>Cockpit View</name>
+			<type>lookfrom</type>
+			<internal type="bool">true</internal>
+			<config>
+				<from-model type="bool">true</from-model>
+				<from-model-idx type="int">0</from-model-idx>
+				<limits>
+					<enabled type="bool">false</enabled>
+				</limits>
+				<x-offset-m type="double">0.55</x-offset-m>				<!-- -left/+right -->
+				<y-offset-m type="double">0.87</y-offset-m>				<!-- -down/+up -->
+				<z-offset-m type="double">-2.1</z-offset-m>				<!-- -for/+back -->
+				<dynamic-view type="bool">true</dynamic-view>
+				<default-field-of-view-deg type="double">83</default-field-of-view-deg>
+				<field-of-view type="double">83</field-of-view>
+				<pitch-offset-deg type="double">-7</pitch-offset-deg>
+			</config>
+		</view>
+		
+		<sound>
+			<path>Aircraft/Bell-412/Sounds/Bell-412-sound.xml</path>
+		</sound>
+		
+		<weight n="0">
+			<name>Pilot</name>
+			<weight-lb>180</weight-lb>
+			<max-lb>300</max-lb>
+		</weight>
+
+		<weight n="1">
+			<name>Co-Pilot</name>
+			<weight-lb>180</weight-lb>
+			<max-lb>300</max-lb>
+		</weight>
+
+		<weight n="2">
+			<name>RPassenger</name>
+			<weight-lb>180</weight-lb>
+			<max-lb>300</max-lb>
+		</weight>
+
+		<weight n="3">
+			<name>LPassenger</name>
+			<weight-lb>180</weight-lb>
+			<max-lb>300</max-lb>
+		</weight>
+
+		<menubar include="Dialogs/Bell-412-menu.xml"/> 
+		<multiplay n="0">
+			<chat_display>1</chat_display>
+			<generic n="0">
+				<int n="0" type="int">  0 </int>  <!-- RESERVED FOR DUAL CONTROL (Boolean Switch)-->
+				<int n="1" type="int">  0 </int>  <!-- 0 immat -->
+				<int n="2" type="int">  0 </int>  <!-- 1 immat -->
+				<int n="3" type="int">  0 </int>  <!-- 2 immat -->
+				<int n="4" type="int">  0 </int>  <!-- 3 immat -->
+				<int n="5" type="int">  0 </int>  <!-- 4 immat -->
+				<int n="6" type="int">  0 </int>  <!-- 5 immat -->
+				<int n="7" type="int">  0 </int>  <!-- 6 immat -->
+				<int n="8" alias="/controls/lighting/beacon-state/state"/> 		<!-- beacon state -->
+				<int n="9" alias="/controls/lighting/nav-lights"/> 				<!-- nav lights -->
+				<int n="10" alias="/controls/electrical/buses"/> 				<!-- bat. buses state -->
+			</generic>
+		</multiplay>
+	</sim>
+	
+	<input>
+		<keyboard include="Systems/Bell-412-keyboard.xml"/>
+	</input>
+	
+	<controls>
+		<engines>
+			<engine n="0">
+				<magnetos>0</magnetos>
+			</engine>
+			<engine n="1">
+				<magnetos>0</magnetos>
+			</engine>
+		</engines>
+		<gear>
+			<brake-parking>1</brake-parking>
+		</gear>
+		<rotor>
+			<reltarget>1</reltarget>
+			<maxreltorque>1</maxreltorque>
+		</rotor>
+		<lighting>
+			<switches>
+				<beacon type="bool">false</beacon>
+				<navlights type="bool">false</navlights>
+			</switches>
+		</lighting>
+		<electrical>
+			<buses type="bool">false</buses>
+			<switches>
+				<bus1 type="bool">false</bus1>
+				<bus2 type="bool">false</bus2>
+			</switches>
+		</electrical>
+	</controls>
+
+	<rotors>
+		<main>
+			<rpm type="double">0</rpm>
+			<cone-deg type="double">0</cone-deg>
+			<cone1-deg type="double">0</cone1-deg>
+			<cone2-deg type="double">0</cone2-deg>
+			<cone3-deg type="double">0</cone3-deg>
+			<cone4-deg type="double">0</cone4-deg>
+		</main>
+		<bar>
+			<roll-deg type="float">0</roll-deg>
+			<yaw-deg type="float">0</yaw-deg>
+		</bar>
+		<bar2>
+			<roll-deg type="float">0</roll-deg>
+			<yaw-deg type="float">0</yaw-deg>
+		</bar2>
+	</rotors>
+
+	<bell412>
+		<electrical>
+			<buses type="bool">false</buses>					<!-- true when both bus are on ie enough energy power -->
+			<bus1>
+				<ampload type="double">0.0</ampload>
+				<voltacload type="double">0.0</voltacload>
+				<voltdcload type="double">0.0</voltdcload>
+			</bus1>
+			<bus2>
+				<ampload type="double">0.0</ampload>
+				<voltacload type="double">0.0</voltacload>
+				<voltdcload type="double">0.0</voltdcload>
+			</bus2>
+			<output>
+				<beacon type="bool">false</beacon>
+				<navlights type="bool">false</navlights>
+				<console>									<!-- depend on bus1,bus2,console bat1, console bat2, pilot copilot dim factor -->
+					<pilot type="double">0.0</pilot>		<!-- pilot and copilot have different light dim factor -->
+					<copilot type="double">0.0</copilot>
+				</console>
+			</output>
+		</electrical>
+	</bell412>
+
+	<instrumentation>
+		<gsdi>
+			<serviceable type="bool">true</serviceable>
+			<enabled type="bool">true</enabled>
+		</gsdi>
+	</instrumentation>
+	
+	<orientation>
+    	<roll-rate-degps type="float">0</roll-rate-degps>
+	</orientation>
+
+	<nasal>
+		<bell412>
+			<file>Aircraft/Bell-412/Nasal/immat.nas</file>
+			<file>Aircraft/Bell-412/Nasal/bell412.nas</file>
+			<file>Aircraft/Bell-412/Nasal/electrical.nas</file>
+		</bell412>
+	</nasal>
+
+    <flight-recorder>
+      <replay-config type="int">0</replay-config>
+      <config n="0" include="/Aircraft/Generic/flightrecorder/generic-helicopter.xml">
+        <!-- Add some custom properties -->
+        <signal>
+          <type>int</type>
+          <property type="string">/sim/model/bell412/state</property>
+        </signal>
+        <signal>
+          <type>int</type>
+          <property type="string">/controls/engines/engine/magnetos</property>
+        </signal>
+      </config>
+    </flight-recorder>
+
+</PropertyList>
+

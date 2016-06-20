@@ -1,0 +1,114 @@
+Project started : 25/05/16
+
+Current:
+17/06/16 22:18	- Engines Nasal
+				- rembrandt rendering
+
+* Model
+	- Meshes
+	X 	fuselage
+	- 	cockpit
+	X 		main board
+	X 		overhead
+	X 		pedestal
+	> 		instruments
+	> 			main panel
+	- 			pedestal
+	- 			OH
+	- 			misc
+	-		controls
+
+	- Textures
+	X 	fuselage
+	> 	cabin
+	> 	framework
+	- 	cockpit
+	> 		cockpit
+	X 		boards
+	X 		instruments
+
+* FDM
+	> yasim xml
+
+! Engines
+	> power/energy/engine logic schematic
+	> bell412 xml value tree
+	! nasal engine model -- see the 2-engine model from ec135.nas
+
+* Instruments
+	X airspeed
+	>	accurracy
+	X vsi
+	X	need to be fixed
+	X hsi (heading)
+	X	more accurate texture
+	>	rotating part
+	>	red indicators
+	X attitude indicator
+	X	needles
+	X	more accurate texture
+	X	more accurate ball position
+	> agl radio altimeter -- see 707 mk-agl.nas + agl instr.
+	- compass OH
+	> alt
+	-	knob 
+	- tacho
+	- torque
+	- rpm
+	- battery
+	X 	ampmeter		16/06/16
+	< 	volt dc meter
+	< 	volt ac meter
+	- fuel
+	- oil
+	- AP
+	- DME
+	- radio nav
+	- acfs
+	- autopilot
+
+* Controls
+	- quickstart
+	- collective
+	- cyclic
+	- switches
+	-	Console
+	-		bat1
+	-		bat2 aft
+	- 	OH
+	X 		beacon lights	-- 14/06/16
+	X 		nav lights	-- 14/06/16
+	> 		electrical buses + nasal
+	- 		inverters
+	-		lights knob dimmer 
+	-	Pedestal
+	-		fuel flow
+	-		engine switches
+
+* Animation
+	X blades/rotors	-- 13/06/16		TODO : better texture, 2 levels blurring
+	- cyclic and collect.
+	- rudders
+	- doors
+
+* Effects
+	> ligthning
+	X 	beacon				-- 14/06/16		TODO : better texture / ALS shader
+	-		rembrandt
+	X 	nav					-- 14/06/16
+	-		rembrandt
+	>	instruments
+	- 	console 			-- see /home/vbox/flightgear/flightgear-2016/Aircraft/707/Models/Cockpit/cockpit.xml
+							-- and every xml files from Models/Cockpit/Instruments/..
+							-- /home/vbox/flightgear/flightgear-2016/Aircraft/707/Models/Lights/707_Lights.xml
+	- 	cabin
+	X Sounds				-- 19/06/16 21:36 done
+	X	inside
+	X 	outside
+	- ALS cabin/cockpit shadows
+	- fuselage external shadows
+	- normal maps
+	> glass effect
+	X	rembrandt/als
+	-	reflexion
+

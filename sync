@@ -1,0 +1,2 @@
+#!/bin/sh
+rsync -HAXaup . /home/valery/workspace/Bell-412
