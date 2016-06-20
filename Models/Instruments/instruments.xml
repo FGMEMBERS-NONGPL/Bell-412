@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>instruments.ac</path>
+
+	<!-- 
+	============================================================================================
+	Indicators - separate meshes that need to be well centered/axed in order to animate properly
+	TODO :
+		move to indicators:
+			X hsi_disc	!! attn: Effect won't work without an absolute path 
+			X AI Ball	!! idem  + testing center and axes
+			- other needles.
+			- all needle texture to Indicators/.
+	============================================================================================
+	-->
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/ai_ball.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/hsi_disc.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/AmpMeter1.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/AmpMeter2.xml</path></model>
+
+	<!-- 
+	==============================================================================
+	Needles animat
+	============================================================================== 
+	-->
+    <animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Main Instruments Airspeed Needle</object-name>
+        <property>/instrumentation/airspeed-indicator/indicated-speed-kt</property>
+		<interpolation>
+			<entry><ind> -999 </ind><dep>   0 </dep></entry>
+			<entry><ind>    0 </ind><dep>   0 </dep></entry>
+			<entry><ind>   10 </ind><dep>   7 </dep></entry>
+			<entry><ind>   20 </ind><dep>  25 </dep></entry>
+			<entry><ind>   30 </ind><dep>  65 </dep></entry>
+			<entry><ind>   40 </ind><dep> 110 </dep></entry>
+			<entry><ind>   50 </ind><dep> 135 </dep></entry>
+			<entry><ind>   60 </ind><dep> 154 </dep></entry>
+			<entry><ind>   70 </ind><dep> 171 </dep></entry>
+			<entry><ind>   80 </ind><dep> 188 </dep></entry>
+			<entry><ind>   90 </ind><dep> 211 </dep></entry>
+			<entry><ind>  100 </ind><dep> 237 </dep></entry>
+			<entry><ind>  110 </ind><dep> 261 </dep></entry>
+			<entry><ind>  120 </ind><dep> 283 </dep></entry>
+			<entry><ind>  130 </ind><dep> 304 </dep></entry>
+			<entry><ind>  140 </ind><dep> 325 </dep></entry>
+			<entry><ind>  150 </ind><dep> 345 </dep></entry>
+			<entry><ind>  999 </ind><dep> 345 </dep></entry>
+		</interpolation>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+        <center>
+            <x-m>2.8289</x-m>
+            <y-m>0.32801</y-m>
+            <z-m>0.46124</z-m>
+        </center>
+	</animation>
+
+    <animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Main Instruments VSI Needle</object-name>
+        <property>instrumentation/vertical-speed-indicator/indicated-speed-fpm</property>
+        <interpolation>
+                <entry><ind>2000.0</ind><dep>170</dep></entry>
+                <entry><ind>500.000</ind><dep>60</dep></entry>
+                <entry><ind>0</ind><dep>0.0</dep></entry>
+                <entry><ind>-500.000</ind><dep>-60</dep></entry>
+                <entry><ind>-2000.000</ind><dep>-170</dep></entry>
+            </interpolation>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+        <center>
+            <x-m>2.81619</x-m>
+            <y-m>0.55557</y-m>
+            <z-m>0.35016</z-m>
+        </center>
+    </animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Main Instruments Alt Needle 100</object-name>
+		<property>instrumentation/altimeter/indicated-altitude-ft</property>
+		<factor>0.36</factor>
+		<axis>
+			<x> -1 </x>
+			<y>  0 </y>
+			<z>  0 </z>
+		</axis>
+		<center>
+			<x-m>  2.81952 </x-m>
+			<y-m>  0.55495 </y-m>
+			<z-m>  0.43983 </z-m>
+		</center>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Main Instruments Alt Needle 1000</object-name>
+		<property>instrumentation/altimeter/indicated-altitude-ft</property>
+		<factor>0.036</factor>
+		<axis>
+			<x> -1 </x>
+			<y>  0 </y>
+			<z>  0 </z>
+		</axis>
+		<center>
+			<x-m>  2.81870 </x-m>
+			<y-m>  0.55495 </y-m>
+			<z-m>  0.43983 </z-m>
+		</center>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Main Instruments RadioAlt Needle</object-name>
+		<property>instrumentation/altimeter/indicated-altitude-ft</property>
+		<factor>0.036</factor>
+		<axis>
+			<x> -1 </x>
+			<y>  0 </y>
+			<z>  0 </z>
+		</axis>
+		<center>
+			<x-m>  2.78931 </x-m>
+			<y-m>  0.55550 </y-m>
+			<z-m>  0.23317 </z-m>
+		</center>
+	</animation>
+	
+	<!-- 
+	==============================================================================
+	Lighting
+	============================================================================== 
+	-->
+	<!-- instruments set 1 -->
+	<effect>
+		<inherits-from>Effects/instruments-1-lights</inherits-from>
+		<object-name>5.Cockpit Panel Main Instruments VSI</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Airspeed</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AI</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Altimeter</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Rotor</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Torque</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Left</object-name>
+		<object-name>5.Cockpit Panel Main Instruments RadioAlt</object-name>
+		<object-name>5.Cockpit Panel Main Instruments RPM</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AmpMeter</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Volt1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Volt2</object-name>
+	</effect>
+
+	<!-- needles -->
+	<animation>
+		<type>material</type>
+        <object-name>5.Cockpit Panel Main Instruments Airspeed Needle</object-name>
+        <object-name>5.Cockpit Panel Main Instruments VSI Needle</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AI Needle Hor</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AI Needle Vert</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Alt Needle 1000</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Alt Needle 100</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI needle</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AmpMeter Needle1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AmpMeter Needle2</object-name>
+        <ambient>
+            <red>0.8</red>
+            <green>0.8</green>
+            <blue>0.8</blue>
+        </ambient>
+        <diffuse>
+            <red>0.8</red>
+            <green>0.8</green>
+            <blue>0.8</blue>
+        </diffuse>
+        <emission>
+            <red>0.8</red>
+            <green>0.9</green>
+            <blue>0.7</blue>
+			<factor-prop>/controls/electrical/buses</factor-prop>	<!-- TODO 16/06/16 14:45 : dim factor instead of baterry buses state -->
+        </emission>
+	</animation>
+
+</PropertyList>

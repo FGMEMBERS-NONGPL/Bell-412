@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<PropertyList>
+	<!-- Main fuselage -->
+	<path>412.ac</path>
+	<!-- <texture-path>./Textures</texture-path> useless, blender export don't understand this -->
+	<offsets>
+		<pitch-deg>0</pitch-deg>   
+		<roll-deg>0</roll-deg>
+		<x-m>0</x-m>
+		<y-m>0</y-m>
+		<z-m>0.1</z-m>	<!-- splatch zboeing at startup ... it's alive ! -->
+	</offsets>
+
+	<!-- Glasses Rembrandt transparency -->
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<condition>
+			<property>sim/rendering/rembrandt/enabled</property>
+		</condition>
+		<object-name>3.Glasses Front Interior</object-name>
+	</effect>
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<condition>
+			<property>sim/rendering/rembrandt/enabled</property>
+		</condition>
+		<object-name>3.Glasses Front</object-name>
+	</effect>
+
+	<!-- Immatriculation -->
+	<model>
+		<path>Aircraft/Bell-412/Models/Immat/immat.xml</path>
+	</model>
+	<!-- Instruments -->
+	<model>
+		<path>Aircraft/Bell-412/Models/Instruments/instruments.xml</path>
+	</model>
+	<!-- Rotors -->
+	<model>
+		<path>Aircraft/Bell-412/Models/Rotors/412-rotors.xml</path>
+	</model>
+	<!-- Lighting -->
+	<model>
+		<path>Aircraft/Bell-412/Models/Lights/lights.xml</path>
+	</model>
+	<!-- Controls / Switches / Knobs stuff -->
+	<model>
+		<path>Aircraft/Bell-412/Models/Controls/controls.xml</path>
+	</model>
+
+</PropertyList>
+

@@ -1,0 +1,25 @@
+AC3Db
+MATERIAL "DefaultWhite" rgb 1.0000 1.0000 1.0000  amb 0.2000 0.2000 0.2000  emis 0.0000 0.0000 0.0000  spec 0.5000 0.5000 0.5000  shi 10 trans 0.0000
+MATERIAL "5.Cockpit Panel Main Instruments Needles" rgb 0.8000 0.8000 0.8000  amb 1.0000 1.0000 1.0000  emis 0.0000 0.0000 0.0000  spec 0.0000 0.0000 0.0000  shi 12 trans 0.0000
+OBJECT world
+name "Blender_export__AmpMeter2.ac"
+kids 1
+OBJECT poly
+name "5.Cockpit Panel Main Instruments AmpMeter Needle2"
+crease 30.0
+texture "instruments-needles.png"
+texrep 1 1
+numvert 4
+0.0000001 0.0019157 -0.0010653
+0.0000001 0.0007826 0.0020478
+0.0000001 -0.0112590 -0.0058605
+0.0000001 -0.0123921 -0.0027474
+numsurf 1
+SURF 0X0
+mat 1
+refs 4
+0 0.455045 0.365760
+1 0.491767 0.365760
+3 0.491767 0.511070
+2 0.455045 0.511070
+kids 0

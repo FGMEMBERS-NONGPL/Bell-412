@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>AmpMeter2.ac</path>
+	<texture-path>../.</texture-path>
+	<offsets>
+		<x-m>-2.80774</x-m>
+		<y-m>-0.07899</y-m>
+		<z-m>0.33873</z-m>
+		<pitch-deg>-8.39</pitch-deg>
+	</offsets>
+    <animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Main Instruments AmpMeter Needle2</object-name>
+		<property>/bell412/electrical/bus2/ampload</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+  		<interpolation>
+            <entry><ind>-999</ind><dep>0</dep></entry>
+            <entry><ind>0</ind><dep>1</dep></entry>
+            <entry><ind>50</ind><dep>25</dep></entry>
+            <entry><ind>100</ind><dep>50</dep></entry>
+            <entry><ind>200</ind><dep>100</dep></entry>
+            <entry><ind>999</ind><dep>100</dep></entry>
+        </interpolation>
+    </animation>
+</PropertyList>
+

@@ -1,0 +1,223 @@
+<PropertyList>
+
+	<path>412-rotors.ac</path>
+	
+	<!-- main rotor -->
+	<animation>
+		<name>blades</name>
+		<object-name>4.Mechanic Rotor Blade.000</object-name>
+		<object-name>4.Mechanic Rotor Blade.001</object-name>
+		<object-name>4.Mechanic Rotor Blade.002</object-name>
+		<object-name>4.Mechanic Rotor Blade.003</object-name>
+	</animation>
+	
+	<animation>
+		<name>bladesblur</name>
+		<object-name>4.Mechanic Rotor Blur.000</object-name>
+		<object-name>4.Mechanic Rotor Blur.001</object-name>
+		<object-name>4.Mechanic Rotor Blur.002</object-name>
+		<object-name>4.Mechanic Rotor Blur.003</object-name>
+	</animation>
+
+	<!-- tail rotor -->
+	<animation>
+		<name>bladestail</name>
+		<object-name>4.Mechanic Rotor Tail Blade.000</object-name>
+		<object-name>4.Mechanic Rotor Tail Blade.001</object-name>
+	</animation>
+
+	<animation>
+		<name>bladestailblur</name>
+		<object-name>4.Mechanic Rotor Tail Blur</object-name>
+	</animation>
+
+	<animation>
+		<type>noshadow</type>
+		<object-name>bladesblur</object-name>
+		<object-name>bladestailblur</object-name>
+	</animation>
+
+	<!-- Transparency for Rembrandt -->
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<condition>
+			<property>sim/rendering/rembrandt/enabled</property>
+		</condition>
+		<object-name>4.Mechanic Rotor Blur.000</object-name>
+	</effect>
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<condition>
+			<property>sim/rendering/rembrandt/enabled</property>
+		</condition>
+		<object-name>4.Mechanic Rotor Blur.001</object-name>
+	</effect>
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<condition>
+			<property>sim/rendering/rembrandt/enabled</property>
+		</condition>
+		<object-name>4.Mechanic Rotor Blur.002</object-name>
+	</effect>
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<condition>
+			<property>sim/rendering/rembrandt/enabled</property>
+		</condition>
+		<object-name>4.Mechanic Rotor Blur.003</object-name>
+	</effect>
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<condition>
+			<property>sim/rendering/rembrandt/enabled</property>
+		</condition>
+		<object-name>4.Mechanic Rotor Tail Blur</object-name>
+	</effect>
+
+	<!-- Appearance selection -->
+	<!-- main rotor -->
+	<animation>
+		<type>select</type>
+		<object-name>blades</object-name>
+		<condition>
+			<less-than>
+				<property>/rotors/main/rpm</property>
+				<value>150</value>
+			</less-than>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>bladesblur</object-name>
+		<condition>
+			<greater-than>
+				<property>/rotors/main/rpm</property>
+				<value>150.01</value>
+			</greater-than>
+		</condition>
+	</animation>
+
+	<!-- tail rotor -->
+	<animation>
+		<type>select</type>
+		<object-name>bladestail</object-name>
+		<condition>
+			<less-than>
+				<property>/rotors/tail/rpm</property>
+				<value>150</value>
+			</less-than>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>bladestailblur</object-name>
+		<condition>
+			<greater-than>
+				<property>/rotors/tail/rpm</property>
+				<value>150.01</value>
+			</greater-than>
+		</condition>
+	</animation>
+
+	<!-- spin animat  -->
+	<!-- main rotor -->
+	<animation>
+		<type>spin</type>
+		<object-name>blades</object-name>
+		<property>/rotors/main/rpm</property>
+		<center>
+			<x-m> 0.08209 </x-m>
+			<y-m> 0.00179 </y-m>
+			<z-m> 0.000 </z-m>
+		</center>
+		<axis>
+			<x> 0 </x>
+			<y> 0 </y>
+			<z> 1 </z>
+		</axis>
+	</animation>
+	<animation>
+		<type>spin</type>
+		<object-name>4.Mechanic Rotor Spider</object-name>
+		<property>/rotors/main/rpm</property>
+		<center>
+			<x-m> 0.08209 </x-m>
+			<y-m> 0.00179 </y-m>
+			<z-m> 0.000 </z-m>
+		</center>
+		<axis>
+			<x> 0 </x>
+			<y> 0 </y>
+			<z> 1 </z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>spin</type>
+		<object-name>bladesblur</object-name>
+		<property>/rotors/main/rpm</property>
+		<center>
+			<x-m> 0.08209 </x-m>
+			<y-m> 0.00179 </y-m>
+			<z-m> 0.000 </z-m>
+		</center>
+		<axis>
+			<x> 0 </x>
+			<y> 0 </y>
+			<z> 1 </z>
+		</axis>
+	</animation>
+
+	<!-- tail rotor -->
+	<animation>
+		<type>spin</type>
+		<object-name>bladestail</object-name>
+		<property>/rotors/tail/rpm</property>
+		<center>
+			<x-m> 8.84416 </x-m>
+			<y-m> 0.4561 </y-m>
+			<z-m> 1.93039 </z-m>
+		</center>
+		<axis>
+			<x> 0 </x>
+			<y> 1 </y>
+			<z> 0 </z>
+		</axis>
+	</animation>
+	<animation>
+		<type>spin</type>
+		<object-name>4.Mechanic Rotor Tail Spider</object-name>
+		<property>/rotors/tail/rpm</property>
+		<center>
+			<x-m> 8.84416 </x-m>
+			<y-m> 0.4561 </y-m>
+			<z-m> 1.93039 </z-m>
+		</center>
+		<axis>
+			<x> 0 </x>
+			<y> 1 </y>
+			<z> 0 </z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>spin</type>
+		<object-name>bladestailblur</object-name>
+		<property>/rotors/tail/rpm</property>
+		<center>
+			<x-m> 8.84416 </x-m>
+			<y-m> 0.4561 </y-m>
+			<z-m> 1.93039 </z-m>
+		</center>
+		<axis>
+			<x> 0 </x>
+			<y> 1 </y>
+			<z> 0 </z>
+		</axis>
+	</animation>
+
+	
+</PropertyList>
+

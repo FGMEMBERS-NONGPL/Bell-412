@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<PropertyList>
+	<default> 
+		<menu n="100"> 
+			<label>Bell-412</label> 
+			<enabled type="bool">true</enabled>
+			<item>
+				<label>Callsign</label>
+				<binding>
+					<command>nasal</command>
+					<script>bell412.immat_dialog.toggle()</script>
+				</binding>
+			</item>
+		</menu>
+	</default>
+</PropertyList>
+

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<PropertyList>
+	<path>controls.ac</path>
+	<!-- Beacon -->	
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel OH Control Beacon</object-name>
+		<property>controls/lighting/switches/beacon</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>-10</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>35</dep>
+			</entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.31331</x-m>
+			<y-m>0.14085</y-m>
+			<z-m>0.99842</z-m>
+		</center>  
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel OH Control Beacon</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>/controls/lighting/switches/beacon</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/sim/sound/switch</property>
+			</binding>
+		</action>
+		<!--
+		<hovered> TODO
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nanl2</tooltip-id>
+				<label>Nav lights : %s</label>
+				<mapping>on-off</mapping>
+				<property>controls/lighting/nav-lights</property>
+			</binding>
+		</hovered>
+		-->
+	</animation>
+
+	<!-- Nav -->	
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel OH Control Nav</object-name>
+		<property>controls/lighting/switches/navlights</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>-10</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>35</dep>
+			</entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.31331</x-m>
+			<y-m>0.10766</y-m>
+			<z-m>0.99842</z-m>
+		</center>  
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel OH Control Nav</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>/controls/lighting/switches/navlights</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/sim/sound/switch</property>
+			</binding>
+		</action>
+		<!--
+		<hovered> TODO
+			<binding>
+				<command>set-tooltip</command>
+				<tooltip-id>nanl2</tooltip-id>
+				<label>Nav lights : %s</label>
+				<mapping>on-off</mapping>
+				<property>controls/lighting/nav-lights</property>
+			</binding>
+		</hovered>
+		-->
+	</animation>
+	
+	<!-- battery buses -->	
+	<!-- bus1 -->
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel OH Control Bus1</object-name>
+		<property>controls/electrical/switches/bus1</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>-10</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>35</dep>
+			</entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.4077</x-m>
+			<y-m>0.10616</y-m>
+			<z-m>0.99788</z-m>
+		</center>  
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel OH Control Bus1</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/electrical/switches/bus1</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/sim/sound/switch</property>
+			</binding>
+		</action>
+	</animation>
+	<!-- bus2 -->
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel OH Control Bus2</object-name>
+		<property>controls/electrical/switches/bus2</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>-10</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>35</dep>
+			</entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.4077</x-m>
+			<y-m>0.14085</y-m>
+			<z-m>0.99788</z-m>
+		</center>  
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel OH Control Bus2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/electrical/switches/bus2</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/sim/sound/switch</property>
+			</binding>
+		</action>
+	</animation>
+</PropertyList>
