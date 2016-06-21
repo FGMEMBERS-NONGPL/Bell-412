@@ -197,4 +197,109 @@
 			</binding>
 		</action>
 	</animation>
+	
+	<!-- console bat1 -->
+	<animation>
+		<type>translate</type>
+		<object-name>5.Cockpit Panel Main Control Bat1</object-name>
+		<property>controls/consoles/switches/bat1</property>
+		<factor>0.0035</factor>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.81704</x-m>
+			<y-m>0.31438</y-m>
+			<z-m>0.40542</z-m>
+		</center>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Main Control Bat1</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/consoles/switches/bat1</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/sim/sound/button</property>
+			</binding>
+		</action>
+	</animation>
+	<!-- console bat2 -->
+	<animation>
+		<type>translate</type>
+		<object-name>5.Cockpit Panel Main Control Bat2</object-name>
+		<property>controls/consoles/switches/bat2</property>
+		<factor>0.0035</factor>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.81704</x-m>
+			<y-m>0.3428</y-m>
+			<z-m>0.40542</z-m>
+		</center>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Main Control Bat2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/consoles/switches/bat2</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>/sim/sound/button</property>
+			</binding>
+		</action>
+	</animation>
+
+	<!-- knob / dimmer pilotlt  -->
+	<animation>
+		<type>knob</type>
+		<object-name>5.Cockpit Panel OH Control Light PilotInstr</object-name>
+		<property>controls/lighting/switches/pilotlt</property>
+		<!-- <factor>1000</factor> -->
+		<center>
+			<x-m>-2.26212</x-m>
+			<y-m>0.13251</y-m>
+			<z-m>0.99008</z-m>
+		</center>  
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>0</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>250</dep>
+			</entry>
+		</interpolation>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/switches/pilotlt</property>
+				<factor>0.1</factor>
+				<min>0</min>
+				<max>1</max>                
+				<wrap>false</wrap>
+			</binding>
+		</action>
+	</animation>
 </PropertyList>

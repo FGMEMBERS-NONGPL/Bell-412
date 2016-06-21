@@ -33,7 +33,35 @@
 			<factor>1.2</factor>
 		</pitch>
 	</switch>
-	
+	<!-- switch button pushed -->
+	<switch>
+		<name>button on</name>
+		<mode>once</mode>
+		<path>Aircraft/Bell-412/Sounds/switch2.wav</path>
+		<condition>
+			<property>/sim/sound/button</property>
+		</condition>
+		<volume>
+			<offset>2.0 </offset>
+		</volume>
+	</switch>
+	<switch>
+		<name>button off</name>
+		<mode>once</mode>
+		<path>Aircraft/Bell-412/Sounds/switch2.wav</path>
+		<condition>
+			<not>
+				<property>/sim/sound/button</property>
+			</not>
+		</condition>
+		<volume>
+			<offset>2.0</offset>
+		</volume>
+		<pitch>
+			<factor>0.8</factor>
+		</pitch>
+	</switch>
+
 	<!-- power startup and air cond. -->
 	<power>
 		<name>powerup</name>

@@ -44,6 +44,13 @@ var debugr = props.globals.getNode("rotors/bar2/roll-deg", 1);
 var bladesvisible = props.globals.getNode("rotors/main/bladesvisible", 1);
 
 
+var help_win = screen.window.new( 0, 0, 1, 5 );
+help_win.fg = [1,1,1,1];
+
+var messenger = func {
+	help_win.write(arg[0]);
+}
+
 # state:
 # 0 off
 # 1 engine startup

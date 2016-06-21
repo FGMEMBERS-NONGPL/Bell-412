@@ -156,7 +156,7 @@
 	</rotors>
 
 	<!-- bell412 state and nasal ipc -->
-	<!-- see Docs/_schematic.graphml ; Docs/_Framwork.txt -->
+	<!-- see Docs/_schematic.graphml ; Docs/_Framework.txt -->
 	<bell412>
 		<!-- Power Inputs -->	
 		<power>
@@ -201,8 +201,8 @@
 
 	<nasal>
 		<bell412>
-			<file>Aircraft/Bell-412/Nasal/immat.nas</file>
 			<file>Aircraft/Bell-412/Nasal/bell412.nas</file>
+			<file>Aircraft/Bell-412/Nasal/immat.nas</file>
 			<file>Aircraft/Bell-412/Nasal/electrical.nas</file>
 		</bell412>
 	</nasal>
