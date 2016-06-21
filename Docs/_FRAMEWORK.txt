@@ -1,4 +1,3 @@
-
 * Aircraft-set.xml
 <PropertyList>
 	<sim>
@@ -29,8 +28,7 @@
 		<animation>
 		
 	
-
-* File dependencies:
+* File dependencies:	TODO
 Bell-412-set.xml
 	Bell-412-yasim.xml
 	Splash/412.png
@@ -42,3 +40,42 @@ Models/bell-412.xml
 
 callsign.xml
 	callsign.ac
+
+* Properties main
+- Bell-412-set.xml
+  - User Switches:
+	/sim/multiplay/aliases ... everything needed to forward state to mp
+	/controls/power/switches
+	/controls/consoles/switches
+	/controls/lighting/switches
+	/controls/engines/switches
+	/controls/energy/switches
+	/controls/energy/pump/switches
+	/controls/energy/tanks/switches
+	/controls/mechanics/thrust1
+	/controls/mechanics/thrust2
+  
+  - states and nasal ipc
+    /bell412/power/bus1
+    /bell412/power/bus2
+    /bell412/power/buses
+
+	/bell412/power/output
+	/bell412/power/output/consoles
+	/bell412/power/output/lights
+	/bell412/power/output/annunciators
+	/bell412/power/output/engines
+
+	/bell412/energy/
+	/bell412/energy/tanks
+	/bell412/energy/pumps
+	/bell412/energy/flow
+	/bell412/mechanics
+	/bell412/mechanics/engines
+	/bell412/mechanics/rotors
+	
+	/bell412/states
+	/bell412/states/vibration
+	/bell412/states/cabin_temp
+	/bell412/states/cabin_oxygen
+	/bell412/states/engines_stage
