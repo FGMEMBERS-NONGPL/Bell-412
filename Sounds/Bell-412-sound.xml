@@ -42,7 +42,7 @@
 			<property>/sim/sound/button</property>
 		</condition>
 		<volume>
-			<offset>2.0 </offset>
+			<offset>2.5 </offset>
 		</volume>
 	</switch>
 	<switch>
@@ -55,10 +55,10 @@
 			</not>
 		</condition>
 		<volume>
-			<offset>2.0</offset>
+			<offset>2.5</offset>
 		</volume>
 		<pitch>
-			<factor>0.8</factor>
+			<factor>0.75</factor>
 		</pitch>
 	</switch>
 

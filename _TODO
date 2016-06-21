@@ -4,6 +4,8 @@ Current:
 17/06/16 22:18	- Engines Nasal
 				- rembrandt rendering
 
+21/06/16 23:33	- shake effect
+
 * Model
 	- Meshes
 	X 	fuselage
@@ -111,4 +113,5 @@ Current:
 	> glass effect
 	X	rembrandt/als
 	-	reflexion
+	- shake/vibration effect -- see 707/nasal/shake.nas
 

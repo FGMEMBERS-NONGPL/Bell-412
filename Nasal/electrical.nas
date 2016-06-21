@@ -130,9 +130,11 @@ var update_power = func {
 
 
 setlistener("/sim/signals/fdm-initialized", func {
-	#init_switches();
+	#init_switches();	# TODO + user prefs saved
 	setprop("/sim/sound/electrical", 0.0);
-	setprop("/controls/electrical/buses", 0);
+	# dimmer default
+	setprop("/controls/lighting/switches/conslt", 0.5);
+	setprop("/controls/lighting/switches/pilotlt",1.0);
 	settimer(update_power,5);
     
 	print("[Bell-412] - Electrical System ... Initialized");

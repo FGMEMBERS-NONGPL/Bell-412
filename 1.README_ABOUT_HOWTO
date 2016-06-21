@@ -33,17 +33,16 @@ Acknowledgment:
 With the help of thejabberwocky.net (aka FGMEMBERS) community members that support 
 and encourage me all along the development of this aircraft.
 
-How to start the Bell:
-- OH Panel: activate bus1 and bus2, then inverter1 and inverter2
-- press '}' key
+*********************************************************************************
+						HOW TO START THE BELL
+---------------------------------------------------------------------------------
+Version: 22/06/16
+- OH Panel: activate bus1 and bus2 (both needed for engines powered)
+- Console: 	press BAT1 on main console (front of pilot, below air speed)
+- OH Panel: you can adjust instruments light with pilot knob
+- press '}' key and wait 1 minutes until rotor is at 90%
+*********************************************************************************
 
-- TODO -----
- once the power is activated, you must hear the power unit and the air conditionner
- Console panel: activate Bat1 and Aft (2 buttons below the airspeed instrument), console will illuminate
- following the "Pilot Instr" Overhead Knob/dimmer.
- Pedestal: 
- ...
-- TODO -----
 	
 FAQ.:
 q: the sounds are very loud, why ?
