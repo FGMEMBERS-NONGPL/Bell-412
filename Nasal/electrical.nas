@@ -1,7 +1,12 @@
 # battery switches ==================================================
-var electrical_bus1_sw = props.globals.initNode("/controls/electrical/switches/bus1", 0, "BOOL");
-var electrical_bus2_sw = props.globals.initNode("/controls/electrical/switches/bus2", 0, "BOOL");
-var electrical_buses_state = props.globals.initNode("/controls/electrical/buses", 0, "BOOL");
+var power_bus1_sw = props.globals.initNode("/controls/power/switches/bus1", 0, "BOOL");
+var power_bus2_sw = props.globals.initNode("/controls/power/switches/bus2", 0, "BOOL");
+var power_inv1_sw = props.globals.initNode("/controls/power/switches/inv1", 0, "BOOL");
+var power_inv2_sw = props.globals.initNode("/controls/power/switches/inv2", 0, "BOOL");
+
+# consoles switches ==================================================
+var console_bat1_sw = props.globals.initNode("/controls/consoles/switches/bat1", 0, "BOOL");
+var console_bat2_sw = props.globals.initNode("/controls/consoles/switches/bat2", 0, "BOOL");
 
 # beacons/nav ========================================================
 var light_beacon_sw = props.globals.initNode("/controls/lighting/switches/beacon", 0, "BOOL");
@@ -17,68 +22,93 @@ aircraft.light.new("/controls/lighting/beacon-state", [0.10, 1.2], light_beacon)
 var esound = props.globals.initNode("/sim/sound/electrical", 0.0, "DOUBLE");
 
 # power ========================================================
-var ampload1 = props.globals.initNode("/bell412/electrical/bus1/ampload", 0, "DOUBLE");
-var ampload2 = props.globals.initNode("/bell412/electrical/bus2/ampload", 0, "DOUBLE");
+var power_buses_state = props.globals.initNode("/bell412/power/buses", 0, "DOUBLE");
+var ampload1 = props.globals.initNode("/bell412/power/bus1/ampload", 0, "DOUBLE");
+var ampload2 = props.globals.initNode("/bell412/power/bus2/ampload", 0, "DOUBLE");
+var consoles_state = props.globals.initNode("/bell412/power/output/consoles/state", 0, "BOOL");
 
 var update_virtual_bus = func {
-	# bus1
-	if ( electrical_bus1_sw.getBoolValue() ) {
-		setprop("/bell412/electrical/bus1/ampload", 60);
-		setprop("/bell412/electrical/bus1/voltacload", 115);
-		setprop("/bell412/electrical/bus1/voltdcload", 28);
+	# bus1 On/Off
+	if ( power_bus1_sw.getBoolValue() ) {
+		setprop("/bell412/power/bus1/ampload", 60);
+		setprop("/bell412/power/bus1/acload", 115);
+		setprop("/bell412/power/bus1/dcload", 28);
 	} else {
-		setprop("/bell412/electrical/bus1/ampload", 0);
-		setprop("/bell412/electrical/bus1/voltacload", 0);
-		setprop("/bell412/electrical/bus1/voltdcload", 0);
+		setprop("/bell412/power/bus1/ampload", 0);
+		setprop("/bell412/power/bus1/acload", 0);
+		setprop("/bell412/power/bus1/dcload", 0);
+		interpolate("/bell412/power/buses",0.0,2);
 	}
-
-	# bus2
-	if ( electrical_bus2_sw.getBoolValue() ) {
-		setprop("/bell412/electrical/bus2/ampload", 60);
-		setprop("/bell412/electrical/bus2/voltacload", 115);
-		setprop("/bell412/electrical/bus2/voltdcload", 28);
+	# bus2 On/Off
+	if ( power_bus2_sw.getBoolValue() ) {
+		setprop("/bell412/power/bus2/ampload", 60);
+		setprop("/bell412/power/bus2/acload", 115);
+		setprop("/bell412/power/bus2/dcload", 28);
 	} else {
-		setprop("/bell412/electrical/bus2/ampload", 0);
-		setprop("/bell412/electrical/bus2/voltacload", 0);
-		setprop("/bell412/electrical/bus2/voltdcload", 0);
-	}
-
-	# buses
-	if ( electrical_bus1_sw.getBoolValue() or electrical_bus2_sw.getBoolValue() ) {
-		interpolate("/sim/sound/electrical",1.0,3);
-		setprop("/bell412/electrical/output/console/pilot", 1);
-		setprop("/bell412/electrical/output/console/copilot", 1);
-	} else { 
-		interpolate("/sim/sound/electrical",0.0,1);
-		setprop("/bell412/electrical/output/console/pilot", 0);
-		setprop("/bell412/electrical/output/console/copilot", 0);
-	}
-		
-	if ( electrical_bus1_sw.getBoolValue() and electrical_bus2_sw.getBoolValue() ) {
-		setprop("/controls/electrical/buses", 1);
-		setprop("/bell412/electrical/buses", 1);
-	} else {
-		setprop("/controls/electrical/buses", 0);
-		setprop("/bell412/electrical/buses",0);
+		setprop("/bell412/power/bus2/ampload", 0);
+		setprop("/bell412/power/bus2/acload", 0);
+		setprop("/bell412/power/bus2/dcload", 0);
+		interpolate("/bell412/power/buses",0.0,2);
 	}
 	
-	# lights switches
-	if ( light_beacon_sw.getBoolValue() ) {			# texture appearance depends on electrical_buses_state, see lights.xml
-		setprop("/controls/lighting/beacon", 1);
+	# buses check
+	if ( power_buses_state.getValue() == 0 ) {
+		if ( power_bus1_sw.getBoolValue() and power_bus2_sw.getBoolValue() ) {
+			#setprop(power_buses_state, 1); don't work neither through .getNode()
+			#setprop("/bell412/power/buses", 1);
+			interpolate("/bell412/power/buses",1.0,2);	# sounds need this
+		}
+	# buses On, powering all electrical devices
 	} else {
-		setprop("/controls/lighting/beacon", 0);
+		if ( console_bat1_sw.getBoolValue() or console_bat2_sw.getBoolValue() ) {
+			setprop("/bell412/power/output/consoles/state",1);
+		} else {
+			setprop("/bell412/power/output/consoles/state",0);
+		}
+		if ( consoles_state.getBoolValue() ) {
+			setprop("/bell412/power/output/consoles/instruments",1);
+			setprop("/bell412/power/output/consoles/conslt",1);
+			setprop("/bell412/power/output/consoles/pilotlt",1);
+		}
 	}
 
-  	if ( light_navlights_sw.getBoolValue() ) {		# texture appearance depends on electrical_buses_state, see lights.xml
-  		setprop("/controls/lighting/nav-lights", 1);
-  	} else {
-	  	setprop("/controls/lighting/nav-lights", 0);
-	}		  
+
+#	# buses
+#	if ( electrical_bus1_sw.getBoolValue() or electrical_bus2_sw.getBoolValue() ) {
+#		interpolate("/sim/sound/electrical",1.0,3);
+#		setprop("/bell412/electrical/output/console/pilot", 1);
+#		setprop("/bell412/electrical/output/console/copilot", 1);
+#	} else { 
+#		interpolate("/sim/sound/electrical",0.0,1);
+#		setprop("/bell412/electrical/output/console/pilot", 0);
+#		setprop("/bell412/electrical/output/console/copilot", 0);
+#	}
+#		
+#	if ( electrical_bus1_sw.getBoolValue() and electrical_bus2_sw.getBoolValue() ) {
+#		setprop("/controls/electrical/buses", 1);
+#		setprop("/bell412/electrical/buses", 1);
+#	} else {
+#		setprop("/controls/electrical/buses", 0);
+#		setprop("/bell412/electrical/buses",0);
+#	}
+#	
+#	# lights switches
+#	if ( light_beacon_sw.getBoolValue() ) {			# texture appearance depends on electrical_buses_state, see lights.xml
+#		setprop("/controls/lighting/beacon", 1);
+#	} else {
+#		setprop("/controls/lighting/beacon", 0);
+#	}
+#
+#  	if ( light_navlights_sw.getBoolValue() ) {		# texture appearance depends on electrical_buses_state, see lights.xml
+#  		setprop("/controls/lighting/nav-lights", 1);
+#  	} else {
+#	  	setprop("/controls/lighting/nav-lights", 0);
+#	}		  
 }
 
-var update_electrical = func {
+var update_power = func {
   	update_virtual_bus();
-	settimer(update_electrical, 0);
+	settimer(update_power, 0);
 }
 
 
@@ -86,7 +116,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 	#init_switches();
 	setprop("/sim/sound/electrical", 0.0);
 	setprop("/controls/electrical/buses", 0);
-	settimer(update_electrical,5);
+	settimer(update_power,5);
     
 	print("[Bell-412] - Electrical System ... Initialized");
     

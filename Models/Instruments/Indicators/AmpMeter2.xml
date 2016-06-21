@@ -12,7 +12,7 @@
     <animation>
         <type>rotate</type>
         <object-name>5.Cockpit Panel Main Instruments AmpMeter Needle2</object-name>
-		<property>/bell412/electrical/bus2/ampload</property>
+		<property>/bell412/power/bus2/ampload</property>
         <axis>
             <x>1</x>
             <y>0</y>

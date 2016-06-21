@@ -8,7 +8,7 @@
 			<image>Aircraft/Bell-412/Models/Instruments/instruments-2-lights.png</image>
 		</texture>
 		<lightmap-factor type="float" n="0">
-			<use>/controls/electrical/buses</use>	<!-- TODO 16/06/16 14:45 : dim factor instead of baterry buses state -->
+			<use>/bell412/power/buses</use>	<!-- TODO 16/06/16 14:45 : dim factor instead of baterry buses state -->
 		</lightmap-factor>
 		<lightmap-color type="vec3d" n="0"> 0.9 1.0 0.8 </lightmap-color>
 		<!-- alpha channel -->

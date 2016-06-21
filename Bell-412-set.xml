@@ -86,7 +86,7 @@
 				<int n="7" type="int">  0 </int>  <!-- 6 immat -->
 				<int n="8" alias="/controls/lighting/beacon-state/state"/> 		<!-- beacon state -->
 				<int n="9" alias="/controls/lighting/nav-lights"/> 				<!-- nav lights -->
-				<int n="10" alias="/controls/electrical/buses"/> 				<!-- bat. buses state -->
+				<int n="10" alias="/bell412/power/buses"/> 						<!-- bat. buses state -->
 			</generic>
 		</multiplay>
 	</sim>
@@ -94,9 +94,10 @@
 	<input>
 		<keyboard include="Systems/Bell-412-keyboard.xml"/>
 	</input>
-	
+
+	<!-- controls: everythings related to the user controls/switches/knob -->
 	<controls>
-		<engines>
+		<engines>	<!-- TODO old set -->
 			<engine n="0">
 				<magnetos>0</magnetos>
 			</engine>
@@ -104,7 +105,7 @@
 				<magnetos>0</magnetos>
 			</engine>
 		</engines>
-		<gear>
+		<gear>	<!-- TODO old set -->
 			<brake-parking>1</brake-parking>
 		</gear>
 		<rotor>
@@ -113,20 +114,29 @@
 		</rotor>
 		<lighting>
 			<switches>
-				<beacon type="bool">false</beacon>
-				<navlights type="bool">false</navlights>
+				<beacon type="bool">false</beacon>			<!-- OH beacon sw -->
+				<navlights type="bool">false</navlights>	<!-- OH nav sw -->
+				<conslt type="double">0</conslt>			<!-- OH console light dimmer -->
+				<pilotlt type="double">0</pilotlt>			<!-- OH pilot light dimmer -->
 			</switches>
 		</lighting>
-		<electrical>
-			<buses type="bool">false</buses>
+		<power>
 			<switches>
 				<bus1 type="bool">false</bus1>
+				<inv1 type="bool">false</inv1>
 				<bus2 type="bool">false</bus2>
+				<inv2 type="bool">false</inv2>
 			</switches>
-		</electrical>
+		</power>
+		<consoles>
+			<switches>
+				<bat1 type="bool">false</bat1>
+				<bat2 type="bool">false</bat2>
+			</switches>
+		</consoles>
 	</controls>
 
-	<rotors>
+	<rotors>	<!-- TODO old set -->
 		<main>
 			<rpm type="double">0</rpm>
 			<cone-deg type="double">0</cone-deg>
@@ -145,28 +155,37 @@
 		</bar2>
 	</rotors>
 
+	<!-- bell412 state and nasal ipc -->
+	<!-- see Docs/_schematic.graphml ; Docs/_Framwork.txt -->
 	<bell412>
-		<electrical>
-			<buses type="bool">false</buses>					<!-- true when both bus are on ie enough energy power -->
+		<!-- Power Inputs -->	
+		<power>
 			<bus1>
-				<ampload type="double">0.0</ampload>
-				<voltacload type="double">0.0</voltacload>
-				<voltdcload type="double">0.0</voltdcload>
+				<ampload type="float">0</ampload>
+				<dcload type="float">0</dcload>
+				<acload type="float">0</acload>
 			</bus1>
 			<bus2>
-				<ampload type="double">0.0</ampload>
-				<voltacload type="double">0.0</voltacload>
-				<voltdcload type="double">0.0</voltdcload>
+				<ampload type="float">0</ampload>
+				<dcload type="float">0</dcload>
+				<acload type="float">0</acload>
 			</bus2>
+			<buses type="double">0</buses>								<!-- main buses = bus1 + bus2 -->
+
+			<!-- Power Outputs -->	
 			<output>
-				<beacon type="bool">false</beacon>
-				<navlights type="bool">false</navlights>
-				<console>									<!-- depend on bus1,bus2,console bat1, console bat2, pilot copilot dim factor -->
-					<pilot type="double">0.0</pilot>		<!-- pilot and copilot have different light dim factor -->
-					<copilot type="double">0.0</copilot>
-				</console>
+				<lights>
+					<beacon type="bool">false</beacon>
+					<navlights type="bool">false</navlights>
+				</lights>
+				<consoles>
+					<state type="bool">false</state>					<!-- activated by bat1 OR bat2-aft on the console -->
+					<instruments type="double">0.0</instruments>		<!-- instrument powered  -->
+					<conslt type="double">0</conslt>					<!-- console light powered -->
+					<pilotlt type="double">0.0</pilotlt>				<!-- pilot instruments lights powered -->
+				</consoles>
 			</output>
-		</electrical>
+		</power>
 	</bell412>
 
 	<instrumentation>

@@ -117,7 +117,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>5.Cockpit Panel OH Control Bus1</object-name>
-		<property>controls/electrical/switches/bus1</property>
+		<property>controls/power/switches/bus1</property>
 		<interpolation> 
 			<entry>
 				<ind>0</ind>
@@ -147,7 +147,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/electrical/switches/bus1</property>
+				<property>controls/power/switches/bus1</property>
 			</binding>
 			<binding>
 				<command>property-toggle</command>
@@ -159,7 +159,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>5.Cockpit Panel OH Control Bus2</object-name>
-		<property>controls/electrical/switches/bus2</property>
+		<property>controls/power/switches/bus2</property>
 		<interpolation> 
 			<entry>
 				<ind>0</ind>
@@ -189,7 +189,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/electrical/switches/bus2</property>
+				<property>controls/power/switches/bus2</property>
 			</binding>
 			<binding>
 				<command>property-toggle</command>

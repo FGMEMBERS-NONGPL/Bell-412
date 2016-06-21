@@ -35,13 +35,13 @@
 	</switch>
 	
 	<!-- power startup and air cond. -->
-	<electrical>
+	<power>
 		<name>powerup</name>
 		<mode>looped</mode>
-		<path>Aircraft/Bell-412/Sounds/electricalOn.wav</path>
+		<path>Aircraft/Bell-412/Sounds/powerOn.wav</path>
 		<condition>
 			<greater-than>
-				<property>/sim/sound/electrical</property>
+				<property>/bell412/power/buses</property>
 				<value>0</value>
 			</greater-than>
 		</condition>
@@ -51,27 +51,27 @@
 			<offset> 2.2 </offset>
 		</volume>
 		<pitch>
-			<property>/sim/sound/electrical</property>
+			<property>/bell412/power/buses</property>
 			<factor>1</factor>
 			<offset>0.0</offset>
 			<max>1</max>
 		</pitch>
-	</electrical>
-	<!--			TODO : air switch on 'hi'
-	<electrical>
+	</power>
+	<!--			TODO : air switch hi/low
+	<power>
 		<name>air conditioner</name>
 		<mode>looped</mode>
 		<path>Aircraft/Bell-412/Sounds/air_cond.wav</path>
 		<condition>
 			<greater-than>
-				<property>/sim/sound/electrical</property>
+				<property>/sim/sound/power</property>
 				<value>0.9</value>
 			</greater-than>
 		</condition>
 		<volume>
 			<offset> 0.2 </offset>
 		</volume>
-	</electrical>
+	</power>
 	-->
 
 	<!-- engine -->
@@ -161,7 +161,7 @@
 			<property>rotors/main/rpm</property>
 			<factor>0.00325</factor>
 			<offset>-0.0</offset>
-			<max>2.5</max>
+			<max>1.0</max>
 		</pitch>
 		<reference-dist>50</reference-dist>
 		<max-dist>1000</max-dist>
@@ -197,7 +197,7 @@
 			<property>rotors/main/rpm</property>
 			<factor>0.00325</factor>
 			<offset>-0.0</offset>
-			<max>2.5</max>
+			<max>1.0</max>
 		</pitch>
 		<reference-dist>50</reference-dist>
 		<max-dist>1000</max-dist>

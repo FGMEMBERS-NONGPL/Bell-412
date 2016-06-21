@@ -182,7 +182,7 @@
             <red>0.8</red>
             <green>0.9</green>
             <blue>0.7</blue>
-			<factor-prop>/controls/electrical/buses</factor-prop>	<!-- TODO 16/06/16 14:45 : dim factor instead of baterry buses state -->
+			<factor-prop>/bell412/power/buses</factor-prop>	<!-- TODO 16/06/16 14:45 : dim factor instead of baterry buses state -->
         </emission>
 	</animation>
 

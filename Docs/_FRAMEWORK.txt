@@ -70,11 +70,12 @@ callsign.xml
 	/bell412/energy/tanks
 	/bell412/energy/pumps
 	/bell412/energy/flow
+
 	/bell412/mechanics
 	/bell412/mechanics/engines
 	/bell412/mechanics/rotors
 	
-	/bell412/states
+	/bell412/states						parked,running,flying,crashed
 	/bell412/states/vibration
 	/bell412/states/cabin_temp
 	/bell412/states/cabin_oxygen

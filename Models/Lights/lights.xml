@@ -16,7 +16,7 @@
 		<condition>
 			<and>
 				<property>sim/multiplay/generic/int[8]</property>	<!-- beacon state alias to /controls/lighting/beacon-state/state -->
-				<property>sim/multiplay/generic/int[10]</property>	<!-- bat buses state alias to /controls/electrical/buses -->
+				<property>sim/multiplay/generic/int[10]</property>	<!-- bat buses state  -->
 			</and>
 		</condition>
 	</animation>
@@ -28,7 +28,7 @@
 			<and>
 				<not><property>/sim/rendering/rembrandt/enabled</property></not>
 				<property>sim/multiplay/generic/int[8]</property>	<!-- beacon state alias to /controls/lighting/beacon-state/state -->
-				<property>sim/multiplay/generic/int[10]</property>	<!-- bat buses state alias to /controls/electrical/buses -->
+				<property>sim/multiplay/generic/int[10]</property>	<!-- bat buses state  -->
 			</and>
 		</condition>
 	</animation>
@@ -69,7 +69,7 @@
 		<condition>
 			<and>
 				<property>sim/multiplay/generic/int[9]</property>	<!-- nav state alias to /controls/lighting/nav -->
-				<property>sim/multiplay/generic/int[10]</property>	<!-- bat buses state alias to /controls/electrical/buses -->
+				<property>sim/multiplay/generic/int[10]</property>	<!-- bat buses state  -->
 			</and>
 		</condition>
 	</animation>
@@ -81,7 +81,7 @@
 			<and>
 				<not><property>/sim/rendering/rembrandt/enabled</property></not>
 				<property>sim/multiplay/generic/int[9]</property>
-				<property>sim/multiplay/generic/int[10]</property>	<!-- bat buses state alias to /controls/electrical/buses -->
+				<property>sim/multiplay/generic/int[10]</property>	<!-- bat buses state  -->
 			</and>
 		</condition>
 	</animation>

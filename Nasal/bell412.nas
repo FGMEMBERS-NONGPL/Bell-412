@@ -60,14 +60,14 @@ var update_state = func {
 		if (new_state == (1)) {
 			settimer(func { update_state(2) }, 1);
 			#interpolate(engine, 0.03, 0.7);
-			interpolate(engine, 0.1, .10);
+			interpolate(engine, 0.05, .50);
 		} else {
 			if (new_state == (2)) {
 				settimer(func { update_state(3) }, 6);
 				rotor.setValue(1);
 				max_rel_torque.setValue(0.01);
 				target_rel_rpm.setValue(0.2);
-				interpolate(engine, 0.4, 7);
+				interpolate(engine, 0.1, 7);
 			} else { 
 				if (new_state == (3)) {
 					if (rotor_rpm.getValue() > 100) {
@@ -75,7 +75,8 @@ var update_state = func {
 						max_rel_torque.setValue(1);
 						target_rel_rpm.setValue(1.00);
 						state.setValue(5);
-						interpolate(engine, 1.03, 20);
+						#interpolate(engine, 1.03, 20);
+						interpolate(engine, 0.60, 20);
 					} else {
 						settimer(func { update_state(4) }, 7*0);
 						max_rel_torque.setValue(0.05);
@@ -85,8 +86,8 @@ var update_state = func {
 				} else {
 					if (new_state == (4)) {
 						settimer(func { update_state(5) }, 20);
-						max_rel_torque.setValue(0.25);
-						target_rel_rpm.setValue(0.7);
+						max_rel_torque.setValue(0.18);
+						target_rel_rpm.setValue(0.5);
 					} else {
 							if (new_state == (5)) {
 							max_rel_torque.setValue(1);
@@ -115,8 +116,7 @@ var engines = func {
 
 var update_engine = func {
 	if (state.getValue() > 3 ) {
-		interpolate (engine,  clamp( rotor_rpm.getValue() / 235 ,
-								0.05, target_rel_rpm.getValue() ), 0.25 );
+		interpolate (engine,  clamp( rotor_rpm.getValue() / 235, 0.05, target_rel_rpm.getValue() ), 1.00 ); # 0.25 => 1.00
 	}
 }
 
