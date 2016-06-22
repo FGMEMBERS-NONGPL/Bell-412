@@ -4,7 +4,7 @@
 		<description>Bell-412</description>
 		<author>vslash.com</author>
 		<status>V0.1</status>
-    	<license>free</license>
+    	<license>notfree</license>
 
 		<flight-model>yasim</flight-model>
 		<aero>Bell-412-yasim</aero>
@@ -122,15 +122,15 @@
 		</lighting>
 		<power>
 			<switches>
-				<bus1 type="bool">false</bus1>
-				<inv1 type="bool">false</inv1>
+				<bus1 type="bool">false</bus1>				<!-- OH Buses -->
+				<inv1 type="bool">false</inv1>				<!-- OH inverters -->
 				<bus2 type="bool">false</bus2>
 				<inv2 type="bool">false</inv2>
 			</switches>
 		</power>
 		<consoles>
 			<switches>
-				<bat1 type="bool">false</bat1>
+				<bat1 type="bool">false</bat1>				<!-- console bat -->
 				<bat2 type="bool">false</bat2>
 			</switches>
 		</consoles>
@@ -186,6 +186,24 @@
 				</consoles>
 			</output>
 		</power>
+		<mechanics>
+			<engines>
+				<engine n="0" type="float">
+					<state type="float">0</state>
+					<rpm type="float">0</rpm>
+					<itt type="float">0</itt>
+					<oilpress type="float">0</oilpress>
+					<fuelpress type="float">0</fuelpress>
+				</engine>
+				<engine n="1" type="float">
+					<state type="float">0</state>
+					<rpm type="float">0</rpm>
+					<itt type="float">0</itt>
+					<oilpress type="float">0</oilpress>
+					<fuelpress type="float">0</fuelpress>
+				</engine>
+			</engines>
+		</mechanics>
 	</bell412>
 
 	<instrumentation>

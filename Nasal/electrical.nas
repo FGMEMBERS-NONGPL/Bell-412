@@ -88,39 +88,6 @@ var update_virtual_bus = func {
 			setprop("/bell412/power/output/consoles/pilotlt",0);
 		}
 	}
-
-
-#	# buses
-#	if ( electrical_bus1_sw.getBoolValue() or electrical_bus2_sw.getBoolValue() ) {
-#		interpolate("/sim/sound/electrical",1.0,3);
-#		setprop("/bell412/electrical/output/console/pilot", 1);
-#		setprop("/bell412/electrical/output/console/copilot", 1);
-#	} else { 
-#		interpolate("/sim/sound/electrical",0.0,1);
-#		setprop("/bell412/electrical/output/console/pilot", 0);
-#		setprop("/bell412/electrical/output/console/copilot", 0);
-#	}
-#		
-#	if ( electrical_bus1_sw.getBoolValue() and electrical_bus2_sw.getBoolValue() ) {
-#		setprop("/controls/electrical/buses", 1);
-#		setprop("/bell412/electrical/buses", 1);
-#	} else {
-#		setprop("/controls/electrical/buses", 0);
-#		setprop("/bell412/electrical/buses",0);
-#	}
-#	
-#	# lights switches
-#	if ( light_beacon_sw.getBoolValue() ) {			# texture appearance depends on electrical_buses_state, see lights.xml
-#		setprop("/controls/lighting/beacon", 1);
-#	} else {
-#		setprop("/controls/lighting/beacon", 0);
-#	}
-#
-#  	if ( light_navlights_sw.getBoolValue() ) {		# texture appearance depends on electrical_buses_state, see lights.xml
-#  		setprop("/controls/lighting/nav-lights", 1);
-#  	} else {
-#	  	setprop("/controls/lighting/nav-lights", 0);
-#	}		  
 }
 
 var update_power = func {

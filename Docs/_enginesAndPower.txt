@@ -1,19 +1,21 @@
-* startup
-	time(s)		condition		r/sec. 	tacho/rpm	comment
-	0			warm up			0		0
-	7.02		rotor unlock	0		1
-	15			rotor start 	2		3
+* startup (from yt movie)
+	time(s)		condition		r/sec. 	tacho	gasprod	comment
+	------		-------------	-----	-----	-------	--------
+	0			warm up			0		0		0%
+	7.02		rotor unlock	0		1		60%
+	15			rotor start 	2		3		60%
 	20									12
-	25			rotor rotate	5		22			vibrating
+	25			rotor rotate	5		22				vibrating
 	32									30
 	45									40
-	55									50
+	55									50		70%
 	1:15								60
 
-after 1:30, moving collective power engine to max then tacho goes up to 80-90
+1. At engine start (switche on), dcbat down from nominal 26V to 18V)
+2. after 1:30, moving collective thrust to max then tacho goes up to 80-90
 
 starting engine 1 with collect. thrust at 0, 
-then start engine 1, then up to collect thrust to 50%,
+then start engine 1, then up collect thrust to 50%,
 then tacho eng.1 up to 90 in 10 sec., follow tacho and increase collect.
 thrust for eng 1 to 100%
 
