@@ -194,4 +194,16 @@
         </emission>
 	</animation>
 
+	<!-- console -->
+	<effect>
+		<inherits-from>Effects/console-lights</inherits-from>
+		<object-name>5.Cockpit Panel Main Board</object-name>
+		<object-name>5.Cockpit Panel Main Central</object-name>
+	</effect>
+	<!-- pedestal, OH Panel -->
+	<effect>
+		<inherits-from>Effects/pedestal-lights</inherits-from>
+		<object-name>5.Cockpit Panel Pedestal</object-name>
+		<object-name>5.Cockpit Panel OH</object-name>
+	</effect>
 </PropertyList>

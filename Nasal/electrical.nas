@@ -11,6 +11,7 @@ var console_bat2_sw = props.globals.initNode("/controls/consoles/switches/bat2",
 # lights dimmer ======================================================
 var dimmer_conslt = props.globals.initNode("/controls/lighting/switches/conslt", 0, "DOUBLE");
 var dimmer_pilotlt = props.globals.initNode("/controls/lighting/switches/pilotlt", 0, "DOUBLE");
+var dimmer_pedlt = props.globals.initNode("/controls/lighting/switches/pedestallt", 0, "DOUBLE");
 
 # beacons/nav ========================================================
 var light_beacon_sw = props.globals.initNode("/controls/lighting/switches/beacon", 0, "BOOL");
@@ -64,6 +65,7 @@ var update_virtual_bus = func {
 		setprop("/bell412/power/output/consoles/instruments",0);
 		setprop("/bell412/power/output/consoles/conslt",0);
 		setprop("/bell412/power/output/consoles/pilotlt",0);
+		setprop("/bell412/power/output/consoles/pedestallt",0);
 		setprop("/bell412/power/output/engines/state",0);
 		
 		if ( power_bus1_sw.getBoolValue() and power_bus2_sw.getBoolValue() ) {
@@ -83,10 +85,12 @@ var update_virtual_bus = func {
 			setprop("/bell412/power/output/consoles/instruments",1);
 			setprop("/bell412/power/output/consoles/conslt", 1 * dimmer_conslt.getValue());
 			setprop("/bell412/power/output/consoles/pilotlt",1 * dimmer_pilotlt.getValue());
+			setprop("/bell412/power/output/consoles/pedestallt",1 * dimmer_pedlt.getValue());
 		} else {
 			setprop("/bell412/power/output/consoles/instruments",0);
 			setprop("/bell412/power/output/consoles/conslt",0);
 			setprop("/bell412/power/output/consoles/pilotlt",0);
+			setprop("/bell412/power/output/consoles/pedestallt",0);
 		}
 		setprop("/bell412/power/output/engines/state",1);
 	}
@@ -102,8 +106,9 @@ setlistener("/sim/signals/fdm-initialized", func {
 	#init_switches();	# TODO + user prefs saved
 	setprop("/sim/sound/electrical", 0.0);
 	# dimmer default
-	setprop("/controls/lighting/switches/conslt", 0.5);
+	setprop("/controls/lighting/switches/conslt", 1.0);
 	setprop("/controls/lighting/switches/pilotlt",1.0);
+	setprop("/controls/lighting/switches/pedestallt",1.0);
 	settimer(update_power,5);
     
 	print("[Bell-412] - Electrical System ... Initialized");
