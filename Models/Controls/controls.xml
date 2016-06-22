@@ -2,11 +2,13 @@
 
 <PropertyList>
 	<path>controls.ac</path>
+	<!-- Button/Knob Lighting -->
 	<effect>
 		<inherits-from>Effects/controls-lights</inherits-from>
 		<object-name>5.Cockpit Panel Main Control Bat1</object-name>
 		<object-name>5.Cockpit Panel Main Control Bat2</object-name>
 		<object-name>5.Cockpit Panel OH Control Light PilotInstr</object-name>
+		<object-name>5.Cockpit Panel OH Control Light Console</object-name>
 	</effect>
 	<!-- Beacon -->	
 	<animation>
@@ -301,6 +303,43 @@
 			<binding>
 				<command>property-adjust</command>
 				<property>controls/lighting/switches/pilotlt</property>
+				<factor>0.1</factor>
+				<min>0</min>
+				<max>1</max>                
+				<wrap>false</wrap>
+			</binding>
+		</action>
+	</animation>
+
+	<!-- knob / dimmer consolelt  -->
+	<animation>
+		<type>knob</type>
+		<object-name>5.Cockpit Panel OH Control Light Console</object-name>
+		<property>controls/lighting/switches/conslt</property>
+		<center>
+			<x-m>-2.20793</x-m>
+			<y-m>0.0465</y-m>
+			<z-m>0.99075</z-m>
+		</center>  
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>0</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>250</dep>
+			</entry>
+		</interpolation>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/switches/conslt</property>
 				<factor>0.1</factor>
 				<min>0</min>
 				<max>1</max>                
