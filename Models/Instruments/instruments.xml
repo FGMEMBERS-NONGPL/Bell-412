@@ -18,6 +18,10 @@
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/hsi_disc.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/AmpMeter1.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/AmpMeter2.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/vacmeter1.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/vacmeter2.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/vdcmeter1.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/vdcmeter2.xml</path></model>
 
 	<!-- 
 	==============================================================================
@@ -168,6 +172,10 @@
 		<object-name>5.Cockpit Panel Main Instruments HSI needle</object-name>
 		<object-name>5.Cockpit Panel Main Instruments AmpMeter Needle1</object-name>
 		<object-name>5.Cockpit Panel Main Instruments AmpMeter Needle2</object-name>
+        <object-name>5.Cockpit Panel Main Instruments Volt1 Needle AC</object-name>
+        <object-name>5.Cockpit Panel Main Instruments Volt2 Needle AC</object-name>
+        <object-name>5.Cockpit Panel Main Instruments Volt1 Needle DC</object-name>
+        <object-name>5.Cockpit Panel Main Instruments Volt2 Needle DC</object-name>
         <ambient>
             <red>0.8</red>
             <green>0.8</green>
