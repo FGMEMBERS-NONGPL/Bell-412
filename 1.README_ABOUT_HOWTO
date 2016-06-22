@@ -38,9 +38,39 @@ and encourage me all along the development of this aircraft.
 ---------------------------------------------------------------------------------
 Version: 22/06/16
 - OH Panel: activate bus1 and bus2 (both needed for engines powered)
-- Console: 	press BAT1 on main console (front of pilot, below air speed)
-- OH Panel: you can adjust instruments light with pilot knob
+- Console: 	press BAT1 on main console (front of pilot, below airspeed)
+- OH Panel: you can adjust instruments light with the pilot knob.
 - press '}' key and wait 1 minutes until rotor is at 90%
+- you can fly.
+---------------------------------------------------------------------------------
+						     FLYING
+---------------------------------------------------------------------------------
+- Torque effect.
+  The Bell rotor rotate counterclockwise (American style), so the torque effect
+  if clockwise. At startup, you must compensate the torque by pushing
+  the rudder on the right at ~20%. When flying, you smoothly push the rudder on
+  the left (from -20 to 0%), and arround 100Knots, at 20% on the left, this way
+  you flight straight forward. Decrease the speed, smoothly push your rudder on 
+  the right, and so on.
+- Take off.
+  Increase your collectiv slowly, see the behaviour of your aircraft, correct
+  torque with your rudder. When you take off, try to keep and AOA of -8/-10°,
+  correct roll and pitch. Climb at 100 feet, AOA at 0° or less, more speed
+  needs more collectiv to balance vspeed. 
+- Speed and pitch.
+  Increasing or decreasing speed has effect on the vertical speed. Every time
+  you change your AOA in order to increase or decrease your speed, you must act 
+  on the collectiv accordingly, in order to correct your vspeed.
+  The AOA of the whole rotor is at ~10° (the FDM is not right yet), to put your chopper
+  stationary (or decrease your speed), you must have your nose at a pitch of -10° 
+  (nose up), so the plane of the blades cone will be is at 0°. Always look at your
+  attitude indicator, it's your best friend and it is well calibrated.
+  But wind, ground and torque effect influence your fly. It is difficult
+  to put your Bell stationary, but possible. Keep an eye on your attitude indicator,
+  your vspeed indicator and your pitch. Act on the rudder slowly when torque is too
+  hi (your chopper rotate), correct the pitch and roll, act on the collectiv.
+  If like me your are using a mouse, you cannot act on rudders and the cyclic at the 
+  same time. So, handle your aircraft slowly and gently, step by step.
 *********************************************************************************
 
 	
