@@ -18,6 +18,10 @@ var normatan = func(x) { math.atan2(x, 1) * 2 / math.pi }
 var turbine_timer = aircraft.timer.new("/sim/time/hobbs/turbines", 10);
 aircraft.timer.new("/sim/time/hobbs/helicopter", nil).start();
 
+# power =====================================================
+var engines_power = props.globals.getNode("/bell412/power/output/engines/state");
+
+
 # engines/rotor =====================================================
 var state = props.globals.getNode("sim/model/bell412/state");
 var engine = props.globals.getNode("sim/model/bell412/engine");
@@ -109,6 +113,7 @@ var update_state = func {
 
 var engines = func {
 	if (props.globals.getNode("sim/crashed",1).getBoolValue()) {return; }
+	if ( ! engines_power.getBoolValue() ) { return; }
 	var s = state.getValue();
 	if (arg[0] == 1) {
 		if (s == 0) {

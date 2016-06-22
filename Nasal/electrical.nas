@@ -64,6 +64,7 @@ var update_virtual_bus = func {
 		setprop("/bell412/power/output/consoles/instruments",0);
 		setprop("/bell412/power/output/consoles/conslt",0);
 		setprop("/bell412/power/output/consoles/pilotlt",0);
+		setprop("/bell412/power/output/engines/state",0);
 		
 		if ( power_bus1_sw.getBoolValue() and power_bus2_sw.getBoolValue() ) {
 			#setprop("/bell412/power/buses", 1);
@@ -87,6 +88,7 @@ var update_virtual_bus = func {
 			setprop("/bell412/power/output/consoles/conslt",0);
 			setprop("/bell412/power/output/consoles/pilotlt",0);
 		}
+		setprop("/bell412/power/output/engines/state",1);
 	}
 }
 

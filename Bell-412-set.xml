@@ -184,6 +184,11 @@
 					<conslt type="double">0</conslt>					<!-- console light powered -->
 					<pilotlt type="double">0.0</pilotlt>				<!-- pilot instruments lights powered -->
 				</consoles>
+				<engines>
+					<state type="bool">false</state>					<!-- powered -->
+					<starter n="0" type="bool">false</starter>			<!-- starter 1 -->
+					<starter n="1" type="bool">false</starter>			<!-- starter 2 -->
+				</engines>
 			</output>
 		</power>
 		<mechanics>
