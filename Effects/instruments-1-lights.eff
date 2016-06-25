@@ -13,7 +13,7 @@
 		<lightmap-color type="vec3d" n="0"> 0.9 1.0 0.8 </lightmap-color>
 		<!-- alpha channel -->
 		<!--
-		<lightmap-factor type="float" n="3">1.0</lightmap-factor> alpha channel
+		<lightmap-factor type="vec3d" n="3">0.0 0.0 0.0</lightmap-factor>
 		-->
 	</parameters>
 </PropertyList>

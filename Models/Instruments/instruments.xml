@@ -145,21 +145,38 @@
 	-->
 	<!-- instruments set 1 -->
 	<effect>
-		<inherits-from>Effects/instruments-1-lights</inherits-from>
-		<object-name>5.Cockpit Panel Main Instruments VSI</object-name>
+		<inherits-from>Effects/instruments-1-lights2</inherits-from>
 		<object-name>5.Cockpit Panel Main Instruments Airspeed</object-name>
-		<object-name>5.Cockpit Panel Main Instruments AI</object-name>
+		<object-name>5.Cockpit Panel Main Instruments VSI</object-name>
+		<object-name>5.Cockpit Panel Main Instruments CSI</object-name>
 		<object-name>5.Cockpit Panel Main Instruments Altimeter</object-name>
 		<object-name>5.Cockpit Panel Main Instruments Rotor</object-name>
 		<object-name>5.Cockpit Panel Main Instruments Torque</object-name>
-		<object-name>5.Cockpit Panel Main Instruments HSI Left</object-name>
 		<object-name>5.Cockpit Panel Main Instruments RadioAlt</object-name>
-		<object-name>5.Cockpit Panel Main Instruments RPM</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngRPM</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngITT</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngFuelPsi</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngOIL</object-name>
+		<object-name>5.Cockpit Panel Main Instruments FUELQTY</object-name>
 		<object-name>5.Cockpit Panel Main Instruments AmpMeter</object-name>
 		<object-name>5.Cockpit Panel Main Instruments Volt1</object-name>
 		<object-name>5.Cockpit Panel Main Instruments Volt2</object-name>
+		<object-name>5.Cockpit Panel Main Instruments GearBox</object-name>
+		<object-name>5.Cockpit Panel Main Instruments XMSN</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AI</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AIST</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Left</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HYDR1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HYDR2</object-name>
 	</effect>
 
+	<!--
+	<effect>
+		<inherits-from>Effects/instruments-1-lights2</inherits-from>
+		<object-name>5.Cockpit Panel Main Instruments AI</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Left</object-name>
+	</effect>
+	-->
 	<!-- needles -->
 	<animation>
 		<type>material</type>
@@ -190,7 +207,7 @@
             <red>0.8</red>
             <green>0.9</green>
             <blue>0.7</blue>
-			<factor-prop>/bell412/power/buses</factor-prop>	<!-- TODO 16/06/16 14:45 : dim factor instead of baterry buses state -->
+			<factor-prop>/bell412/power/output/consoles/pilotlt</factor-prop>
         </emission>
 	</animation>
 
@@ -200,10 +217,21 @@
 		<object-name>5.Cockpit Panel Main Board</object-name>
 		<object-name>5.Cockpit Panel Main Central</object-name>
 	</effect>
-	<!-- pedestal, OH Panel -->
+	<!-- pedestal -->
 	<effect>
 		<inherits-from>Effects/pedestal-lights</inherits-from>
 		<object-name>5.Cockpit Panel Pedestal</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_com1</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_com2</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_nav1</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_nav2</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_adf</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_xpdr</object-name>
+	</effect>
+	<!-- OH Panel -->
+	<effect>
+		<inherits-from>Effects/paneloh-lights</inherits-from>
 		<object-name>5.Cockpit Panel OH</object-name>
+		<object-name>5.Cockpit Panel OH Fuse</object-name>
 	</effect>
 </PropertyList>

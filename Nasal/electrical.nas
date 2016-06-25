@@ -106,7 +106,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 	#init_switches();	# TODO + user prefs saved
 	setprop("/sim/sound/electrical", 0.0);
 	# dimmer default
-	setprop("/controls/lighting/switches/conslt", 1.0);
+	setprop("/controls/lighting/switches/conslt", 0.5);
 	setprop("/controls/lighting/switches/pilotlt",1.0);
 	setprop("/controls/lighting/switches/pedestallt",1.0);
 	settimer(update_power,5);
