@@ -1,2 +1,2 @@
 #!/bin/sh
-rsync -HAXauvp --exclude '*.sw*' --exclude '~*' --exclude '.svn*' --exclude '.project' --delete . /home/valery/workspace/Bell-412
+rsync -HAXauvp --exclude '*sw*' --exclude '~*' --exclude '.svn*' --exclude '.project' --delete . /home/valery/workspace/Bell-412
