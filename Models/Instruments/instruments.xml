@@ -24,6 +24,7 @@
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/vdcmeter2.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/radioalt.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/ai_turn.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/ai_roll.xml</path></model>
 
 	<!-- 
 	==============================================================================
@@ -180,6 +181,7 @@
         <object-name>5.Cockpit Panel Main Instruments Volt2 Needle DC</object-name>
         <object-name>5.Cockpit Panel Main Instruments RadioAlt Needle</object-name>
         <object-name>5.Cockpit Panel Main Instruments AI turn</object-name>
+        <object-name>5.Cockpit Panel Main Instruments AI roll</object-name>
         <ambient>
             <red>0.8</red>
             <green>0.8</green>
