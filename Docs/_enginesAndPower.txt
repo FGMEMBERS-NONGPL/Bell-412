@@ -48,3 +48,14 @@ single phase 115 Volt 400 Hertz AC power, which is then supplied to part of
 the AC ESS BUS. When the aircraft speed is above 50 knots, the inverter is
 automatically activated, if nothing but the batteries are supplying electrical
 power to the aircraft, regardless of the BAT 1 and BAT 2 P/b positions.
+
+* Governor
+http://www.danubewings.com/governor-correlator/
+
+* Power - Torque
+calculator: https://mdmetric.com/tech/powercalc.htm
+
+Torque (lb.in) = 63,025 x Power (HP) / Speed (RPM)
+Power (HP) = Torque (lb.in) x Speed (RPM) / 63,025
+Torque (N.m) = 9.5488 x Power (kW) / Speed (RPM)
+Power (kW) = Torque (N.m) x Speed (RPM) / 9.5488 

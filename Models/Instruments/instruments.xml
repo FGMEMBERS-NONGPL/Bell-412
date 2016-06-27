@@ -22,6 +22,8 @@
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/vacmeter2.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/vdcmeter1.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/vdcmeter2.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/radioalt.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/ai_turn.xml</path></model>
 
 	<!-- 
 	==============================================================================
@@ -121,23 +123,6 @@
 		</center>
 	</animation>
 
-	<animation>
-		<type>rotate</type>
-		<object-name>5.Cockpit Panel Main Instruments RadioAlt Needle</object-name>
-		<property>instrumentation/altimeter/indicated-altitude-ft</property>
-		<factor>0.036</factor>
-		<axis>
-			<x> -1 </x>
-			<y>  0 </y>
-			<z>  0 </z>
-		</axis>
-		<center>
-			<x-m>  2.78931 </x-m>
-			<y-m>  0.55550 </y-m>
-			<z-m>  0.23317 </z-m>
-		</center>
-	</animation>
-	
 	<!-- 
 	==============================================================================
 	Lighting
@@ -193,6 +178,8 @@
         <object-name>5.Cockpit Panel Main Instruments Volt2 Needle AC</object-name>
         <object-name>5.Cockpit Panel Main Instruments Volt1 Needle DC</object-name>
         <object-name>5.Cockpit Panel Main Instruments Volt2 Needle DC</object-name>
+        <object-name>5.Cockpit Panel Main Instruments RadioAlt Needle</object-name>
+        <object-name>5.Cockpit Panel Main Instruments AI turn</object-name>
         <ambient>
             <red>0.8</red>
             <green>0.8</green>

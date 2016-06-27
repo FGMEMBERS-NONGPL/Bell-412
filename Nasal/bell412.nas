@@ -388,12 +388,8 @@ dynamic_view.register(func {
 
 # main() ============================================================
 var delta_time = props.globals.getNode("/sim/time/delta-realtime-sec", 1);
-var adf_rotation = props.globals.getNode("/instrumentation/adf/rotation-deg", 1);
-var hi_heading = props.globals.getNode("/instrumentation/heading-indicator/indicated-heading-deg", 1);
 
 var main_loop = func {
-	# adf_rotation.setDoubleValue(hi_heading.getValue());
-
 	var dt = delta_time.getValue();
 	update_torque(dt);
 	update_stall(dt);

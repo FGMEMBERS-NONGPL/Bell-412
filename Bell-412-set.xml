@@ -210,6 +210,11 @@
 				</engine>
 			</engines>
 		</mechanics>
+		<instruments>
+			<indicators>
+				<radioalt type="float">0</radioalt>
+			</indicators>
+		</instruments>
 	</bell412>
 
 	<instrumentation>

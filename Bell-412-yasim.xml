@@ -52,6 +52,23 @@
 	Bell 212 UH-1N                                             NACA 0010.8                              NACA 0005.4 mod
 	Bell 212 UH-1Y                                             Narramore                                Narramore
 	Bell 412                                                   Boeing VR-7                              Wortmann FX 71-H-080
+
+	Boeing VR-7: http://airfoiltools.com/airfoil/details?airfoil=vr7-il
+
+	CG
+	Longitudinal center of gravity limits vary from station 130 to 144, depending on grossweight. Refer to Gross weight center ofgravity charts (figure 1-1
+	POWER RATINGS 
+	:(Pratt & Whitney PT6T-3D Twin Pac)Uninstalled Thermodynamic Capability, TotalTakeoff , kW1342
+	Max Continuous Power, kW 1342
+	OEI SHP [2-1/2minutes]850
+	OEI SHP [Continuous]-standard(optionalPT6T-3DF engine w/30 min. OEI pwr.)  723(795)
+	TRANSMISSION RATINGS: 
+	Takeoff , kW (5-minute)(@ Mast) 1022
+	Max Continuous Power, kW(@ Mast) 828
+	Single Engine, kW850 
+	Fuel: 
+	Type Aviation Turbine
+	Capacity (Usable)1251 liters
 -->
 
 <!-- FDM by Maik Justus, Emmanuel Baranger and HHS (Heiko Schulz)
