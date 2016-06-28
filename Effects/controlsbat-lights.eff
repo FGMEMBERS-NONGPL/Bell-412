@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PropertyList>
-	<name>paneloh-lights</name>
+	<name>controls-lights</name>
 	<inherits-from>/Effects/model-combined-deferred</inherits-from>
 	<parameters>
 		<lightmap-enabled type="int">1</lightmap-enabled>
 		<texture n="3">
-			<image>../Models/Instruments/5.Cockpit Panel OH-lights.png</image>
+			<image>../Models/Controls/instruments-needles-lights.png</image>
 		</texture>
 		<lightmap-factor type="float" n="0">
-			<use>/bell412/power/output/consoles/pilotlt</use>
+			<!-- <use>/bell412/power/output/consoles/state</use> -->
+			<use>/bell412/power/buses</use>
 		</lightmap-factor>
 		<lightmap-color type="vec3d" n="0"> 1.0 1.0 1.0 </lightmap-color>
 		<!-- alpha channel -->

@@ -2,14 +2,19 @@
 
 <PropertyList>
 	<path>controls.ac</path>
+	
 	<!-- Button/Knob Lighting -->
 	<effect>
-		<inherits-from>Effects/controls-lights</inherits-from>
+		<inherits-from>Effects/controlsbat-lights</inherits-from>
 		<object-name>5.Cockpit Panel Main Control Bat1</object-name>
 		<object-name>5.Cockpit Panel Main Control Bat2</object-name>
+	</effect>
+	<effect>
+		<inherits-from>Effects/controls-lights</inherits-from>
 		<object-name>5.Cockpit Panel OH Control Light PilotInstr</object-name>
 		<object-name>5.Cockpit Panel OH Control Light Console</object-name>
 	</effect>
+
 	<!-- Beacon -->	
 	<animation>
 		<type>rotate</type>

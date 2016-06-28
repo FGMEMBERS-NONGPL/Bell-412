@@ -49,5 +49,33 @@
 		<path>Aircraft/Bell-412/Models/Controls/controls.xml</path>
 	</model>
 
+	<!-- cabin ambient lights with console light -->
+	<animation>
+		<type>material</type>
+        <object-name>6.Cabin Roof</object-name>
+        <object-name>6.Cabin Framework Front Middle</object-name>
+        <object-name>2.Door Front Left Inner</object-name>
+        <object-name>2.Door Front Right Inner</object-name>
+        <object-name>5.Cockpit Pedestal Board</object-name>
+        <object-name>5.Cockpit OH Board</object-name>
+        <object-name>5.Cockpit Seats Front</object-name>
+        <ambient>
+            <red>0.8</red>
+            <green>0.8</green>
+            <blue>0.8</blue>
+        </ambient>
+        <diffuse>
+            <red>0.8</red>
+            <green>0.8</green>
+            <blue>0.8</blue>
+        </diffuse>
+        <emission>
+            <red>0.08</red>
+            <green>0.10</green>
+            <blue>0.09</blue>
+			<factor-prop>/bell412/power/output/consoles/conslt</factor-prop>
+        </emission>
+	</animation>
+
 </PropertyList>
 

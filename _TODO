@@ -42,13 +42,13 @@ Current:
 	X	need to be fixed
 	X hsi (heading)
 	X	more accurate texture
-	>	rotating part
-	>	red indicators
+	>	red switche indicators
 	X attitude indicator
 	X	needles
 	X	more accurate texture
 	X	more accurate ball position
-	> agl radio altimeter -- see 707 mk-agl.nas + agl instr.
+	X	roll + turn indicators
+	X agl radio altimeter 
 	- compass OH
 	> alt
 	-	knob 
@@ -57,8 +57,8 @@ Current:
 	- rpm
 	- battery
 	X 	ampmeter		16/06/16
-	< 	volt dc meter
-	< 	volt ac meter
+	X 	volt dc meter
+	X 	volt ac meter
 	- fuel
 	- oil
 	- AP
