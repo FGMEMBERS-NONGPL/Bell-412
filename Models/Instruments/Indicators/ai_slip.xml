@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>ai_slip.ac</path>
+	<offsets>
+		<x-m>-2.83169</x-m>
+		<y-m>0.44045</y-m>
+		<z-m>0.46673</z-m>
+		<pitch-deg>-8.39</pitch-deg>
+	</offsets>
+    <animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Main Instruments AI slip</object-name>
+		<property>/orientation/side-slip-deg</property>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+  		<interpolation>
+            <entry><ind>-999</ind><dep>-12</dep></entry>
+            <entry><ind>-10.0</ind><dep>-10</dep></entry>
+            <entry><ind>-2</ind><dep>-5</dep></entry>
+            <entry><ind>0</ind><dep>0</dep></entry>
+            <entry><ind>2</ind><dep>5</dep></entry>
+            <entry><ind>10</ind><dep>10</dep></entry>
+            <entry><ind>999</ind><dep>12</dep></entry>
+		</interpolation>
+    </animation>
+</PropertyList>
+
