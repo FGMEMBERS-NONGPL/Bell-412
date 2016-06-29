@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- FDM from Valery Seys - Paris /\ *** valery@vslash.com  
+<!-- FDM *** valery@vslash.com  
 	refs.: 
 		Bell 412 Systems 6.0 ROTOR SYSTEMS REVIEW - Alma Ramirez
 		412EPI_ProductSpec201302-Web - Bell/Textron Lab.
 		Principles of Helicopter Aerodynamics - MIT Press - J. Gordon Leishman
+		Bell/Textron: 412-FM-4_Rev_27 (rev. from the Bell412 Flight Manual)
 
-	TODO: see ec135 for thruster and hitch
+	TODO: thruster and hitch
 
 	Propulsion	1 Turboshaft Engine
 	Engine Model	Pratt & Whitney Canada PT6T-3D Twin-Pac
@@ -71,7 +72,7 @@
 	Capacity (Usable)1251 liters
 -->
 
-<!-- FDM by Maik Justus, Emmanuel Baranger and HHS (Heiko Schulz)
+<!-- from an FDM by Maik Justus, Emmanuel Baranger and HHS (Heiko Schulz)
 
     FDM based on information given in NASA-CR-3144; TR-1087-1
     and NASA-CR-3145

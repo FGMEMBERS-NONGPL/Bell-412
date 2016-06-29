@@ -40,14 +40,16 @@ Current:
 	>	accurracy
 	X vsi
 	X	need to be fixed
-	X hsi (heading)
-	X	more accurate texture
-	>	red switche indicators
+	> hsi (heading)
+	x	more accurate texture
+	>	nav course/heading set + indicators
 	X attitude indicator
-	X	needles
+	X	ball
+	X	'static' needles
 	X	more accurate texture
 	X	more accurate ball position
 	X	roll + turn indicators
+	X 	slip indicators
 	X agl radio altimeter 
 	- compass OH
 	> alt
@@ -66,6 +68,7 @@ Current:
 	- radio nav
 	- acfs
 	- autopilot
+	- flight director
 
 * Controls
 	- quickstart

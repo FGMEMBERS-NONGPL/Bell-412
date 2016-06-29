@@ -1,0 +1,57 @@
+ Since certification in 1983, Honeywell's Digital Automatic Flight Control Systems (DAFCS) for helicopters have become the standard against which all other systems are judged. The number of variations installed in over a thousand Bell, Eurocopter, Sikorsky, and Mil/Kazan helicopters is evidence of this.
+
+In addition to their four-axis capability, these systems also introduced built-in-test (BIT) and self-diagnostics never before seen in a helicopter AFCS. But what do you do when the system can't tell you what's wrong? Having some basic knowledge about these sophisticated systems and some idea of what to ask the flight crew, or yourself when problems arise can save many hours of troubleshooting and thousands of dollars wasted on replacing the wrong component.
+
+The SPZ ("Spee-zee") Series
+
+Prior to Honeywell acquiring Sperry in 1986, the SPZ-7000 was the first Sperry system to provide full four-axis flight control for helicopters, i.e. pitch, roll, yaw, and collective. The dual system is found on many versions of the Sikorsky S-76 as well as the Eurocopter 365N and N2, while a simplex version is found on the Bell 222U and 230. A three-axis (pitch, roll, and yaw) version, dubbed SPZ-7100, was developed for the BK-117. In 1991, the SPZ-7600 was introduced which improved on the SPZ-7000 and added optional search and rescue (SAR) modes including Mark-On-Target approach to hover. The SAR option was first certified on the S-76 and was followed by the Bell 412 in 1992. An anti-submarine warfare (ASW) version can be found on some Bell 412s.
+
+While all of the previously mentioned systems provide fully coupled automatic flight control, approved for single pilot IFR (SPIFR), there are uncoupled, "flight director only" versions installed in the Sikorsky S-70 and the Mi-17KF. As stated earlier, self-diagnostics are incorporated in these systems to help identify and isolate the causes of malfunctions. Three types of BIT detect specific faults at system power-up (power-up test), after power-up (continuous test and monitoring) and preflight test. Errors detected by these routines are displayed on the instrument panel and should be noted by the flight crew. Power-up and continuous tests check basic system integrity and operate independent of pilot action. Prior to takeoff, the pilot uses the preflight test to verify proper operation of peripheral sensors and controls.
+
+Though error codes can be extremely helpful when troubleshooting system problems, there are still plenty of times when a code simply isn't displayed, usually because one doesn't exist that correlates to what the pilot reported. Sometimes, even with error codes the troubleshooting can still be confusing. When this is the case, communication between the maintenance staff and the flight crew becomes critical if the problem is to be solved. As is usually the case, the mechanic isn't present when the problem occurs. So when there's no error code, flag, annunciator, or other direct evidence of what's wrong you'll have to ask the pilot the right questions to efficiently troubleshoot and resolve the issue. Here are just a few examples.
+
+Is it an autopilot problem or a flight director problem?
+
+Many mechanics and pilots don't understand the difference between an autopilot (AP) and a flight director (FD). Frequently the entire system is referred to as the "autopilot" even though, in classical terms, autopilots and flight directors have totally different roles. Knowing the simple difference between the autopilot and flight director will help you focus your attention in the right area first.
+
+The autopilot provides or enhances helicopter stability through its two basic modes: ATT (attitude retention) and SAS (stability augmentation system). With the exception of an "autopilot heading hold" feature in the SPZ systems, the autopilot knows nothing about holding such things as altitude, airspeed, or course.
+
+On the other hand, the flight director is essentially clueless about stabilizing the aircraft, but does know how to compute pitch and roll attitude corrections to keep the aircraft on the desired lateral and/or vertical path when navigating between points A and B. These corrections from the FD, called "computed steering commands," are displayed by command bars (cues) on the Attitude Director Indicator (ADI) to "direct" the human pilot to fly the aircraft up, down, left, right, or some combination thereof.
+
+Compared to the AP's two basic modes, flight directors have a number of modes such as HDG (heading select), ALT (altitude hold), ALTPRE (altitude preselect), IAS (indicated airspeed hold), NAV (navigation) and many more for use during en route, approach, SAR, or hovering.
+
+What were you "coupled" to?
+
+Many years ago autopilots and flight directors had no interaction, however, today they do, which simplifies the flying task tremendously. This is accomplished by taking the steering commands from the flight director and inputting them to both the ADI and the autopilot, which is called "coupling." On the SPZ systems coupling (which is only possible during AP ATT mode) is indicated by a CPL "ON" annunciation on the AP controller. If desired, the pilot can "uncouple" the FD commands from the AP and manually steer according to the command bars, while the AP returns to maintaining pitch and roll attitude. Uncoupling the FD commands from the AP is sometimes useful to compare the basic performance of the autopilot to the behavior of the command bars. For example, if the aircraft is stable and the command bars are wandering, the basic AP is most likely OK but something isn't right with one or more parts of the FD system, such as sensors or wiring.
+
+If the flight crew squawks problems with one or more FD modes, you'll need to know which ones were being used to isolate the possible causes. For example, if the pilot writes up "porpoising when coupled to ALT" you would investigate the pitot-static and air data systems and other potential contributors to porpoising, but before you start tearing things apart you might have to ask the next question.
+
+Did you try the other FD?
+
+This is the first question that should be asked when a pilot reports FD mode problems in a helicopter that has a dual SPZ system, which has two full-time autopilots and two flight directors, FD1 and FD2. While modes can be selected on both FDs, only the "active" flight director, as annunciated on the FD1/2 or FDSEL button, can be coupled to both autopilots at one time.
+
+Dual systems have a great advantage of dual AP servos and, in most cases, fully dual sensors (gyros/AHRS, air data, radios, etc.) which facilitate "box swapping." For example, if a problem is reported while coupled to a specific mode (or modes) using FD2, the first thing you want to know is how the mode behaves using FD1. If FD1 operation is satisfactory you would then swap the appropriate sensors for that mode from side to side. If the problem follows a suspected sensor from FD2 over to FD1, it's a no-brainer, replace the sensor. Don't forget, the problem might be in FD2 itself, so you may need to swap the flight control computers (each which contains an AP and a FD). If the problem doesn't follow a box you'll need to look elsewhere, usually in the wiring.
+
+In some installations a single sensor, such as an encoding altimeter, is wired to both computers. Be careful! This has several possibilities. If the mode performance is equally bad on both sides, your first inclination would be to suspect the single sensor that supports the mode, and rightfully so. However, if the wiring from that sensor is routed to a splice block, which then divides and routes the signals to each computer, you could be dealing with wiring problems between the sensor and the block or the block itself. If the mode performance is bad on only one side, and the sensor has only one set of outputs, don't blame the sensor. The problem may be in the splice blocks, the wiring from the blocks to the computer, or the computer itself.
+
+Were you in ATT or SAS?
+
+Up to now we've looked at flight director issues when coupled to the autopilots, but what about when the flight director isn't being used? If you're not using the FD, you're down to the two basic modes of autopilot operation, ATT and SAS. In addition to knowing the difference between autopilots and flight directors, you need to know the difference between these two modes.
+
+The ATT mode maintains the pitch and roll attitude of the helicopter, always returning the aircraft to the pilot-set attitude after a disturbance. It is typically used for "hands-off" flight and coupling to the flight director. The mode relies primarily on one sensor, the vertical gyro or AHRS (attitude/heading reference system), to provide real-time pitch and roll attitude. Regardless of gyro or AHRS, the attitude source is the most important sensor in any automatic flight control system.
+
+The SAS mode is basically a rate damper in the pitch and roll axes and is used when the pilot prefers to be flying the aircraft "hands-on," which may be during takeoff and landing or where a lot of maneuvering is needed. Stability augmentation systems, in general, make the aircraft easier to fly by controlling pitch and roll attitude rates while in turbulence and by controlling the pitch and roll rate response to the pilot's input on the cyclic stick. Again, the attitude source is the primary sensor which the autopilot uses to control the aircraft rate response. However, to enhance the aircraft's handling qualities (or lack thereof) position sensors are installed to detect pitch and roll stick inputs. The SAS mode uses the stick inputs to provide the desired aircraft response. One of the big differences between SAS and ATT is that ATT almost never uses stick position.
+
+Now that you know the difference, so what?
+
+Well, at some time, you may hear a pilot comment that the helicopter doesn't "feel" right. Vague? You bet. So you ask for more details and find out that it's only during takeoff and landing and that the SAS mode was being used. Now you ask, "How does the ATT mode perform?" The pilot says "no problem, just fine."
+
+Since the SAS and ATT modes use the same attitude source, it should make sense that if the source was faulty, both modes would be affected. However, since only the SAS mode was squawked, it's not the attitude source, it's somewhere in the stick position sensor or signal. Now you just need to know whether the problem was in the No. 1 or No. 2 autopilot and whether it was in the pitch axis or roll axis, which can be learned by flying with only one AP engaged. If you're lucky, the pilot already did this.
+
+Once you get the symptoms isolated to one mode, one autopilot, one axis, and one sensor you should be able to find and fix the problem.
+
+Other questions
+
+Depending on the symptoms, there are dozens of other questions that might have to be asked. Were any flags in view? What did the actuator position indicator show? Can you reproduce the symptom consistently? What was your airspeed and altitude? Is the problem associated with any other system?
+
+Coming up with the right questions isn't always easy, but the more you know about any system, and how to properly use it, the easier it will be and the more natural it will become. AMT

@@ -16,6 +16,7 @@ Softwares use:
 	- Yed 3.14 Graph editor - YWorks Gmbh 2016
 	- Vim editor
 	- Eclipse IDE.
+	- sourceforge.net
 
 Sounds Sources:
 Air conditionning 	: https://www.youtube.com/watch?v=meE8z_19J6M
@@ -23,15 +24,14 @@ Battery/Engine		: https://www.youtube.com/watch?v=zl51qoP4ZOQ
 Engine outside		: https://www.youtube.com/watch?v=kGqUIGQqQss
 
 Licensing:
-This software is not free. All rights reserved to Valéry Seys / Paris.
+The final license of this software is in progress.
+At its current state, this software is not free. 
+All rights reserved to Valéry S / Paris.
 You cannot fork, redistribute, duplicate or sell any of the contents of this
 software without the permission of the author.
 This software is intended for the Flightgear 2016 flight simulator software playing 
-at home and for a personnal and private use only.
+at home and for a personnal and private use only. No commercial use allowed.
 
-Acknowledgment:
-With the help of thejabberwocky.net (aka FGMEMBERS) community members that support 
-and encourage me all along the development of this aircraft.
 
 *********************************************************************************
 						HOW TO START THE BELL
@@ -43,20 +43,20 @@ Version: 22/06/16
 - press '}' key and wait 1 minutes until rotor is at 90%
 - you can fly.
 ---------------------------------------------------------------------------------
-						     FLYING
+						     FLYING TIPS
 ---------------------------------------------------------------------------------
 - Torque effect.
   The Bell rotor rotate counterclockwise (American style), so the torque effect
   if clockwise. At startup, you must compensate the torque by pushing
   the rudder on the right at ~20%. When flying, you smoothly push the rudder on
-  the left (from -20 to 0%), and arround 100Knots, at 20% on the left, this way
-  you flight straight forward. Decrease the speed, smoothly push your rudder on 
-  the right, and so on.
-- Take off.
+  the left (from -20 to 0%). See your attitude slip indicator during the trip
+  and rule your rudder accordingly.
+  - Take off.
   Increase your collectiv slowly, see the behaviour of your aircraft, correct
-  torque with your rudder. When you take off, try to keep an AOA of 8/10°,
+  torque with your rudders. When you take off, try to keep an AOA of 8/10°,
   correct roll and pitch. Climb at 100 feet, AOA at 0° or less, more speed
-  needs more collectiv to balance vspeed. 
+  needs more collectiv to balance vspeed. There's no AFCS right now.
+  Governor is not completed.
 - Speed and pitch.
   Increasing or decreasing speed has effect on the vertical speed. Every time
   you change your AOA in order to increase or decrease your speed, you must act 
@@ -74,15 +74,3 @@ Version: 22/06/16
 *********************************************************************************
 
 	
-FAQ.:
-q: the sounds are very loud, why ?
-a: sounds level are designed from the actual Bell cockpit.
-   tips: find and put your headphone on your head.
-q: how many time do you spend for this model ?
-a: 2 months full time
-q: how many meshe objects are needed to modelize the aircraft ?
-a: arround 300
-q: what was the most difficult to do ?
-a: naming and managing all pieces of data/objects/lights/... making a framework that works
-   and not too difficult to maintain.
-
