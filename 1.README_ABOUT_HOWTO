@@ -4,10 +4,16 @@
 	    Flightgear Flight Simulator
 ***********************************************
 
-Author			: Valéry Seys
+Author			: Valéry Seys / valery@vslash.com
 Release Date	: 2016
 
+This code is available at:
+https://sourceforge.net/projects/bell-412/
+
+** If you find this code elsewhere, be sure to get the last version **
+
 Softwares use:
+	- Flightgear 2016.1
 	- Blender 2.76
 		- YASim XML Importer by Cem Aydin
 		- AC3D Import/Export by Chris Marr
@@ -18,17 +24,16 @@ Softwares use:
 	- Eclipse IDE.
 	- sourceforge.net
 
+Codes: all codes is written from scratch with the help of the Flightgear
+wiki and doc. but for the FDM which was originally written by:
+Maik Justus, Emmanuel Baranger and HHS (Heiko Schulz)
+	
 Sounds Sources:
 Air conditionning 	: https://www.youtube.com/watch?v=meE8z_19J6M
 Battery/Engine		: https://www.youtube.com/watch?v=zl51qoP4ZOQ
 Engine outside		: https://www.youtube.com/watch?v=kGqUIGQqQss
 
-Licensing:
-The final license of this software is in progress.
-At its current state, this software is not free. 
-All rights reserved to Valéry S / Paris.
-You cannot fork, redistribute, duplicate or sell any of the contents of this
-software without the permission of the author.
+Licensing: CC-BY-NC-SA (see COPYRIGHT file)
 This software is intended for the Flightgear 2016 flight simulator software playing 
 at home and for a personnal and private use only. No commercial use allowed.
 
