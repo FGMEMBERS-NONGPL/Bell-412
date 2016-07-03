@@ -28,6 +28,40 @@
 		<object-name>3.Glasses Front</object-name>
 	</effect>
 
+	<!-- Shaders -->
+	<effect>
+		<inherits-from>Effects/Bell-412-Fuselage-combShaders</inherits-from>
+                <object-name>1.Fuselage</object-name>
+                <object-name>2.Door Back Left Outer</object-name>
+                <object-name>2.Door Back Right Outer</object-name>
+                <object-name>2.Door Front Left Outer</object-name>
+                <object-name>2.Door Front Right Outer</object-name>
+                <object-name>2.Door Middle Left Outer</object-name>
+                <object-name>2.Door Middle Right Outer</object-name>
+                <object-name>2.Door Nose Outer</object-name>
+                <object-name>3.Glasses Frame Front Bottom</object-name>
+	</effect>
+	<effect>
+		<inherits-from>Effects/Bell-412-FuselageQueue-combShaders</inherits-from>
+                <object-name>1.Fuselage Air Entry Left</object-name>
+                <object-name>1.Fuselage Air Entry Right</object-name>
+                <object-name>1.Fuselage Engine Top</object-name>
+                <object-name>1.Fuselage Tail</object-name>
+                <object-name>1.Fuselage Tail Aileron</object-name>
+                <object-name>1.Fuselage Turbine Exit</object-name>
+                <object-name>2.Door Tail Outer</object-name>
+	</effect>
+	<effect>
+		<inherits-from>Effects/Bell-412-Cabin-floor-bumpspecs</inherits-from>
+                <object-name>5.Cockpit Control Cyclic Left Bottom</object-name>
+                <object-name>5.Cockpit Control Cyclic Right Bottom</object-name>
+                <object-name>6.Cabin Floor and Front</object-name>
+	</effect>
+	<effect>
+		<inherits-from>Effects/Bell-412-Cabin-roof-bumpspecs</inherits-from>
+                <object-name>6.Cabin Roof</object-name>
+	</effect>
+
 	<!-- Immatriculation -->
 	<model>
 		<path>Aircraft/Bell-412/Models/Immat/immat.xml</path>
