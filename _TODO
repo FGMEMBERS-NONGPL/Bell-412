@@ -110,7 +110,7 @@ Current:
 	X 	outside
 	- ALS cabin/cockpit shadows
 	- fuselage external shadows
-	- normal maps
+	X normal maps                          -- 03/07/16 Done, IAHM-COL
 	> glass effect
 	X	rembrandt/als
 	-	reflexion
