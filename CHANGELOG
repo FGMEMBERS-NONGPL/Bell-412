@@ -1,0 +1,86 @@
+29/06/16 -- v0.1 (R30)
+- initial release
+
+--------------------------------------------------------------------------------
+16/11/16 -- v0.2 (R32)
+* COMPAT: 
+- test with FG2016.3.1 ( ALS/Rembrandt) : OK
+- ALS/Rembrandt lightning OK	
+
+* FDM: ballast/weight/rotor change, CoG is near to be the real one. Flying AOA at 0°
+  aircraft is more stable at 0Kt (stationary) ; notice that collectiv behaviour has changed too.
+
+* MODEL:
+- airspeed indicator (needle) rotate well now and is well calibrated.
+  (NOTE: here the yellow part range is from 0-20 kt while it is 0-30 kt for the real Bell ;
+   we keep this fake range in order to be more accurate at low speed
+   - in the reality, the 0-30 kt range is not accurate at all, ... so we don't care)
+- main pilot instruments with 'console-spot' lightning is pretty done now.
+- engine panel texture update (labels/tags)
+- engine instruments needles done at 90%
+- engine instruments updated (E1/E2 id., xml)
+- copilot meshes instruments (still not operational)
+- annunciators/caution lights: (Models/Instruments/Cautions/cautions.xml)
+  - mains
+  - Engines/Master/CYCCTR
+  - logic: all done (except for fire caution which needs a featured nasal)
+- better texture management (remove some dupli overload)
+- all glasses done.
+
+* CONTROLS
+- inverters (OH)
+- brake (OH)
+- fuel: E1/E2: trans/pump/valve - xfeed/intcon (pedestal)
+- hydraulics, governors (pedestal) 
+- engine starters 1,2 (collectiv)
+- altimeter knob(ingh) (console)
+- cautions: testLight, alarmReset (console)
+
+* ANIMATION
+- Collectiv / Cyclic
+- Rudders
+- Front doors (with a 'door chime' caution !)
+
+* INSTRUMENTS
+- engine: fuel PSI (simulated)
+- engine: rotor n1,n2,nr and logic (modelized)
+- engine: itt,oil and logic (simulated)
+- engine: mast torque (modelized)
+
+* SOUNDS
+- alarm
+- doors chime
+- better sound engine (using new FG2016.3.1 features)
+
+* NASAL/ENGINE MODEL
+- bell412.nas completly rewrited from scratch
+- electrical system redesigned (event driven, all user triggered, Nasal timer() thread removed)
+- engine system re-designed
+- warning system monitoring
+
+--------------------------------------------------------------------------------
+21/11/16 -- v0.3 (R33)
+* FDM
+- blade Chord optimized to get more stability
+
+* MODEL
+- rgba texture removed when not used (far better fps rendering)
+- Liveries support with some
+- some meshes optimized (limited dissolve)
+- Attitude Indicator + Horizon Indicator: better lighting and textures
+- Collectiv lighting
+- Switches lighting
+
+* INSTRUMENTS
+- radioalt DH Knob (desired height) + 'Off' indicator + intelligent alarm
+- RPM out of range caution indicator
+- OVER TORQUE caution indicator
+
+* ANIMATION
+- engine shake animation on ground + option menu to deactivate (don't work well with rembrandt, don't know why)
+
+* SOUNDS
+- better sync with engine shutdown
+
+* MISC
+- splash screen updated

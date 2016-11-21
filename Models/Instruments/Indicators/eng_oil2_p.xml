@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>eng_oil2_p.ac</path>
+	<offsets>
+		<x-m>-2.80774</x-m>
+		<y-m>0.15783</y-m>
+		<z-m>0.33873</z-m>
+		<pitch-deg>-8.39</pitch-deg>
+	</offsets>
+    <animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Main Instruments EngOIL2 Needle P</object-name>
+		<property>/bell412/mechanics/engines/engine[1]/oilpress</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+  		<interpolation>
+            <entry><ind>-999</ind><dep>38</dep></entry>
+            <entry><ind>0</ind><dep>38</dep></entry>
+            <entry><ind>40</ind><dep>94</dep></entry>
+            <entry><ind>60</ind><dep>122</dep></entry>
+            <entry><ind>80</ind><dep>154</dep></entry>
+            <entry><ind>100</ind><dep>182</dep></entry>
+            <entry><ind>999</ind><dep>182</dep></entry>
+        </interpolation>
+    </animation>
+</PropertyList>
+

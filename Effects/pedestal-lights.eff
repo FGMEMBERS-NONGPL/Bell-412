@@ -8,7 +8,7 @@
 			<image>../Models/Instruments/5.Cockpit Panel Pedestal-lights.png</image>
 		</texture>
 		<lightmap-factor type="float" n="0">
-			<use>/bell412/power/output/consoles/pedestallt</use>
+			<use>/bell412/power/output/consoles/pedlt</use>
 		</lightmap-factor>
 		<lightmap-color type="vec3d" n="0"> 1.0 1.0 1.0 </lightmap-color>
 		<!-- alpha channel -->

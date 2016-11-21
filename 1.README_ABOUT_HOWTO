@@ -1,19 +1,17 @@
-***********************************************
-                BELL 412 
-                   for 
-	    Flightgear Flight Simulator
-***********************************************
+*********************************************************************************
+									BELL-412 
+									   for 
+							Flightgear Flight Simulator
+*********************************************************************************
 
 Author			: Valéry Seys / valery@vslash.com
 Release Date	: 2016
 
-This code is available at:
-https://sourceforge.net/projects/bell-412/
-
-** If you find this code elsewhere, be sure to get the last version **
+	This code is available at:
+	https://sourceforge.net/projects/bell-412/
 
 Softwares use:
-	- Flightgear 2016.1
+	- Flightgear
 	- Blender 2.76
 		- YASim XML Importer by Cem Aydin
 		- AC3D Import/Export by Chris Marr
@@ -25,13 +23,15 @@ Softwares use:
 	- sourceforge.net
 
 Codes: all codes is written from scratch with the help of the Flightgear
-wiki and doc. but for the FDM which was originally written by:
-Maik Justus, Emmanuel Baranger and HHS (Heiko Schulz)
-	
+wiki and doc.
+
 Sounds Sources:
-Air conditionning 	: https://www.youtube.com/watch?v=meE8z_19J6M
-Battery/Engine		: https://www.youtube.com/watch?v=zl51qoP4ZOQ
-Engine outside		: https://www.youtube.com/watch?v=kGqUIGQqQss
+Air conditionning 		: https://www.youtube.com/watch?v=meE8z_19J6M
+Battery/Engine			: https://www.youtube.com/watch?v=zl51qoP4ZOQ
+Engine outside			: https://www.youtube.com/watch?v=kGqUIGQqQss
+Alarm sound:			: freesound.org/kwahmah_02
+Door Chime				: freesound.org/metrostock99
+Engine Starter Grind	: freesound.org/lonemonk
 
 Licensing: CC-BY-NC-SA (see COPYRIGHT file)
 This software is intended for the Flightgear 2016 flight simulator software playing 
@@ -41,41 +41,96 @@ at home and for a personnal and private use only. No commercial use allowed.
 *********************************************************************************
 						HOW TO START THE BELL
 ---------------------------------------------------------------------------------
-Version: 22/06/16
-- OH Panel: activate bus1 and bus2 (both needed for engines powered)
-- Console: 	press BAT1 on main console (front of pilot, below airspeed)
+- OH Panel: activate BUS1, BUS2, INV1, INV2, BEACON LIGHT.
+- OH: Brake Off (0%)
+- Doors closed.
+- Console: 	press BAT on main console to get console light(front of pilot, below airspeed)
 - OH Panel: you can adjust instruments light with the pilot knob.
-- press '}' key and wait 1 minutes until rotor is at 90%
-- you can fly.
+- For each engine:
+- PEDESTAL Panel: 
+	- Fuel INTCON,XFEED: ON
+	- Fuel Trans,Pump,Valve ON
+	- Governor: NORM, PART SEP: ON
+	- HYDR: ON (wait preheating until 30°C before starting)
+- Collectiv: Throttle to 15%
+- Collectiv: left click start switch: start engine 1, middle click: start engine 2
+==> you cannot start both engines at the same time
+- Wait until tachometer N2 indicate 100% (RPM Caution indicator: OFF), then start other engine
 ---------------------------------------------------------------------------------
 						     FLYING TIPS
 ---------------------------------------------------------------------------------
 - Torque effect.
   The Bell rotor rotate counterclockwise (American style), so the torque effect
-  if clockwise. At startup, you must compensate the torque by pushing
-  the rudder on the right at ~20%. When flying, you smoothly push the rudder on
-  the left (from -20 to 0%). See your attitude slip indicator during the trip
-  and rule your rudder accordingly.
-  - Take off.
-  Increase your collectiv slowly, see the behaviour of your aircraft, correct
-  torque with your rudders. When you take off, try to keep an AOA of 8/10°,
-  correct roll and pitch. Climb at 100 feet, AOA at 0° or less, more speed
+  if clockwise. At startup, you must compensate the torque effect by moving
+  your rudders (it depends on wind too).
+  See your attitude slip indicator during the trip and rule your rudders accordingly.
+  
+- Taking off.
+  !! WARNING: below 12fps (FG refresh rate ..), the chopper is very difficult to manage
+              due to the latency btw your action and the simulator. Helicopter aircraft
+              require a lot of accuracy.
+  !! IMPORTANT: every time you take off, know the current wind speed and orientation ;
+  your aircraft will naturally turn in front off the wind. 
+
+  The yasim simulated main rotor is tilted at ~5°, so before taking off, pull
+  your cyclic at ~10% (near you) in order to maintain the whole rotor plane at 0° 
+  (or your chopper will go forward). This value is theorical, all depends on the true wind
+  (front,back,cross ...).
+  Increase your collectiv slowly, your chopper must take off at once but gently,
+  see the behaviour of your aircraft, correct rotation with your rudders. 
+  When you take off, try to keep an AOA at -5° according to the wind.
+  Climb at 100 feet, AOA at 0° or more = more speed
   needs more collectiv to balance vspeed. There's no AFCS right now.
   Governor is not completed.
+  Always manage your aircraft slowly.
+
 - Speed and pitch.
   Increasing or decreasing speed has effect on the vertical speed. Every time
   you change your AOA in order to increase or decrease your speed, you must act 
-  on the collectiv accordingly, in order to correct your vspeed.
-  The AOA of the whole rotor is at ~-10° (the FDM is not right yet), to put your chopper
-  stationary (or decrease your speed), you must have your nose at a pitch of 10° 
+  on the collectiv accordingly, in order to correct your vspeed. Remember that your
+  rotor acts like an aircraft wing.
+  The AOA of the whole rotor is at ~5° (the FDM is not right yet), to put your chopper
+  stationary (or decrease your speed), you must have your nose at a pitch of -5° 
   (nose up), so the plane of the blades cone will be is at 0°. Always look at your
   attitude indicator, it's your best friend and it is well calibrated.
+  Decreasing the speed of your chopper take time : the Bell412 flight manual say that
+  it can dive at 1000ft / mn. It is possible to dive and reduce your speed at the same time:
+  put your collectiv at 2-3%, when you reach alt. and speed needed, pull on your cyclic (nose
+  up), and get more collectiv.
   But wind, ground and torque effect influence your fly. It is difficult
   to put your Bell stationary, but possible. Keep an eye on your attitude indicator,
   your vspeed indicator and your pitch. Act on the rudder slowly when torque is too
   hi (your chopper rotate), correct the pitch and roll, act on the collectiv.
   If like me you are using a mouse, you cannot act on rudders and the cyclic at the 
   same time. So, handle your aircraft slowly and gently, step by step.
-*********************************************************************************
 
-	
+- Autopilot
+  You can use the default FG autopilot when cruising (from 60 to 130 Kt.)
+  Don't use it below 60Kt. 
+
+---------------------------------------------------------------------------------
+				     HOW ENGINES WORKS (and what indicates the instruments)
+---------------------------------------------------------------------------------
+The Bell412 has a Pratt & Whitney TwinPac PT6T with 2 Turbine Engines
+It can operate with only one engine.
+(we say it operates at OEI = one engine inoperative)
+A turbine engine is a compound of :
+- a gaz producer aka a compressor (N1) - see the instrument "Gas Prod"
+- a turbine (N2) - see the tachometer (needle '1' or '2' according to engine nr)
+- which rotate a rotor (NR) through a gearbox - see the tachometer : needle 'R'
+The main rotor always turn at a constant RPM (in our case: 324 rpm).
+According to the needs (speed,vspeed,takeoff,weight) and the position of the cyclic
+and the collectiv (pitch .., blades AOA), the engines produce more or less energy 
+in order to maintain a constant RPM.
+On the Bell, you will see the ITT instrument: it indicates the 
+Inter Turbine Temperature in DegC. It follows the engine heat.
+On the collectiv, you will see two gas handles: they manage the Gas producer N1
+(one for each engine) and are needed in order to start the Bell properly. 
+Currently, they operate automagically. Don't use them.
+When the whole engine is started, they stay at 100%, no more, no less.
+They are generally gripped in order to stay in pos.
+Finally, you can see a torque meter : it indicates the force applied to the rotor.
+If you want to turn something, you must produce a force to this thing (like in a
+bycicle), but if you apply to much energy, you can brake your mechanism.
+The torque meter will help you in order to stay below this 'brake' limit.
+*********************************************************************************

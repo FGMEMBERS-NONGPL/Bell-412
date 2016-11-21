@@ -1,0 +1,14 @@
+<PropertyList>
+
+<sim>
+  <model>
+    <livery>
+      <name type="string">IslandTour</name>
+	  <texture-fuselage>Liveries/IslandTour-1.Fuselage.png</texture-fuselage>
+	  <texture-queue>Liveries/IslandTour-1.FuselageQueue.png</texture-queue>
+	  <!-- <texture-doorsinside>2.Doors Inside.png</texture-doorsinside> -->
+    </livery>
+  </model>
+</sim>
+
+</PropertyList>

@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- FDM *** valery@vslash.com  
-	refs.: 
+<!-- Bell-412 FDM
+	SOURCE: 
+		https://sourceforge.net/projects/bell-412
+
+	PROJECT: 
+		Flightgear Bell-412 
+
+	REFS.: 
 		Bell 412 Systems 6.0 ROTOR SYSTEMS REVIEW - Alma Ramirez
 		412EPI_ProductSpec201302-Web - Bell/Textron Lab.
 		Principles of Helicopter Aerodynamics - MIT Press - J. Gordon Leishman
 		Bell/Textron: 412-FM-4_Rev_27 (rev. from the Bell412 Flight Manual)
+
+	CHANGELOG:
+	20/06/16	initial
+	26/10/16 	improve COG near the real one
+			 	blade length + chord
+				ballast pos.
+	29/10/2016	tanker pos
+
 
 	TODO: thruster and hitch
 
@@ -19,20 +33,43 @@
 	Service Ceiling	6.096 m	20.000 ft
 	Range	709 km	383 NM 441 mi.
 	Empty Weight	3.112 kg	6.861 lbs (pounds)
-	max. Takeoff Weight	5.398 kg	11.901 lbs
+	max. Takeoff Weight	5.398 kg	11.901 - 6861  ==> max load = 5040 lbs
 	ICAO Code	B412
 	FAA TCDS	H4SW
+
+	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 	Fuel (usable)
+	Data:
 		Type		Aviation Turbine
 		Capacity 	330.5 US Gallons
 	Standard Fuel 	331 US gal 	1,251 litres				0.75Kg / fuel * 1251 = 938.25 Kg = 2068 lb (pounds)
 	Aux Fuel 	33 or 163 US gal 	123 or 617 liters
+	331 US gal = 1.252971 m3 = 44.248264 ft3
 
+	Blender 3D approximate design
+	  - Refs: 412-FM-4_REV_27.PDF (pp75 sect 5.9)
+			  412.pdf (pp497 sect 2 - System description)
+	Approx. Tankers Weight :
+ 	Tank			Volume (m3)	Vol (l) Mass (kg) 	Note
+	Tank Rear 1 : 	0.275		275		206			behing CoG
+	Tank Rear 2 : 	0.275		275		206			""         (optional tank)
+	Tank Rear 3 :	0.150		150		112			""
+	Tank Rear 4 : 	0.150		150		112			""
+	Tank Front 1 : 	0.040		040		030			front of Cog
+	Tank Front 2 : 	0.040		040		030			""
+	Tank Front 3 : 	0.060		060		045			""
+	Tank Front 4 : 	0.060		060		045			""
+	Tank Front 5 : 	0.070		070		053			on the CoG
+	tank Front 6 : 	0.070		070		053			on the CoG
+	_____________	_______	   ____     ___	
+	==>  			1.20 m3    1190		892
+	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 	MAIN ROTOR
-	Blades 4
+	Blades 4	( PART NR 412-015-300-109)
 	Diameter 46ft (14.0m)
 	Chord 1ft 2in (0.37m)
+	Blade Twist: 15° (ref. reddy.pdf) ==> we keep -11 for stability 14/11/16 11:33
 	Engine-to-rotor gear ratio 20.38:1
 	Tip speed 780 ft/sec (240m/s)
 	Rotor RPM 324rpm
@@ -72,49 +109,6 @@
 	Capacity (Usable)1251 liters
 -->
 
-<!-- from an FDM by Maik Justus, Emmanuel Baranger and HHS (Heiko Schulz)
-
-    FDM based on information given in NASA-CR-3144; TR-1087-1
-    and NASA-CR-3145
-    UH-1H DESCRIPTIVE DATA
-
-    MAIN ROTOR
-    Blades 2
-    Radius 7.32 m (24 f t )
-    Chord 0.333 m (1.75 f t )
-    Section NACA 0012
-    Hub type Teetering
-    Undersling 0.132 m (0.433 f t )
-    Twist -10.9 deg
-    Pitch flap coupling (Fj3) Zero
-    Shaft tilt 5 deg forward
-    Design rpm
-    Hub loca&on
-    Blade flapping inertia 1641.2 kg-m (1210.5 slug-ft )
-    314 to 324 (power on), 294 t o 339 (power off)
-    FS 133.3, WL 136.5
-    2 2
-
-    TAIL ROTOR
-    Blades 2
-    Diameter 2.59 m (8.3 f t )
-    Chord 0.297 m (0.958 f t )
-    Twist Zero
-    Gear ratio 5.123
-    Hub location FS 479.4, WL 137.6, BL -15.16
-    ELEXATOR (EACH SIDE, EXCLUDING FUSELAGE CARRY-THROUGH)
-    Area 1.016 m2 (10.936 ft2)
-    Aspect ratio 2.009
-    Center of pressure location
-    Incidence Variable
-    FS 363.0, BL - i- 28.1, WL 64.83
-    VERTICAL STABILIZER
-    Area
-    Aspect ratio 1 .&6
-    Center of pressure location
-    1.036 m2 (11 .I5 ft2)
-    FS 450.3, BL 0.4, WL 104.7
--->
 <airplane mass="6861">
 
   <approach speed="80" aoa="16">
@@ -127,14 +121,14 @@
 
   <rotor name="main"
          x="0.00" y="0.0" z="1.233"
-         nx="0.0875" ny="0" nz="1."
+         nx="0.0800" ny="0" nz="1."
          fx="1" fy="0" fz="0" ccw="1"
          maxcollective="15.5" mincollective=".5"
          mincyclicele="-24" maxcyclicele="24"
          mincyclicail="-19" maxcyclicail="21"
-         diameter="14.63" numblades="4"
-         weightperblade="120" twist="-10.9"
-         chord="0.533" rpm="324"
+         diameter="14.02" numblades="4"
+         weightperblade="120" twist="-11"
+         chord="0.40" rpm="324"
          relbladecenter="0.5" dynamic=".4"
          rellenflaphinge="0.018"
          sharedflaphinge="1"
@@ -157,7 +151,7 @@
          cyclic-factor="0.95"
          rotor-correction-factor="0.93"
          downwashfactor ="0.3"
-         balance="0.999985">
+         balance="0.999989">
          <control-input axis="/controls/flight/aileron-trim" control="CYCLICAIL" split="true"/>
          <control-input axis="/controls/flight/aileron" control="CYCLICAIL" src0="-1.0" src1="1.0" dst0="-0.35" dst1="0.35"/>
          <control-input axis="/controls/flight/elevator-trim" control="CYCLICELE" split="true"/>
@@ -213,17 +207,19 @@
          rotor-correction-factor="0.98" >
   </rotor>
 
-  <rotorgear max-power-engine="1044"
-             max-power-rotor-brake="185"
-             rotorgear-friction="3.7"
-             engine-prop-factor="0.015"
-             engine-accel-limit="4"
+  <!-- old value uh1: max-power-engine: 1044 -->
+  <!-- Max torque: 1340 kW, 324 rpm ==> 39494 N.m -->
+  <rotorgear max-power-engine="1340"
+             max-power-rotor-brake="100"
+             rotorgear-friction="4.0"
+             engine-prop-factor="0.010"
+             engine-accel-limit="3"
              yasimdragfactor="40"
-             yasimliftfactor="240">
-             <control-input axis="/controls/engines/engine[0]/magnetos" control="ROTORGEARENGINEON"/>
-             <control-input axis="/controls/rotor/brake" control="ROTORBRAKE" src0="0.0" src1="1.0" dst0="0.0" dst1="1.0"/>
-             <control-input axis="/controls/rotor/reltarget" control="ROTORRELTARGET" src0="0.0" src1="2.0" dst0="0.0" dst1="2.0"/>
-             <control-input axis="/controls/rotor/maxreltorque" control="ROTORENGINEMAXRELTORQUE" src0="0.0" src1="2.0" dst0="0.0" dst1="2.0"/>
+             yasimliftfactor="140">
+             <control-input axis="/controls/rotorgear/starter" control="ROTORGEARENGINEON"/>
+             <control-input axis="/controls/rotorgear/reltarget" control="ROTORRELTARGET" src0="0.0" src1="2.0" dst0="0.0" dst1="2.0"/>
+             <control-input axis="/controls/rotorgear/maxreltorque" control="ROTORENGINEMAXRELTORQUE" src0="0.0" src1="2.0" dst0="0.0" dst1="2.0"/>
+			 <control-input axis="/controls/engines/brake" control="ROTORBRAKE" src0="0.0" src1="1.0" dst0="0.0" dst1="1.0"/>
   </rotorgear>
 
   <cockpit x="2.66" y="0.0" z="-0.570"/>
@@ -303,13 +299,13 @@
   <!-- work around bug in native-fdm.cxx:184 -->
   <tank x="0" y="0" z="0" capacity="0"/>
 
-  <ballast x="+4.27" y="+0.0" z=" -4.9" mass="+600"/>
+  <ballast x="+5.88" y="+0.0" z=" -4.9" mass="+600"/>
 
-  <ballast x="+3.37" y="+0.00" z="+0.00" mass="-600"/>
-  <ballast x="-3.22" y="+0.00" z="+0.00" mass="-600"/>
+  <ballast x="+2.66" y="+0.00" z="+0.00" mass="-600"/>
+  <ballast x="-3.40" y="+0.00" z="+0.00" mass="-600"/>
 
-  <ballast x="+0.07" y="-1.30" z="+0.00" mass="+600"/>
-  <ballast x="+0.07" y="+1.30" z="+0.00" mass="+600"/>
+  <ballast x="+0.07" y="-1.38" z="+0.00" mass="+600"/>
+  <ballast x="+0.07" y="+1.38" z="+0.00" mass="+600"/>
 
   <ballast x="+0.07" y="+0.00" z="-2.10" mass="-600"/>
   <ballast x="+0.07" y="+0.00" z="+2.10" mass="-600"/>
@@ -324,10 +320,12 @@
   <!-- right passenger -->
   <weight x="+0.37" y="+0.08" z="-0.70" mass-prop="/sim/weight[2]/weight-lb"/>
   <!-- left passenger -->
-  <weight x="+0.37" y="-0.08" z="-0.70" mass-prop="/sim/weight[4]/weight-lb"/>
-
-  <weight x="+0.02" y="+0.00" z="-1.30" mass-prop="/sim/weight[5]/weight-lb"/>
+  <weight x="+0.37" y="-0.08" z="-0.70" mass-prop="/sim/weight[3]/weight-lb"/>
+  <!-- load on x/y CG -->
+  <weight x="-0.150" y="+0.00" z="-1.30" mass-prop="/sim/weight[4]/weight-lb"/>
 
   <!-- load -->
 
 </airplane>
+
+

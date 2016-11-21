@@ -26,62 +26,69 @@
 			<property>sim/rendering/rembrandt/enabled</property>
 		</condition>
 		<object-name>3.Glasses Front</object-name>
-	</effect>
-
-	<!-- Shaders -->
-	<effect>
-		<inherits-from>Effects/Bell-412-Fuselage-combShaders</inherits-from>
-                <object-name>1.Fuselage</object-name>
-                <object-name>2.Door Back Left Outer</object-name>
-                <object-name>2.Door Back Right Outer</object-name>
-                <object-name>2.Door Front Left Outer</object-name>
-                <object-name>2.Door Front Right Outer</object-name>
-                <object-name>2.Door Middle Left Outer</object-name>
-                <object-name>2.Door Middle Right Outer</object-name>
-                <object-name>2.Door Nose Outer</object-name>
-                <object-name>3.Glasses Frame Front Bottom</object-name>
-	</effect>
-	<effect>
-		<inherits-from>Effects/Bell-412-FuselageQueue-combShaders</inherits-from>
-                <object-name>1.Fuselage Air Entry Left</object-name>
-                <object-name>1.Fuselage Air Entry Right</object-name>
-                <object-name>1.Fuselage Engine Top</object-name>
-                <object-name>1.Fuselage Tail</object-name>
-                <object-name>1.Fuselage Tail Aileron</object-name>
-                <object-name>1.Fuselage Turbine Exit</object-name>
-                <object-name>2.Door Tail Outer</object-name>
-	</effect>
-	<effect>
-		<inherits-from>Effects/Bell-412-Cabin-floor-bumpspecs</inherits-from>
-                <object-name>5.Cockpit Control Cyclic Left Bottom</object-name>
-                <object-name>5.Cockpit Control Cyclic Right Bottom</object-name>
-                <object-name>6.Cabin Floor and Front</object-name>
-	</effect>
-	<effect>
-		<inherits-from>Effects/Bell-412-Cabin-roof-bumpspecs</inherits-from>
-                <object-name>6.Cabin Roof</object-name>
+		<object-name>3.Glasses Door Front Left 1</object-name>
+		<object-name>3.Glasses Door Front Left 2</object-name>
+		<object-name>3.Glasses Door Front Right 1</object-name>
+		<object-name>3.Glasses Door Front Right 2</object-name>
+		<object-name>3.Glasses Middle Left</object-name>
+		<object-name>3.Glasses Middle Right</object-name>
+		<object-name>3.Glasses Back Left</object-name>
+		<object-name>3.Glasses Back Right</object-name>
 	</effect>
 
 	<!-- Immatriculation -->
-	<model>
-		<path>Aircraft/Bell-412/Models/Immat/immat.xml</path>
-	</model>
+	<model><path>Aircraft/Bell-412/Models/Immat/immat.xml</path></model>
 	<!-- Instruments -->
-	<model>
-		<path>Aircraft/Bell-412/Models/Instruments/instruments.xml</path>
-	</model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/instruments.xml</path></model>
 	<!-- Rotors -->
-	<model>
-		<path>Aircraft/Bell-412/Models/Rotors/412-rotors.xml</path>
-	</model>
+	<model><path>Aircraft/Bell-412/Models/Rotors/412-rotors.xml</path></model>
 	<!-- Lighting -->
-	<model>
-		<path>Aircraft/Bell-412/Models/Lights/lights.xml</path>
-	</model>
-	<!-- Controls / Switches / Knobs stuff -->
-	<model>
-		<path>Aircraft/Bell-412/Models/Controls/controls.xml</path>
-	</model>
+	<model><path>Aircraft/Bell-412/Models/Lights/lights.xml</path></model>
+	<!-- Aircraft Controls (cyclic,collectiv,rudders -->
+	<model><path>Aircraft/Bell-412/Models/Controls/controls.xml</path></model>
+
+	<!-- Livery setup Fuselage -->
+	<animation>
+		<type>material</type>
+		<object-name>1.Fuselage</object-name>
+		<object-name>2.Door Front Left Outer</object-name>
+		<object-name>2.Door Front Right Outer</object-name>
+		<object-name>2.Door Middle Left Outer</object-name>
+		<object-name>2.Door Middle Right Outer</object-name>
+		<object-name>2.Door Back Left Outer</object-name>
+		<object-name>2.Door Back Right Outer</object-name>
+		<object-name>2.Door Nose Outer</object-name>
+		<property-base>sim/model/livery</property-base>
+		<texture-prop>texture-fuselage</texture-prop>
+		<!--	<texture>Roger-1.FuselageQueue.png</texture> -->
+	</animation>
+	<!-- Livery setup Tail -->
+	<animation>
+		<type>material</type>
+		<object-name>1.Fuselage Tail</object-name>
+		<object-name>1.Fuselage Engine Top</object-name>
+		<object-name>1.Fuselage Turbine Exit</object-name>
+		<object-name>1.Fuselage Air Entry Left</object-name>
+		<object-name>1.Fuselage Air Entry Right</object-name>
+		<object-name>1.Fuselage Tail Aileron</object-name>
+		<object-name>2.Door Tail Outer</object-name>
+		<property-base>sim/model/livery</property-base>
+		<texture-prop>texture-queue</texture-prop>
+		<!--	<texture>Roger-1.FuselageQueue.png</texture> -->
+	</animation>
+	<!-- Livery setup Doors Inside (FG BUG : childs object-->
+	<!--
+	<animation>
+		<type>material</type>
+		<object-name>2.Door Front Left Inner</object-name>
+		<object-name>2.Door Front Right Inner</object-name>
+		<object-name>2.Door Middle Left Inner</object-name>
+		<object-name>2.Door Middle Right Inner</object-name>
+		<property-base>sim/model/livery</property-base>
+		<texture-prop>texture-doorsinside</texture-prop>
+		<texture>2.Doors Inside.png</texture>
+	</animation>
+	-->
 
 	<!-- cabin ambient lights with console light -->
 	<animation>
@@ -110,6 +117,142 @@
 			<factor-prop>/bell412/power/output/consoles/conslt</factor-prop>
         </emission>
 	</animation>
-
+	
+	<!-- Doors -->
+	<!-- pilot front right -->
+	<animation>
+		<type>pick</type>
+		<object-name>2.Door Front Right Handles</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<!-- open -->
+			<binding>
+				<condition>
+					<less-than>
+						<property>controls/doors/front/right</property>
+						<value type="float">1</value>
+					</less-than>
+				</condition>
+				<command>nasal</command>
+				<script>bell412.sound_door_open("/controls/doors/front/right");</script>
+			</binding>
+			<!-- close -->
+			<binding>
+				<condition>
+					<greater-than>
+						<property>controls/doors/front/right</property>
+						<value type="float">0</value>
+					</greater-than>
+				</condition>
+				<command>nasal</command>
+				<script>bell412.sound_door_close("/controls/doors/front/right");</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>rotate</type>
+		<object-name>2.Door Front Right Outer</object-name>
+		<object-name>2.Door Front Right Inner</object-name>
+		<object-name>3.Glasses Door Front Right 1</object-name>
+		<object-name>3.Glasses Door Front Right 2</object-name>
+		<property>controls/doors/front/right</property>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+		<center>
+			<x-m>-2.76753</x-m>
+			<y-m>0.955</y-m>
+			<z-m>0.12462</z-m>
+		</center>  
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>0</dep>
+			</entry>
+			<entry>
+				<ind>1</ind>
+				<dep>60</dep>
+			</entry>
+		</interpolation>
+	</animation>
+	<!-- copilot front left -->
+	<animation>
+		<type>pick</type>
+		<object-name>2.Door Front Left Handles</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<!-- open -->
+			<binding>
+				<condition>
+					<less-than>
+						<property>controls/doors/front/left</property>
+						<value type="float">1</value>
+					</less-than>
+				</condition>
+				<command>nasal</command>
+				<script>bell412.sound_door_open("/controls/doors/front/left");</script>
+			</binding>
+			<!-- close -->
+			<binding>
+				<condition>
+					<greater-than>
+						<property>controls/doors/front/left</property>
+						<value type="float">0</value>
+					</greater-than>
+				</condition>
+				<command>nasal</command>
+				<script>bell412.sound_door_close("/controls/doors/front/left");</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>rotate</type>
+		<object-name>2.Door Front Left Outer</object-name>
+		<object-name>2.Door Front Left Inner</object-name>
+		<object-name>3.Glasses Door Front Left 1</object-name>
+		<object-name>3.Glasses Door Front Left 2</object-name>
+		<property>controls/doors/front/left</property>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>-1</z>
+		</axis>
+		<center>
+			<x-m>-2.76753</x-m>
+			<y-m>-0.95046</y-m>
+			<z-m>0.12462</z-m>
+		</center>  
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>0</dep>
+			</entry>
+			<entry>
+				<ind>1</ind>
+				<dep>60</dep>
+			</entry>
+		</interpolation>
+	</animation>
+	<!-- Livery tweaks ( http://wiki.flightgear.org/Livery_over_MP ) -->
+	<nasal>
+		<load>
+			<!--
+		  ##############################################################################
+		  # The on-load Nasal is not executed when this file is loaded as the user
+		  # aircraft. The code is only executed if the file is loaded for a remote
+		  # aircraft in Multi-Player mode (MP)
+		  ##############################################################################
+		-->
+		<![CDATA[
+		var livery_update = aircraft.livery_update.new("Aircraft/747/Models/Liveries");
+		]]></load>
+		<unload><![CDATA[
+			livery_update.stop();
+			]]></unload>
+	</nasal>
 </PropertyList>
 

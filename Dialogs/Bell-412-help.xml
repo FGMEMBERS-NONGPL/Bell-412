@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+    <title>Bell-412 Aircraft Help</title>
+    <key>
+        <name>s</name>
+        <desc>Start Engine 1</desc>
+    </key>
+    <key>
+        <name>S</name>
+        <desc>Start Engine 2</desc>
+    </key>
+    <key>
+        <name>n</name>
+        <desc>Increase Rotor Brake</desc>
+	</key>
+	<key>
+		<name>PgUp</name>
+		<desc>Collectiv Down (dive)</desc>
+	</key>
+	<key>
+		<name>PgDown</name>
+		<desc>Collectiv UP (climb)</desc>
+	</key>
+
+	<line/>
+	<!--
+	<line>For checklists, see under Help-&gt;Aircraft Checklists</line>
+	-->
+	<line>* Starting: </line>
+	<line>  Doors closed</line>
+	<line>  Rotor brake Off (0%)</line>
+	<line>  Collectiv: down</line>
+	<line/>
+	<line>  OH Panel: BUS1, BUS2, INV1, INV2, Beacon : ON</line>
+	<line>  Console: Bat1 (below Airspeed instrument):</line> 
+	<line>  Pedestal: Fuel XFeed, Intcon: ON</line>
+	<line/>
+	<line>  For each engine (one after the other): </line>
+	<line>    Pedestal: FUEL TRANS: ON, BOOST PUMP: ON, FUEL Valve: ON</line>
+	<line>    Pedestal: GOVernor:AUTO, PART SEP: NORM, HYDR-SYS: ON</line>
+	<line>    Collectiv: Engine throttle at 15% (use mouse wheel) </line>
+	<line>    According to the ext. air temperature, wait until OIL temp indicates 30C deg.</line>
+	<line>    Collectiv: click on the Starter switch (mouse-left: Engine1, mouse-middle: Engine 2</line>
+	<line>    ==&gt; wait until N1/N2 indicate 100% ( 90 seconds for 1st engine, 40s for scd. engine)</line>
+	<line/>
+	<line>  ATTN: during start, engine throttle move automagically, don't change it</line>
+	<line/>
+	<line>* Takeoff: </line>
+	<line>  Wait to NR Nominal (minimum at 95%)</line> 
+	<line>  Pull cyclic a little bit near you (chopper nose up)</line>
+	<line>  Gently increase the collectiv (PgDown key)</line>
+	<line>  More information on the README file</line>
+	<line/>
+	<line>* Options (Bell-412 menu)</line>
+	<line>  - "Shake Me Honey": rotor vibration effect when landed.</line>
+	<line/>
+	<line>* Alarms reset</line>
+	<line>  - general: cautions panel, click on the reset button (top/center)</line>
+	<line>  - radioalt: left click on the DH knob (it will reset the DH alt too)</line>
+	<line/>
+	<line>  Check for the last version at: https://sourceforge.net/projects/bell-412</line>
+    <line/>
+</PropertyList>

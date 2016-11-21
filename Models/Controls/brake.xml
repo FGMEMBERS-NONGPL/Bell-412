@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<PropertyList> 
+	<path>brake.ac</path>
+	<object-name>5.Cockpit Panel OH Control Brake</object-name>
+
+	<animation> 
+		<type>knob</type>
+		<object-name>5.Cockpit Panel OH Control Brake</object-name>
+		<property>controls/engines/brake</property>
+        <center>
+            <x-m>-2.24865</x-m>
+            <y-m>0.30052</y-m>
+            <z-m>1.04072</z-m>
+		</center>
+		<axis> 
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<interpolation> 
+			<entry> 
+				<ind>0</ind>
+				<dep>0</dep>
+			</entry>
+			<entry> 
+				<ind>100</ind>
+				<dep>30</dep>
+			</entry>
+		</interpolation>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/engines/brake</property>
+				<factor>10</factor>
+				<min>0</min>
+				<max>100</max>                
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>bell412.display_brake();</script>
+			</binding>
+		</action>
+	</animation>
+</PropertyList> 
+

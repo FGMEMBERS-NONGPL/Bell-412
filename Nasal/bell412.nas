@@ -1,445 +1,728 @@
-# Maik Justus < fg # mjustus : de >, based on bo105.nas by Melchior FRANZ, < mfranz # aon : at >
+# ======================================================================================================
+# Bell412 Engine System 
+# 	(for the Flightgear Flight Simulator)
+# ------------------------------------------------------------------------------------------------------
+#
+# AUTHOR
+# 	Valery Seys		valery@vslash.com
+#
+# REFS
+# 	Textron BHT-412 Rotorcraft Flight Manual (rev. 9/2002)
+# 	Flightgear Nasal Wiki: http://wiki.flightgear.org/Category:Nasal
+#	youtube: AgustaBell AB 412HP Engine Start-Up (PT6T-3D Twin Pac) _HD1080p [ YTref. zl51qoP4ZOQ ]
+#	Helicopter Aerodynamic by Paul Cantrell
+#
+# CHANGELOG
+# 06/2016	: init from the UH-1 by Maik Justus and Melchior Franz
+# 11/2016	: complete redesign using Nasal OO
+# ======================================================================================================
+#
+# NOTES PERSO
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# MAST: maximum available stem torque
+# 		Couple de tige admissible maximale 
+# SI:
+# moment of force 	newton meter 	N·m
+# surface tension 	newton per meter 	N/m
+# 
+# Torque (lb.in) = 63,025 x Power (HP) / Speed (RPM)
+# Power (HP) = Torque (lb.in) x Speed (RPM) / 63,025
+# Torque (N.m) = 9.5488 x Power (kW) / Speed (RPM)
+# Power (kW) = Torque (N.m) x Speed (RPM) / 9.5488 
+#
+# B412 power								: 1340kW
+# Rotor RPM									: 324 
+# P&W PT6T : Engine-to-rotor gear ratio 	: 20.38:1
+# N2 RPM 									: 6603.12
+# Max Torque (N.m)							: 39494 @ 1340kW
+# Max cont Power							: 828kW
+# Max torque @cont power					: 24403
+# (https://mdmetric.com/tech/powercalc.htm)
+# 
+# Required Thrust = ( Weight x 2 ) / NrOfRotor
+# P&W PT6T : Engine-to-rotor gear ratio 20.38:1
+#
+# starting state
+#
+#		0	1..4	5
+#0		1	0	   	2		
+#1..4	0	0		0		
+#5		2	0		0
+#
+#0	no start
+#1	alone
+#2	twin mode
+#
+#me.Engine[n].state == 0 and Engine[other].state == 0
+#	start(twin=off)
+#
+#Chopper
+#	Rotorgear
+#		nr
+#		reltorque
+#		rpm
+#		Engines[]
+#			Engine
+#				n1
+#				n2
+#	Buses[]
+#		Bus
+#
+#iBell412
+#	Rotor
+#		engine0
+#		engine1
+#	Power
+#		bus0
+#		bus1
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if (!contains(globals, "cprint")) {
-	globals.cprint = func {};
-}
+# ------------------------------------------------------------------------------------------------------
+# Globals
+# ------------------------------------------------------------------------------------------------------
+var rg_start = props.globals.getNode("controls/rotorgear/starter");					# rotorgear init
+var rg_reltarget = props.globals.getNode("controls/rotorgear/reltarget");			# rotorgear target rel rpm
+var rg_maxreltorque = props.globals.getNode("controls/rotorgear/maxreltorque");		# rotorgear
+var yasim_rotor_rpm = props.globals.getNode("rotors/main/rpm");						# set by Yasim (?)
+var engine_brake	= props.globals.getNode("controls/engines/brake");				# Rotorgear.update_nr() timer need this
 
-var optarg = aircraft.optarg;
-var makeNode = aircraft.makeNode;
+# ------------------------------------------------------------------------------------------------------
+# Const (Bell412 Limitationss)
+# ------------------------------------------------------------------------------------------------------
+var FUELPRESS_MINIMUM = 4;
+var FUELPRESS_MAXIMUM = 35;
+var FUELPRESS_NOMINAL = 12;
+var HYDRPRESS_MINIMUM = 600;
+var HYDRPRESS_NOMINAL = 1000;
+var OILTEMP_DEFAULT = -50;			# lowest needle position
+var OILTEMP_MINIMUM = 1;			# cannot start below this
+var OILTEMP_MAXIMUM = 115;			# failure
+var OILTEMP_NOMINAL = 30;			# preheat / tostart
+var OILPRESS_MINIMUM = 40;			# psi
+var OILPRESS_MAXIMUM = 115;
+var OILPRESS_NOMINAL = 78;
 
-var sin = func(a) { math.sin(a * math.pi / 180.0) }
-var cos = func(a) { math.cos(a * math.pi / 180.0) }
-var pow = func(v, w) { math.exp(math.ln(v) * w) }
-var npow = func(v, w) { math.exp(math.ln(abs(v)) * w) * (v < 0 ? -1 : 1) }
-var clamp = func(v, min = 0, max = 1) { v < min ? min : v > max ? max : v }
-var normatan = func(x) { math.atan2(x, 1) * 2 / math.pi }
+var N1_MAX_OEI = 103.4;				# % (follw. instr. P/N 212-075-037-113)
+var N1_MAX_TAKEOFF = 100.8;			# %
+var N2_MINIMUM = 97;				# %
+var N2_NOMINAL = 100;				# %
+var N2_MAXIMUM = 104.5;				# % torque < 30%
+var ITT_NOMINAL = 765;				# degC cont. op.
+var ITT_MAX_TAKEOFF = 810;			# degC
+var ITT_MAXIMUM = 1090;				# degC
 
-# timers ============================================================
-var turbine_timer = aircraft.timer.new("/sim/time/hobbs/turbines", 10);
-aircraft.timer.new("/sim/time/hobbs/helicopter", nil).start();
+var THROTTLE_START_MIN = 12;		# 12% minimum to start
+var COLLECTIV_START_MAX = 0.9;		# 10% maxi
 
-# power =====================================================
-var engines_power = props.globals.getNode("/bell412/power/output/engines/state");
+var ROTOR_MAX_RPM = 324;			# rpm
+var ENGINE_POWER = 1340;			# kW
+var ENGINE_MAX_CONT_POWER = 828; 	# kW
+var ENGINE_MAX_TORQUE = 24000;		# N.m Max True 39494, Max@ContOp: 24403
+
+# ------------------------------------------------------------------------------------------------------
+# Classes
+# ------------------------------------------------------------------------------------------------------
+var Engine = {
+    new: func(engNum) {
+        var m = { parents:[Engine] };
+		m.id = engNum;
+		m.twin = !engNum;	# my bro
+		m.twinmode = 0;		# how i'm starting
+		m.sw_trans 	= props.globals.getNode("/controls/fuel/engine["~engNum~"]/trans");
+		m.sw_pump  	= props.globals.getNode("/controls/fuel/engine["~engNum~"]/pump");
+		m.sw_valve 	= props.globals.getNode("/controls/fuel/engine["~engNum~"]/valve");
+		m.sw_hydr 	= props.globals.getNode("/controls/engines/engine["~engNum~"]/hydr");
+		m.sw_partsep= props.globals.getNode("/controls/engines/engine["~engNum~"]/partsep");
+		m.sw_gov	= props.globals.getNode("/controls/engines/engine["~engNum~"]/gov");
+		
+		m.sw_start 	= props.globals.getNode("/controls/engines/engine["~engNum~"]/starter");
+		m.sw_starton= props.globals.getNode("/controls/engines/starteron");
+		m.sw_collectiv 	= props.globals.getNode("/controls/engines/engine["~engNum~"]/throttle");		# collectiv
+		m.sw_thrust = props.globals.getNode("controls/engines/engine["~engNum~"]/thrust");				# throttle on collectiv
+		m.sw_brake	= props.globals.getNode("/controls/engines/brake");									# TODO : one brake per engine
+
+        m.fuelpress	= props.globals.getNode("/bell412/mechanics/engines/engine["~engNum~"]/fuelpress");
+		m.oilpress	= props.globals.getNode("/bell412/mechanics/engines/engine["~engNum~"]/oilpress");
+		m.oiltemp 	= props.globals.getNode("/bell412/mechanics/engines/engine["~engNum~"]/oiltemp");
+		m.hydrpress	= props.globals.getNode("/bell412/mechanics/engines/hydr["~engNum~"]/press");
+		m.hydrtemp 	= props.globals.getNode("/bell412/mechanics/engines/hydr["~engNum~"]/temp");
+
+		m.powered	= props.globals.getNode("/bell412/power/output/engines/engine["~engNum~"]/state");	# engine (un)powered
+		m.charge	= props.globals.getNode("/bell412/power/buses/charge");								# power available
+		m.state		= props.globals.getNode("/bell412/mechanics/engines/engine["~engNum~"]/state");		# engine state [0:OFF,1-5:STARTING,6:RUNNING]
+		m.runnable	= props.globals.getNode("/bell412/mechanics/engines/engine["~engNum~"]/runnable");	# engine check OK
+		m.n1 		= props.globals.getNode("/bell412/mechanics/engines/engine["~engNum~"]/n1");
+		m.n2 		= props.globals.getNode("/bell412/mechanics/engines/engine["~engNum~"]/n2");
+		m.itt 		= props.globals.getNode("/bell412/mechanics/engines/engine["~engNum~"]/itt");
+		m.torque_pct = props.globals.getNode("/bell412/mechanics/engines/torquepct");					# mast torque instrument
+
+		m.sw_collectiv.setValue(1);	# FG bug: only engine[0] has coll. to 1
+		print("[Bell-412] + Engine["~engNum~"]: initialized.");
+        return m;
+    },
+	set_state: func(n) { me.state.setValue(n); },
+	get_state: func() { return me.state.getValue(); },
+	set_runnable: func(s) { me.runnable.setBoolValue(s); },
+    setinit_fuelpress: func(v) { interpolate(me.fuelpress,v+4,1,v,0.5); },
+    set_fuelpress: func(v) { interpolate(me.fuelpress,v,1); },
+	set_hydrpress: func(v) { interpolate(me.hydrpress,v,4); },
+	set_hydrtemp: func(v,t)  { interpolate(me.hydrtemp,v,t); },
+	set_oiltemp: func(v,t)  { interpolate(me.oiltemp,v,t); },
+
+	update_n1: func() {	# n1 depends on gas throttle
+		var gas = math.clamp(me.sw_thrust.getValue(),2,100);
+		var n1 = math.clamp(me.n1.getValue(),2,100);
+		var dt = 4; var dt1 = 0; var dt2 = 0;
+		target = gas - n1;
+		if ( target > 0 ) {	# n1 < gasprod => increase N1
+			# formula: 	w/ small gas throttle, 'infinite' time to get 100% N1 when N1 is small
+			# 			dt is proportional to gas (engine throttle) with a log10() curve. 
+			# 			power: adjust the log10() curve (and so dt1 - dt2)
+			# 			20: minimum time at 100% gas to get 100% N1
+			dt1 = 20/math.pow(gas/(math.log10(100)*50),1.5);		# current gas throttle
+			dt2 = 20/math.pow(gas/(math.log10(n1)*50),1.5);			# current value of N1
+			dt = math.clamp(dt1 - dt2,3,600);	# 3 sec. minimum
+		}
+		#print("DEBUG: dt: "~dt~", gas:"~gas~", n1:"~n1~" target:"~target);
+		interpolate(me.n1,gas,dt);
+	},
+
+	update_n2: func() {	 # TODO current n2 follows rotorgear which depends on n1, it must depend on n1, then nr on n2
+		var rpmpct = yasim_rotor_rpm.getValue() / ROTOR_MAX_RPM * 100;
+		if ( me.state.getValue() < 5 )
+			me.set_load(me.n2,rpmpct,1);		# 't' is based upon TimerN2 refresh rate
+		else
+			me.set_load(me.n2,me.n1.getValue(),1);
+	},
+
+	update_fuelpress: func() {	# torque_pct gives us the power we need
+	# 
+	},
+
+	printout: func(msg) {
+		print("[Bell-412] > engine["~me.id~"]["~me.get_state()~"]: "~msg);
+	},
+	
+	set_load: func(node,v,t) {
+		interpolate(node,v,t);		# t sec to value
+	},
+
+	check_power: func() {
+		if ( me.powered.getBoolValue() and ( me.charge.getValue() > .25) ) {		# TODO : Power will set it and will change me.powered as needed
+			#me.printout("power check: OK");
+			return 1;																# powered + enough charge
+		}
+		me.printout("power check: failed");
+		return 0;
+	},
+
+	check_fuelpress: func() {
+	# trigger: pilot fuel switches
+		if ( me.powered.getBoolValue() and me.sw_trans.getBoolValue() and me.sw_pump.getBoolValue() and me.sw_valve.getBoolValue() ) {
+			if ( me.state.getValue() < 5 )
+				me.setinit_fuelpress(FUELPRESS_NOMINAL);
+			else
+				me.set_fuelpress(FUELPRESS_NOMINAL);
+				
+			#me.printout("fuel pressure check: OK");
+			return 1;
+		} else
+			me.set_fuelpress(0);
+		
+		me.printout("fuel pressure check: failed");
+		return 0;
+	},
+
+	check_hydr: func() {
+	# trigger: pilot hydrau system switch
+		# TODO : get engine state and set temp proportional to itt
+		# TODO : check pressure
+		var exttemp = props.globals.getNode("/environment/temperature-degc").getValue();
+		if ( me.powered.getBoolValue() ) {							# ENGINE IS POWERED
+			if ( me.hydrtemp.getValue() < exttemp )					# temp is less than ambiant temp (starting)
+				me.set_hydrtemp(exttemp,2);							# hydr T instrument set to external temp
+			if ( me.oiltemp.getValue() < exttemp )					# temp is less than ambiant temp (starting)
+				me.set_oiltemp(exttemp,2);							# oil T instrument set to external temp
+			
+			if ( me.sw_hydr.getBoolValue() ) {						# HYDR SWITCH ON
+				me.preheat(exttemp);								# heating hydrau
+				#me.printout("hydraulics check: OK");
+				return 1;
+			} else {												# HYDR SWITCH OFF
+				if ( me.hydrtemp.getValue() > exttemp )
+					me.set_hydrtemp(exttemp,30);					# slowly cooling to external temp
+				if ( me.oiltemp.getValue() > exttemp )
+					me.set_oiltemp(exttemp,30);		
+				
+				me.printout("hydraulics check: failed");
+				return 0;
+			}
+		}
+		else {														# ENGINE UNPOWERED
+			me.set_hydrtemp(OILTEMP_DEFAULT,2);
+			me.set_oiltemp(OILTEMP_DEFAULT,2);
+			me.printout("hydraulics check: failed");
+			return 0;
+		}
+	},
+
+	preheat: func(exttemp) {
+	# trigger: me.check_hydr()
+		if ( me.hydrtemp.getValue() < OILTEMP_NOMINAL ) {
+			if ( me.hydrtemp.getValue() < exttemp ) {
+				interpolate(me.hydrtemp,exttemp,2,OILTEMP_NOMINAL,30);		# coldstart: quickly up to external temp, then slowly heating
+			} else {
+				interpolate(me.hydrtemp,OILTEMP_NOMINAL,15);				# warmstart: up to nominal
+			}
+		}
+		if ( me.oiltemp.getValue() < OILTEMP_NOMINAL ) {
+			if ( me.oiltemp.getValue() < exttemp )
+				interpolate(me.oiltemp,exttemp,2,OILTEMP_NOMINAL,30);
+			else
+				interpolate(me.oiltemp,OILTEMP_NOMINAL,15);
+		}
+	},
+	
+	check_prestart: func() {
+		if ( (me.sw_brake.getValue() == 0) 
+			  and ( me.sw_collectiv.getValue() >= COLLECTIV_START_MAX ) 
+			  and ( me.sw_thrust.getValue() >= THROTTLE_START_MIN ) 
+			  and ( me.sw_partsep.getBoolValue() )
+			  and ( me.sw_gov.getBoolValue() )
+		   ) {
+			#me.printout("prestart check (brake,collectiv,throttle,gov,partsep): OK");
+			return 1;
+		}
+		
+		me.printout("prestart check (brake,collectiv,throttle,gov,partsep): failed");
+		return 0;
+	},
+
+	check: func() {
+		me.set_runnable( me.check_power() and me.check_fuelpress() and me.check_hydr() );
+		return me.runnable.getBoolValue();
+	},
+
+	check_running: func() {
+		# TODO: update_engine() : model fuel,itt,n1,n2
+		if ( me.state.getValue() == 5 ) {
+			if ( ! me.check() )
+				me.die();
+		}
+	},
+
+	start: func(twinmode) {
+		me.set_state(1);																# must override update_nr()
+		if ( me.sw_start.getBoolValue() and me.check() and me.check_prestart() ) {		# start switch ON + check OK + prestart OK
+			me.printout("starting ...");
+			me.sw_starton.setValue(me.id+1);											# 0->1, 1->2
+			me.twinmode = twinmode;														# we need this 'cause timer don't supp. stack data
+			TimerN1[me.id].start();
+			var nextstep = maketimer(1, bell412.iBell412.Rotor.Engines[me.id], func() {
+				me.start1();
+			});
+		} else {
+			me.printout("not runnable.");
+			var nextstep = maketimer(2, bell412.iBell412.Rotor.Engines[me.id], func() {
+				me.start_failed();
+			});
+		}
+		nextstep.singleShot = 1;
+		nextstep.start();
+	},
+
+	start1: func() {	# get enough ac power 			[0-1]	+1
+		me.set_state(1);
+		me.printout("stage 1");
+		var dt = 1;	# duration of this stage
+
+		if ( me.twinmode == 0 ) 						# alone, n2/nr=0
+			Power.get_startingPower();					# tell Power we suck it
+
+		me.set_load(me.fuelpress,8,dt);
+		me.set_load(me.itt,100,dt);
+		interpolate(me.sw_thrust,40,dt);
+		
+		var timer = maketimer(dt, bell412.iBell412.Rotor.Engines[me.id], func() {
+			me.start2();
+		});
+		timer.singleShot = 1;
+		timer.start();
+	},
+
+	start2: func() {	# warm up                   	[1-7]	+6
+		me.set_state(2);
+		me.printout("stage 2");
+		var dt = 5.5;	# duration of this stage 
+	
+		me.set_load(me.fuelpress,6,dt);
+		me.set_load(me.itt,300,dt);
+		me.set_load(me.oilpress,30,dt);
+		interpolate(me.sw_thrust,60,1);			# throttle warm up
+		
+		var timer = maketimer(dt, bell412.iBell412.Rotor.Engines[me.id], func() {
+			me.start3();
+		});
+		timer.singleShot = 1;
+		timer.start();
+	},
+
+	start3: func() {	# n1 strt combustion + rg start	[7-15]	+8
+		me.set_state(3);
+		me.printout("stage 3");
+		var dt = 8;
+		
+		if ( me.twinmode == 0 ) {			# alone, n2/nr=0
+			me.printout("rotorgear start");
+			# rotorgear start				#
+			rg_start.setValue(1);
+			rg_maxreltorque.setValue(0.01);
+			rg_reltarget.setValue(0.1);
+		}
+		
+		Power.set_allNominal(dt);
+		me.set_load(me.fuelpress,FUELPRESS_NOMINAL-2,dt);
+		interpolate(me.itt,700,4,720,1,550,3);		# TODO update_itt()
+		me.set_load(me.oilpress,80,dt);
+		interpolate(me.sw_thrust,90,1,90,3,55,dt-4); # max thrust during 4 sec., then back to 55%
+		if ( me.twinmode == 0 ) 			# alone, n2/nr=0
+			TimerN2[me.id].start();
+		else								# twin mode
+			interpolate(me.n2,40,dt);
+		
+		var timer = maketimer(dt, bell412.iBell412.Rotor.Engines[me.id], func() {
+			me.start4();
+		});
+		timer.singleShot = 1;
+		timer.start();
+	},
+
+	start4: func() { # gently goes up to N1 NOMINAL;	[15-75] +60
+		me.set_state(4);
+		me.printout("stage 4");
+		var dt = 60;
+		if ( me.twinmode == 1 )				# twin mode
+			dt = 12;
+			
+		if ( me.twinmode == 0 ) { 			# alone
+			# rotorgear
+			interpolate(rg_maxreltorque,0.05,4, 0.2,1, 0.5,30, 0.90,27);
+			interpolate(rg_reltarget,   0.2,4,                 0.95,dt-4);
+		}
+
+		me.set_load(me.fuelpress,FUELPRESS_NOMINAL,dt);
+		me.set_load(me.itt,620,dt);
+		me.set_load(me.oilpress,OILPRESS_NOMINAL,dt);
+		interpolate(me.sw_thrust,95,dt);	# TODO twin mode ==> OEI
+		if ( me.twinmode == 1 ) 			# twin mode
+			interpolate(me.n2,95,dt);
+		
+		var timer = maketimer(dt, bell412.iBell412.Rotor.Engines[me.id], func() {
+			me.start5();
+		});
+		timer.singleShot = 1;
+		timer.start();
+	},
+
+	start5: func() { #engine running
+		var dt = 10;
+		interpolate(me.state,5,dt);			# state5 only at the end
+		me.printout("stage 5");
+		
+		if ( me.twinmode == 0 ) { 			# alone
+			# rotorgear
+			interpolate(rg_maxreltorque,1.0,dt);
+			interpolate(rg_reltarget,1.0,dt);
+		} else
+			TimerN2[me.id].start();
+		
+		me.set_load(me.itt,ITT_NOMINAL,dt);
+		interpolate(me.sw_thrust,100,dt);
+		me.sw_start.setBoolValue(0);	# reset starter
+		me.sw_starton.setValue(0);		# rotate switch 
+		TimerCheckRunning[me.id].start();
+		
+	},
+
+	start_failed: func() {
+		var soundshutdown = props.globals.getNode("controls/sound/engineshutdown");
+		if ( me.state.getValue() > 2 ) {
+			soundshutdown.setValue(1);
+			interpolate(soundshutdown,0,5);
+		}
+
+		me.printout("engine failed: reset");
+		me.sw_starton.setValue(0);		# rotate switch 
+		me.sw_start.setBoolValue(0);	# reset starter
+		me.set_state(0);				# state off
+		
+		#rg_start.setValue(0);			# reset rotorgear TODO override Rotorgear.update_nr()
+		#rg_maxreltorque.setValue(0);
+		#rg_reltarget.setValue(0);
+		
+		# reset all system to nominal
+		var dt = 4;
+		Power.set_allNominal(dt);
+		me.check_hydr();
+		me.check_fuelpress();
+		me.set_load(me.itt,0,dt);
+		me.set_load(me.oilpress,0,dt);
+		me.set_load(me.sw_thrust,15,dt);
+		TimerN1[me.id].stop();			# stop n1 thread 
+		TimerN2[me.id].stop();			# stop n2 thread 
+		me.set_load(me.n1,0,dt);		# slowdown n1
+		me.set_load(me.n2,0,dt);		# slowdown n2
+	},
+
+	die: func() {
+		var soundshutdown = props.globals.getNode("controls/sound/engineshutdown");
+		me.printout("out of service");
+		var dt = 8;
+		me.set_state(0);				# state off
+		soundshutdown.setValue(1);
+		interpolate(soundshutdown,0,dt*2);
+		me.set_load(me.itt,0,dt*2);
+		me.set_load(me.oilpress,0,dt);
+		me.set_load(me.sw_thrust,0,dt);
+		TimerN1[me.id].stop();			# stop n1 thread 
+		TimerN2[me.id].stop();			# stop n2 thread 
+		TimerCheckRunning[me.id].stop(); # stop thread
+		me.set_load(me.n1,0,dt);		# slowdown n1
+		me.set_load(me.n2,0,dt);		# slowdown n2
+	}
+
+};
+
+var Rotorgear = {
+# TODO : 	
+#	autostart(),
+    new: func() {
+        var m = { parents:[Rotorgear] };
+		m.Engines = [];
+		m.engine0 = Engine.new(0);														# PT6T TwinPac: turbine 1
+		m.engine1 = Engine.new(1);														# PT6T TwinPac: turbine 2
+		append(m.Engines,m.engine0);
+		append(m.Engines,m.engine1);
+
+		m.starteron= props.globals.getNode("controls/engines/starteron");				# who is starting
+		m.rg_start = props.globals.getNode("controls/rotorgear/starter");				# rotorgear init
+		m.rg_reltarget = props.globals.getNode("controls/rotorgear/reltarget");			# rotorgear target rel rpm
+		m.rg_maxreltorque = props.globals.getNode("controls/rotorgear/maxreltorque");	# rotorgear
+		m.yasim_rotor_rpm = props.globals.getNode("rotors/main/rpm");					# set by Yasim (?)
+		m.nr = props.globals.getNode("/bell412/mechanics/engines/nr");
+		m.torque_pct = props.globals.getNode("/bell412/mechanics/engines/torquepct");	# mast torque instrument
+		m.torque = props.globals.getNode("rotors/main/torque",1);						# set by Yasim
+		m.torque_sound_filtered = props.globals.getNode("rotors/gear/torque-sound-filtered"); # sounds trick
+		m.brake	= props.globals.getNode("/controls/engines/brake");
+		m.dt = props.globals.getNode("/sim/time/delta-realtime-sec", 1);				# delta-time
+		m.torque_val = 0;
+		
+		print("[Bell-412] + Rotorgear: initialized.");
+        return m;
+	},
+	
+	printout: func(msg) {
+		print("[Bell-412] > Rotorgear: "~msg);
+	},
+
+	engines_check: func() {																# triggered on bus switch
+		me.Engines[0].check();
+		me.Engines[1].check();
+	},
+	
+	engine_noneStarting: func() {														# check engines starting state
+		state0 = me.Engines[0].state.getValue();
+		state1 = me.Engines[1].state.getValue();
+		if ( ((state0==0) or (state0==5)) and ((state1==0) or (state1==5)) )			# none is starting
+			return 1;
+	
+		return 0;
+	},
+
+	nstarted: func() {																	# nb of engines started
+		return ( ( me.Engines[0].state.getValue()>0 ) + ( me.Engines[1].state.getValue()>0) );
+	},
+
+	engine_start: func(enr) {															# triggered on 's/S' key or on starter[n] switch
+		me.printout("request start on engine["~enr~"]");
+		if ( ! me.engine_noneStarting() ) {												# ensure other engine is not starting 
+			me.printout("cannot start engine["~enr~"] if started or while other is starting.");
+		} 
+		else {
+			if ( me.Engines[enr].state.getValue() == 5 )
+				me.printout("engine["~enr~"] already started.");
+			else {
+				if ( me.nstarted() == 0 ) {
+					me.Engines[enr].start(0);	# start engine with twin mode off
+				}
+				else {
+					me.Engines[enr].start(1);	# start in twin mode on
+				}
+				TimerNR.start()
+			}
+		}
+	},
+
+	update_nr: func() {
+		#me.printout("DEBUG: update_nr()");
+		var rpmpct = yasim_rotor_rpm.getValue() / ROTOR_MAX_RPM * 100;
+		state0 = me.Engines[0].state.getValue();
+		state1 = me.Engines[1].state.getValue();
+		if ( (state0==5) or (state1==5) ) {		# running state: set rg_reltarget according to max(e0.n1,e1.n1)
+			#me.printout("DEBUG: update_nr(): running");
+			target = math.max(me.Engines[0].n1.getValue(),me.Engines[1].n1.getValue())/100;
+			interpolate(me.rg_reltarget,target,2);
+		}
+		if ( (state0==0) and (state1==0) ) {	# all engines out
+			me.printout("DEBUG: update_nr(): ended");
+			me.rg_start.setValue(0);
+			me.brake.setValue(5);
+			interpolate(me.rg_reltarget,0,1);
+			interpolate(me.rg_maxreltorque,0,1);
+			interpolate(me.nr,0,20);			# TODO not realistic, must follow n2
+			interpolate(me.torque_pct,0,2);
+			TimerNR.stop();
+			#settimer(func { TimerNR.stop() }, 10);
+			settimer(func { engine_brake.setValue(0); }, 24);	# reset brake to default
+		} else 
+			interpolate(me.nr,rpmpct,2);
+	},
+
+	update_torque: func() {
+		#me.printout("DEBUG: update_torque()");
+		var torquepct = me.torque.getValue() / ENGINE_MAX_TORQUE * 100;
+		interpolate(me.torque_pct,torquepct,2);
+	}, 
+
+	# modify sound by torque	 TODO
+	update_torque_sound_filtered: func() {
+		state0 = me.Engines[0].state.getValue();
+		state1 = me.Engines[1].state.getValue();
+		var f = 4 * me.nr.getValue() / 100;					# 0 < nr < 100 ==> 0 < f < 4
+		if ( (state0==0) and (state1==0) ) 	# all engines out
+			interpolate(me.torque_sound_filtered,0.0,30);
+		else 
+			interpolate(me.torque_sound_filtered,f,2);		# ln(4) = 1.38 (sound.xml)
+	}
+};
 
 
-# engines/rotor =====================================================
-var state = props.globals.getNode("sim/model/bell412/state");
-var engine = props.globals.getNode("sim/model/bell412/engine");
-var rotor = props.globals.getNode("controls/engines/engine/magnetos");
-var rotor_rpm = props.globals.getNode("rotors/main/rpm");
-var torque = props.globals.getNode("rotors/gear/total-torque", 1);
-var collective = props.globals.getNode("controls/engines/engine[0]/throttle");
-var turbine = props.globals.getNode("sim/model/bell412/turbine-rpm-pct", 1);
-var torque_pct = props.globals.getNode("sim/model/bell412/torque-pct", 1);
-var stall = props.globals.getNode("rotors/main/stall", 1);
-var stall_filtered = props.globals.getNode("rotors/main/stall-filtered", 1);
-var torque_sound_filtered = props.globals.getNode("rotors/gear/torque-sound-filtered", 1);
-var target_rel_rpm = props.globals.getNode("controls/rotor/reltarget", 1);
-var max_rel_torque = props.globals.getNode("controls/rotor/maxreltorque", 1);
-var cone = props.globals.getNode("rotors/main/cone-deg", 1);
-var cone1 = props.globals.getNode("rotors/main/cone1-deg", 1);
-var cone2 = props.globals.getNode("rotors/main/cone2-deg", 1);
-var cone3 = props.globals.getNode("rotors/main/cone3-deg", 1);
-var cone4 = props.globals.getNode("rotors/main/cone4-deg", 1);
-var debugf = props.globals.getNode("aaa/f", 1);
-var debugrr = props.globals.getNode("orientation/roll-rate-degps", 1);
-var debugr = props.globals.getNode("rotors/bar2/roll-deg", 1);
+# Chopper : main entry points
+var Chopper = {
+    new: func() {
+        var m = { parents:[Chopper] };
+		m.Rotor = Rotorgear.new();				# Twin turbine engine Bell412 Pratt & Whitney PT6T Twinpac / Yasim Rotorgear System
+		
+		print("[Bell-412] + Chopper: initialized.");
+        return m;
+	},
+	
+	printout: func(msg) {
+		print("[Bell-412] > Chopper: "~msg);
+	},
 
-var bladesvisible = props.globals.getNode("rotors/main/bladesvisible", 1);
+	engines_check: func() {						# triggered on OH Bus switch
+		me.Rotor.engines_check();
+	},
 
+	engine_start: func(n) {						# triggered on 'sS' keys or collectiv starter switch
+		me.Rotor.engine_start(n);
+	},
+	
+	check_fuelpress: func(n) {					# pedestal fuel switch
+		me.Rotor.Engines[n].check_fuelpress();
+	},
 
+	check_hydr: func(n) {						# pedestal hydr switch
+		me.Rotor.Engines[n].check_hydr();
+	}
+
+};
+
+var iBell412 = Chopper.new();
+
+# ------------------------------------------------------------------------------------------------------
+# timers thread tweaks
+# ------------------------------------------------------------------------------------------------------
+
+var timern10 = maketimer(1.0,bell412, func () {
+	iBell412.Rotor.Engines[0].update_n1();
+});
+var timern11 = maketimer(2.0,bell412, func () {
+	iBell412.Rotor.Engines[1].update_n1();
+});
+
+var timern20 = maketimer(1.0, bell412, func() {
+	iBell412.Rotor.Engines[0].update_n2();
+});
+var timern21 = maketimer(1.0, bell412, func() {
+	iBell412.Rotor.Engines[1].update_n2();
+});
+
+var TimerN1 = [];			# started/stoped by the Engines themselves
+append(TimerN1,timern10);
+append(TimerN1,timern11);
+
+var TimerN2 = [];			# started/stoped by the Engines themselves
+append(TimerN2,timern20);
+append(TimerN2,timern21);
+
+var TimerNR = maketimer(1.0, bell412, func() {
+	iBell412.Rotor.update_nr();
+	iBell412.Rotor.update_torque();
+	iBell412.Rotor.update_torque_sound_filtered();
+});
+
+var timerchk1 = maketimer(2.0,bell412, func() {
+	iBell412.Rotor.Engines[0].check_running();
+});
+
+var timerchk2 = maketimer(2.0,bell412, func() {
+	iBell412.Rotor.Engines[1].check_running();
+});
+var TimerCheckRunning = [];			# started/stoped by the Engines themselves
+append(TimerCheckRunning,timerchk1);
+append(TimerCheckRunning,timerchk2);
+
+# ------------------------------------------------------------------------------------------------------
+# Functions stuff
+# ------------------------------------------------------------------------------------------------------
 var help_win = screen.window.new( 0, 0, 1, 5 );
 help_win.fg = [1,1,1,1];
 
-var messenger = func {
-	help_win.write(arg[0]);
+# Displaying info
+var display_thrust = func(n) {
+	help_win.write("EngineThrottle["~n~"]: "~iBell412.Rotor.Engines[n].sw_thrust.getValue());
 }
 
-# state:
-# 0 off
-# 1 engine startup
-# 2 engine startup with small torque on rotor
-# 3 engine idle
-# 4 engine accel
-# 5 engine sound loop
-
-var update_state = func {
-	var s = state.getValue();
-	var new_state = arg[0];
-	if (new_state == (s+1)) {
-		state.setValue(new_state);
-		if (new_state == (1)) {
-			settimer(func { update_state(2) }, 1);
-			#interpolate(engine, 0.03, 0.7);
-			interpolate(engine, 0.05, .50);
-		} else {
-			if (new_state == (2)) {
-				settimer(func { update_state(3) }, 6);
-				rotor.setValue(1);
-				max_rel_torque.setValue(0.01);
-				target_rel_rpm.setValue(0.2);
-				interpolate(engine, 0.1, 7);
-			} else { 
-				if (new_state == (3)) {
-					if (rotor_rpm.getValue() > 100) {
-						#rotor is running at high rpm, so accel. engine faster
-						max_rel_torque.setValue(1);
-						target_rel_rpm.setValue(1.00);
-						state.setValue(5);
-						#interpolate(engine, 1.03, 20);
-						interpolate(engine, 0.60, 20);
-					} else {
-						settimer(func { update_state(4) }, 7*0);
-						max_rel_torque.setValue(0.05);
-						target_rel_rpm.setValue(0.02);
-						interpolate(engine, 0.07, 0.1, 0.03, 0.25, 0.075, 0.2, 0.08, 1, 0.06,2);
-					}
-				} else {
-					if (new_state == (4)) {
-						settimer(func { update_state(5) }, 20);
-						max_rel_torque.setValue(0.18);
-						target_rel_rpm.setValue(0.5);
-					} else {
-							if (new_state == (5)) {
-							max_rel_torque.setValue(1);
-							target_rel_rpm.setValue(1.00);
-						}
-					}
-				}
-			}
-		}
-	}
+var display_brake = func() {
+	brake = props.globals.getNode("/controls/engines/brake");
+	help_win.write("Engine Brake: "~brake.getValue());
 }
 
-var engines = func {
-	if (props.globals.getNode("sim/crashed",1).getBoolValue()) {return; }
-	if ( ! engines_power.getBoolValue() ) { return; }
-	var s = state.getValue();
-	if (arg[0] == 1) {
-		if (s == 0) {
-			update_state(1);
-		}
-	} else {
-		rotor.setValue(0);				# engines stopped
-		state.setValue(0);
-		interpolate(engine, 0, 4);
-	}
+# Engines stuff
+# power/torque/rpm have a constant relationship as of:
+var calc_power = func(torque,speed) {
+	var power = (torque * speed / 9.549296) / 1000;
+	return power;
 }
 
-var update_engine = func {
-	if (state.getValue() > 3 ) {
-		interpolate (engine,  clamp( rotor_rpm.getValue() / 235, 0.05, target_rel_rpm.getValue() ), 1.00 ); # 0.25 => 1.00
-	}
+var calc_torque = func(power,speed) {
+	var torque = power * 9549.296 / speed;
+	return torque
 }
 
-#var update_rotor_cone_angle = func {
-#	r = rotor_rpm.getValue();
-#	var f = 1 - r / 100;
-#	f = clamp (f, 0.1 , 1);
-#	c = cone.getValue();
-#	cone1.setDoubleValue( f *c *0.40 + (1-f) * c );
-#	cone2.setDoubleValue( f *c *0.35);
-#	cone3.setDoubleValue( f *c *0.30);
-#	cone4.setDoubleValue( f *c *0.25);
-#}
-
-# 0.50
-# 0.75
-# 1.00
-# 1.25
-var update_rotor_cone_angle = func {
-	r = rotor_rpm.getValue();
-        #print("r  = ", r);
-
-	var f = r / 186;
-        #print("f1 = ", f);
-
-	f = clamp (f, 0 , 0);
-        #print("f2 = ", f);
-
-	c = cone.getValue();
-        #print("c  = ", c);
-
-	cone1.setDoubleValue( (c * 0.30) + (f * c));
-	cone2.setDoubleValue( (c * 0.15) + (f * c));
-	cone3.setDoubleValue( (c * 0.10) + (f * c));
-	cone4.setDoubleValue( (c * 0.05) + (f * c));
-	
-	r = debugr.getValue();
-	rr = debugrr.getValue();
-	if (abs(rr)<1e-7) rr = 1e-7;
-	debugf.setDoubleValue(r/rr);
-	
-}
-
-# torquemeter
-var torque_val = 0;
-torque.setDoubleValue(0);
-
-var update_torque = func(dt) {
-	var f = dt / (0.2 + dt);
-	torque_val = torque.getValue() * f + torque_val * (1 - f);
-	torque_pct.setDoubleValue(torque_val / 5300);
-}
-
-# sound =============================================================
-# stall sound
-var stall_val = 0;
-stall.setDoubleValue(0);
-
-var update_stall = func(dt) {
-	var s = stall.getValue();
-	if (s < stall_val) {
-		var f = dt / (0.3 + dt);
-		stall_val = s * f + stall_val * (1 - f);
-	} else {
-		stall_val = s;
-	}
-	var c = collective.getValue();
-	stall_filtered.setDoubleValue(stall_val + 0.006 * (1 - c));
+var calc_speed = func(power,torque) {
+	var speed = power * 9549.296 / torque;
+	return speed;
 }
 
 
-# modify sound by torque
-var torque_val = 0;
-
-var update_torque_sound_filtered = func(dt) {
-	var t = torque.getValue();
-	t = clamp(t * 0.000001);
-	t = t*0.25 + 0.75;
-	var r = clamp(rotor_rpm.getValue()*0.02-1);
-	torque_sound_filtered.setDoubleValue(t*r);
-}
-
-# skid slide sound
-var Skid = {
-	new : func(n) {
-		var m = { parents : [Skid] };
-		var soundN = props.globals.getNode("sim/sound", 1).getChild("slide", n, 1);
-		var gearN = props.globals.getNode("gear", 1).getChild("gear", n, 1);
-
-		m.compressionN = gearN.getNode("compression-norm", 1);
-		m.rollspeedN = gearN.getNode("rollspeed-ms", 1);
-		m.frictionN = gearN.getNode("ground-friction-factor", 1);
-		m.wowN = gearN.getNode("wow", 1);
-		m.volumeN = soundN.getNode("volume", 1);
-		m.pitchN = soundN.getNode("pitch", 1);
-
-		m.compressionN.setDoubleValue(0);
-		m.rollspeedN.setDoubleValue(0);
-		m.frictionN.setDoubleValue(0);
-		m.volumeN.setDoubleValue(0);
-		m.pitchN.setDoubleValue(0);
-		m.wowN.setBoolValue(1);
-		m.self = n;
-		return m;
-	},
-	update : func {
-		me.wowN.getBoolValue() or return;
-		var rollspeed = abs(me.rollspeedN.getValue());
-		me.pitchN.setDoubleValue(rollspeed * 0.6);
-
-		var s = normatan(20 * rollspeed);
-		var f = clamp((me.frictionN.getValue() - 0.5) * 2);
-		var c = clamp(me.compressionN.getValue() * 2);
-		me.volumeN.setDoubleValue(s * f * c * 2);
-		#if (!me.self) {
-		#	cprint("33;1", sprintf("S=%0.3f  F=%0.3f  C=%0.3f  >>  %0.3f", s, f, c, s * f * c));
-		#}
-	},
-};
-
-var skid = [];
-for (var i = 0; i < 3; i += 1) {
-	append(skid, Skid.new(i));
-}
-
-var update_slide = func {
-	forindex (var i; skid) {
-		skid[i].update();
-	}
-}
-
-# crash handler =====================================================
-#var load = nil;
-var crash = func {
-	if (arg[0]) {
-		# crash
-		setprop("rotors/main/rpm", 0);
-		setprop("rotors/main/blade[0]/flap-deg", -60);
-		setprop("rotors/main/blade[1]/flap-deg", -50);
-		setprop("rotors/main/blade[2]/flap-deg", -40);
-		setprop("rotors/main/blade[3]/flap-deg", -30);
-		setprop("rotors/main/blade[0]/incidence-deg", -30);
-		setprop("rotors/main/blade[1]/incidence-deg", -20);
-		setprop("rotors/main/blade[2]/incidence-deg", -50);
-		setprop("rotors/main/blade[3]/incidence-deg", -55);
-		setprop("rotors/tail/rpm", 0);
-		strobe_switch.setValue(0);
-		beacon_switch.setValue(0);
-		nav_light_switch.setValue(0);
-		rotor.setValue(0);
-		torque_pct.setValue(torque_val = 0);
-		stall_filtered.setValue(stall_val = 0);
-		state.setValue(0);
-
-	} else {
-		# uncrash (for replay)
-		setprop("rotors/tail/rpm", 1500);
-		setprop("rotors/main/rpm", 235);
-		for (i = 0; i < 4; i += 1) {
-			setprop("rotors/main/blade[" ~ i ~ "]/flap-deg", 0);
-			setprop("rotors/main/blade[" ~ i ~ "]/incidence-deg", 0);
-		}
-		strobe_switch.setValue(1);
-		beacon_switch.setValue(1);
-		rotor.setValue(1);
-		state.setValue(5);
-	}
-}
-
-
-
-
-# "manual" rotor animation for flight data recorder replay ============
-var rotor_step = props.globals.getNode("sim/model/bell412/rotor-step-deg");
-var blade1_pos = props.globals.getNode("rotors/main/blade[0]/position-deg", 1);
-var blade2_pos = props.globals.getNode("rotors/main/blade[1]/position-deg", 1);
-var blade3_pos = props.globals.getNode("rotors/main/blade[2]/position-deg", 1);
-var blade4_pos = props.globals.getNode("rotors/main/blade[3]/position-deg", 1);
-var rotorangle = 0;
-
-var rotoranim_loop = func {
-	i = rotor_step.getValue();
-	if (i >= 0.0) {
-		blade1_pos.setValue(rotorangle);
-		blade2_pos.setValue(rotorangle + 90);
-		blade3_pos.setValue(rotorangle + 180);
-		blade4_pos.setValue(rotorangle + 270);
-		rotorangle += i;
-		settimer(rotoranim_loop, 0.1);
-	}
-}
-
-#var init_rotoranim = func {
-#	if (rotor_step.getValue() >= 0.0) {
-#		settimer(rotoranim_loop, 0.1);
-#	}
-#}
-
-# view management ===================================================
-
-var elapsedN = props.globals.getNode("/sim/time/elapsed-sec", 1);
-var flap_mode = 0;
-var down_time = 0;
-controls.flapsDown = func(v) {
-	if (!flap_mode) {
-		if (v < 0) {
-			down_time = elapsedN.getValue();
-			flap_mode = 1;
-			dynamic_view.lookat(
-					5,     # heading left
-					-20,   # pitch up
-					0,     # roll right
-					0.2,   # right
-					0.6,   # up
-					0.85,  # back
-					0.2,   # time
-					55,    # field of view
-			);
-		} elsif (v > 0) {
-			flap_mode = 2;
-			var p = "/sim/view/dynamic/enabled";
-			setprop(p, !getprop(p));
-		}
-
-	} else {
-		if (flap_mode == 1) {
-			if (elapsedN.getValue() < down_time + 0.2) {
-				return;
-			}
-			dynamic_view.resume();
-		}
-		flap_mode = 0;
-	}
-}
-
-
-# register function that may set me.heading_offset, me.pitch_offset, me.roll_offset,
-# me.x_offset, me.y_offset, me.z_offset, and me.fov_offset
-#
-dynamic_view.register(func {
-	var lowspeed = 1 - normatan(me.speedN.getValue() / 50);
-	var r = sin(me.roll) * cos(me.pitch);
-
-	me.heading_offset =						# heading change due to
-		(me.roll < 0 ? -50 : -30) * r * abs(r);			#    roll left/right
-
-	me.pitch_offset =						# pitch change due to
-		(me.pitch < 0 ? -50 : -50) * sin(me.pitch) * lowspeed	#    pitch down/up
-		+ 15 * sin(me.roll) * sin(me.roll);			#    roll
-
-	me.roll_offset =						# roll change due to
-		-15 * r * lowspeed;					#    roll
-});
-
-
-
-
-# main() ============================================================
-var delta_time = props.globals.getNode("/sim/time/delta-realtime-sec", 1);
-
-var main_loop = func {
-	var dt = delta_time.getValue();
-	update_torque(dt);
-	update_stall(dt);
-	update_torque_sound_filtered(dt);
-	update_slide();
-	update_engine();
-	update_rotor_cone_angle();
-	settimer(main_loop, 0);
-}
-
-
-var crashed = 0;
-var variant = nil;
-var doors = nil;
-var config_dialog = nil;
-
-# initialization
+# ------------------------------------------------------------------------------------------------------
+# Listeners
+# ------------------------------------------------------------------------------------------------------
 setlistener("/sim/signals/fdm-initialized", func {
 
-	#init_rotoranim();
-	collective.setDoubleValue(1);
-
-	setlistener("/sim/signals/reinit", func {
-		cmdarg().getBoolValue() and return;
-		cprint("32;1", "reinit");
-		turbine_timer.stop();
-		collective.setDoubleValue(1);
-		# variant.scan();
-		crashed = 0;
-	});
-
-	setlistener("sim/crashed", func {
-		cprint("31;1", "crashed ", cmdarg().getValue());
-		turbine_timer.stop();
-		if (cmdarg().getBoolValue()) {
-			crash(crashed = 1);
-		}
-	});
-
-	setlistener("/sim/freeze/replay-state", func {
-		cprint("33;1", cmdarg().getValue() ? "replay" : "pause");
-		if (crashed) {
-			crash(!cmdarg().getBoolValue())
-		}
-	});
-
-	# the attitude indicator needs pressure
-	# settimer(func { setprop("engines/engine/rpm", 3000) }, 8);
-
-	main_loop();
+	print("[Bell-412] * Chopper: ready.");
+	
 });
-
-

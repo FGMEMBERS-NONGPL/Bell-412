@@ -1,0 +1,193 @@
+The 412 Specifications + Capabilities
+
+Features
+
+proven reliability massive flat-floor cabin performs in the most extreme conditions
+dual 92-inch doors seating for up to 15
+Performance (Projected)
+
+Vne (never-exceed speed) 140kn (259km/h)
+engine take-off power 1,800hp (1,342kw)
+Corporate: flexible and comfortable workspace, easy passenger loading from either side
+EMS: 220-cubic-foot cabin, accommodations for six patients or two patients plus four staff autopilot for hands-free search & rescue
+Utility: 3,975-lb useful payload, low DOC, flexible cabin space, nine-passenger capacity
+Law Enforcement: superior personnel and equipment capacity, configurable for a variety of homeland security applications, cutting-edge surveillance capabilities
+The data set forth herein is general in nature and may vary with conditions. For performance data and operating limitations for any specific flight mission, reference must be made to the approved flight manual.
+
+Product Specifications: Bell 412
+Maximum Gross Weight
+
+External 11900 lb / 5398 kg
+
+Useful Load
+
+Standard VFR 5039 lb / 2286 kg
+
+Max External 4500 lb / 2041 kg
+
+Internal 5068 lb /2299 kg
+
+Speed & Range
+
+Max Cruise Speed 122 km -226 km/h
+
+Maximum Range 356 km - 659 km
+
+Safety Features
+
+Tail rotor clearance 2 Meters (6.5 Feet)
+Main rotor clearance 2.6 Meters (8.6 Feet)
+Rupture resistant fuel system
+Jettisonable crew doors
+Optional wire strike protection system
+Collective mounted engine controls
+Sturdy structure and bulkheads for roll over protection
+Emergency cabin egress through 4 push-out windows
+166,700 hours mean time between inflight shutdowns
+Dual electrical, hydraulic and fuel systems
+Dual digital automatic flight control system
+There¿s no such thing as mission impossible for the 412.
+Better by degrees, whether Fahrenheit or Celsius.
+Proven from the Arctic Circle to the Arabian Gulf, the 412 can operate in conditions that would cripple most other aircraft. It offers the highest dispatch reliability of any twinengine and is designed with rupture resistant fuel cells, energy-absorbing crew seats and a resilient fuselage. And most important, confidence in knowing that the helicopter that got you in can also get you out.
+
+STANDARD CONFIGURATION
+
+AIRFRAME
+Aluminum alloy fuselage (over 240 ft3 [6.8M3]) loading space
+Glass windshields
+Tinted overhead windows
+Dual windshield wipers
+Fresh air ventilators with adjustable outlets (8 cockpit and 12
+aft cabin)
+Bleed air heater and defroster with air noise suppression
+Cargo tie-down fittings (51 aft cabin floor)
+Ash trays, cockpit (2)
+Map and data case
+Cabin fire extinguisher (2)
+Swingout jettisonable doors (2 for forward cabin)
+Sliding doors (2 for aft cabin access with 2 emergency exit
+panels on each door)
+Swingout panels for extended access to aft cabin (2)
+Fixed step on skids for entry to forward cabin (2)
+Retractable steps for aft cabin access (2)
+Baggage compartment in tail boom (over 28 ft3 [0.8M3], 400 lb.
+[181Kg] capacity).
+Skid-type landing gear with replaceable wear shoes
+Mooring and jacking fi ttings (4)
+External attachment fi ttings (16)
+Semi-monocoque tailboom and vertical fi n
+Elevator [airspeed / spring-cartridge controlled]
+Tail skid
+
+ROTORS AND CONTROLS
+
+Soft-in-plane fl ex beam hub with four fi berglass blades
+Main rotor droop restraint
+Pendulum vibration absorbers
+Semi-rigid, two bladed all-metal tail rotor
+All controls hydraulically boosted (dual systems for main rotor)
+Force trim system and artifi cial feel (electrically set)
+Cyclic stick centering
+RPM governor selector control
+Manual engine torque matching and trim
+Dual Digital Three axis AFCS (2 flight control computers)
+
+TRANSMISSION/DRIVE SYSTEM
+
+Main rotor transmission with 4 chip detectors/2 debris
+collectors
+Vibration isolation / suspension mounts (4)
+Main Lift link (single point suspension)
+42º gearbox (sight gage and magnetic drain plug/chip
+detector)
+90º gearbox (sight gage and magnetic drain plug/chip
+detector)
+Hydraulic pumps for controls (2 independent systems)
+Transmission oil cooler
+
+POWER PLANT
+
+Pratt & Whitney of Canada PT6T-3D ¿Twin Pac¿ (1800 SHP)
+Automatic governors (2)
+Magnetic chip detectors
+Torque limiter
+Fuel System (330.5 US Gal [1251 liter] usable, rupture
+resistant cells and breakaway vent fi tting)
+Pumps on engines and submerged in fuel tanks
+Fuel fi lter assembly
+Oil coolers (2)
+Fire detection system (2)
+Fire extinguisher system (2)
+RPM warning system
+Hinged cowling
+Starter-generators (2)
+Power turbine RPM control actuators
+Combining gearbox with chip detector
+Separate fi rewall protection for each engine
+Overriding clutches (2)
+Extended Engine Exhaust Deflectors
+
+COMMUNICATIONS & NAVIGATION
+
+720 Channel VHF rec/trans transceiver [KTR-908]
+VHF antenna
+2 Headsets (pilot & copilot)
+2 Intercomunication Panels (ICS) [pilot & copilot]
+Emergency Transmit Switch
+Horizontal Situation Indicator
+Attitude Director Indicator
+Attitude and Heading Reference Systems (2)
+Cockpit voice recorder provisions
+
+FLIGHT AND ENGINE INSTRUMENTS
+
+Free air temperature indicator
+AL-300 Data Display
+Pitot static system with electric pitot heat
+Altimeter (barometric)
+Clock, digital quartz chronometer
+Hourmeter
+Magnetic compass, pilot¿s standby
+Airspeed indicator
+Rate of climb indicator
+Turn and slip indicator
+Triple tachometer (rotor and engines)
+Dual hydraulic press/temp indicator (2)
+Gas producer tach indicator (2)
+Triple torque indicator (Eng 1, Eng 2, mast)
+Engine oil-temp/press indicator (2)
+Turbine inlet temperature indicator (2)
+Fuel pressure indicator
+Transmission oil-temp/press indicator
+Dual DC and AC voltmeters
+Dual DC loadmeter
+Fire detection warning (3)
+Combining gearbox oil-temp/press indicator
+Flight data recorder provisions
+Caution & Warning System - Master caution light on panel
+draws attention to the pedestal mounted annunciator panel
+when worded segments illuminate
+
+ELECTRICAL
+
+Generator (2) (30 volt, 200 ampere DC startergenerator
+derated to 150 amperes)
+Inverters (2), (450 volt ampere single phase, solid state)
+Nickel cadmium battery (40 ampere hours)
+Battery over-temp warning
+Generator voltage regulators
+Instrument (integral) lights (white)
+Navigation lights
+Landing light-retractable
+Anticollision light (2)
+Searchlight-controllable
+Tritium lighted emergency exit signs
+Cockpit lights (2)
+Dome lights (3)
+External power receptacle
+Twin ignition and starting systems
+Seat belt sign
+Passenger step lights
+Baggage compartment light & fire sensor
+
+Utility cabin lights (removable) 

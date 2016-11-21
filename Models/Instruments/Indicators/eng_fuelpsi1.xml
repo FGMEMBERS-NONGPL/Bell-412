@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>eng_fuelpsi1.ac</path>
+	<!--<texture-path>../.</texture-path> -->
+	<offsets>
+		<x-m>-2.79934</x-m>
+		<y-m>0.09457</y-m>
+		<z-m>0.27919</z-m>
+		<pitch-deg>-8.39</pitch-deg>
+	</offsets>
+    <animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Main Instruments EngFuelPsi1 Needle</object-name>
+		<property>/bell412/mechanics/engines/engine[0]/fuelpress</property>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+  		<interpolation>
+            <entry><ind>-999</ind><dep>135</dep></entry>
+            <entry><ind>0</ind><dep>135</dep></entry>
+            <entry><ind>5</ind><dep>160</dep></entry>
+            <entry><ind>10</ind><dep>188</dep></entry>
+            <entry><ind>15</ind><dep>216</dep></entry>
+            <entry><ind>20</ind><dep>245</dep></entry>
+            <entry><ind>25</ind><dep>274</dep></entry>
+            <entry><ind>30</ind><dep>302</dep></entry>
+            <entry><ind>35</ind><dep>330</dep></entry>
+            <entry><ind>40</ind><dep>348</dep></entry>
+            <entry><ind>50</ind><dep>390</dep></entry>
+            <entry><ind>999</ind><dep>390</dep></entry>
+        </interpolation>
+    </animation>
+</PropertyList>
+

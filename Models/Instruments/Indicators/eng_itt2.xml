@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>eng_itt2.ac</path>
+	<offsets>
+		<x-m>-2.81703</x-m>
+		<y-m>0.15248</y-m>
+		<z-m>0.39927</z-m>
+		<pitch-deg>-8.39</pitch-deg>
+	</offsets>
+    <animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Main Instruments EngITT2 Needle</object-name>
+		<property>/bell412/mechanics/engines/engine[1]/itt</property>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+  		<interpolation>
+            <entry><ind>-9999</ind><dep>19</dep></entry>
+            <entry><ind>0</ind><dep>19</dep></entry>
+            <entry><ind>300</ind><dep>61</dep></entry>
+            <entry><ind>400</ind><dep>81</dep></entry>
+            <entry><ind>500</ind><dep>103</dep></entry>
+            <entry><ind>600</ind><dep>124</dep></entry>
+            <entry><ind>700</ind><dep>141</dep></entry>
+            <entry><ind>1000</ind><dep>360</dep></entry>
+            <entry><ind>9999</ind><dep>360</dep></entry>
+        </interpolation>
+    </animation>
+</PropertyList>
+

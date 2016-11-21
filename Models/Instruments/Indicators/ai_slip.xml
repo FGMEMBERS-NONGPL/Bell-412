@@ -11,12 +11,18 @@
     <animation>
         <type>rotate</type>
         <object-name>5.Cockpit Panel Main Instruments AI slip</object-name>
-		<property>/orientation/side-slip-deg</property>
+		<property>/instrumentation/slip-skid-ball/indicated-slip-skid</property>
+		<factor>30</factor>
+		<!--
+		<min-deg>-9.3</min-deg>
+		<max-deg>9.3</max-deg>
+		-->
         <axis>
             <x>-1</x>
             <y>0</y>
             <z>0</z>
 		</axis>
+		<!--
   		<interpolation>
             <entry><ind>-999</ind><dep>-12</dep></entry>
             <entry><ind>-10.0</ind><dep>-10</dep></entry>
@@ -26,6 +32,7 @@
             <entry><ind>10</ind><dep>10</dep></entry>
             <entry><ind>999</ind><dep>12</dep></entry>
 		</interpolation>
+		-->
     </animation>
 </PropertyList>
 

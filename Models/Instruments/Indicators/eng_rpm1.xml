@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>eng_rpm1.ac</path>
+	<offsets>
+		<x-m>-2.82557</x-m>
+		<y-m>0.09403</y-m>
+		<z-m>0.4569</z-m>
+		<pitch-deg>-8.39</pitch-deg>
+	</offsets>
+    <animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Main Instruments EngRPM1 Needle</object-name>
+		<property>/bell412/mechanics/engines/engine[0]/n1</property>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+  		<interpolation>
+            <entry><ind>-999</ind><dep>0</dep></entry>
+            <entry><ind>0</ind><dep>0</dep></entry>
+            <entry><ind>10</ind><dep>26</dep></entry>
+            <entry><ind>20</ind><dep>52</dep></entry>
+            <entry><ind>30</ind><dep>78</dep></entry>
+            <entry><ind>40</ind><dep>104</dep></entry>
+            <entry><ind>50</ind><dep>130</dep></entry>
+            <entry><ind>60</ind><dep>156</dep></entry>
+            <entry><ind>80</ind><dep>208</dep></entry>
+            <entry><ind>90</ind><dep>236</dep></entry>
+            <entry><ind>100</ind><dep>266</dep></entry>
+            <entry><ind>110</ind><dep>272</dep></entry>
+            <entry><ind>120</ind><dep>278</dep></entry>
+            <entry><ind>130</ind><dep>284</dep></entry>
+            <entry><ind>140</ind><dep>290</dep></entry>
+            <entry><ind>150</ind><dep>296</dep></entry>
+            <entry><ind>999</ind><dep>310</dep></entry>
+        </interpolation>
+    </animation>
+</PropertyList>
+

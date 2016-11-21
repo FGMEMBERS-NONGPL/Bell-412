@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>clock.ac</path>
+	<offsets>
+		<x-m>-2.81615</x-m>
+		<y-m>0.67023</y-m>
+		<z-m>0.38061</z-m>
+		<pitch-deg>-8.39</pitch-deg>
+	</offsets>
+    <animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Main Instruments Clock Needle H</object-name>
+		<property>instrumentation/clock/local-hour</property>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+		<interpolation>
+			<entry><ind>-999</ind><dep>0</dep></entry>
+			<entry><ind>3</ind><dep>90</dep></entry>
+			<entry><ind>6</ind><dep>180</dep></entry>
+			<entry><ind>9</ind><dep>270</dep></entry>
+			<entry><ind>10</ind><dep>300</dep></entry>
+			<entry><ind>11</ind><dep>330</dep></entry>
+			<entry><ind>12</ind><dep>0</dep></entry>
+			<entry><ind>15</ind><dep>90</dep></entry>
+			<entry><ind>18</ind><dep>180</dep></entry>
+			<entry><ind>21</ind><dep>270</dep></entry>
+			<entry><ind>23</ind><dep>330</dep></entry>
+		</interpolation>
+    </animation>
+    <animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Main Instruments Clock Needle M</object-name>
+		<property>instrumentation/clock/indicated-min</property>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+		<interpolation>
+			<entry><ind>-999</ind><dep>0</dep></entry>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>15</ind><dep>90</dep></entry>
+			<entry><ind>30</ind><dep>180</dep></entry>
+			<entry><ind>45</ind><dep>270</dep></entry>
+			<entry><ind>59</ind><dep>359</dep></entry>
+			<entry><ind>999</ind><dep>360</dep></entry>
+		</interpolation>
+    </animation>
+</PropertyList>
+

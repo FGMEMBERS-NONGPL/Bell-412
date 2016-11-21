@@ -1,0 +1,744 @@
+<?xml version="1.0"?>
+
+<!-- WARNING: add every object to the rembrandt effect feature at the bottom -->
+
+<PropertyList>
+	<path>cautions.ac</path>
+
+	<!-- warnings special caution lights, default to off on bus start -->
+	<animation>
+		<name>cautions_warnings</name>
+		<object-name>5.Cockpit Panel Main Cautions.BATTERYTEMP</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.CBOXOILTEMP</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.FIRE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.XMSNOILTEMP</object-name>
+	</animation>
+	<!-- default caution lights on bus start -->
+	<animation>
+		<name>cautions_default</name>
+		<object-name>5.Cockpit Panel Main Cautions.1.AFCS</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.DCGENERATOR</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.ENGINECHIP</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.FUELBOOST</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.FUELTRANS</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.FUELVALVE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.GENOVHT</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.GOVMANUAL</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.HYDRAULIC</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.INVERTER</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.OILPRESSURE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.PARTSEPOFF</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.AFCS</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.DCGENERATOR</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.ENGINECHIP</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.FUELBOOST</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.FUELTRANS</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.FUELVALVE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.GENOVHT</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.GOVMANUAL</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.HYDRAULIC</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.INVERTER</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.OILPRESSURE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.PARTSEPOFF</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.BATTERY</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.CBOXOILPRESSURE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.DOORLOCK</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.EXTERNALPOWER</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.FUELINTCON</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.FUELXFEED</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.ROTORBRAKE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.XMSNOILPRESSURE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.OUTSTATE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.OUTSTATE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.MASTERSTATE</object-name>		<!-- pilot/cop MASTER CAUTION -->
+		<object-name>5.Cockpit Panel Main Cautions.CYCCTRSTATE</object-name>		<!-- pilot/cop cyclic constraint -->
+		<object-name>5.Cockpit Panel Main Cautions.RALTDH</object-name>				<!-- radio alt warning -->
+		<object-name>5.Cockpit Panel Main Cautions.RPMSTATE</object-name>			<!-- RPM out of range -->
+		<object-name>5.Cockpit Panel Main Cautions.OVERTORQUESTATE</object-name>	<!-- OVER TORQUE -->
+	</animation>
+
+	<!-- 
+		 ==============================================================================
+		 CAUTIONS DEFAULT LIGHTNING
+		 ==============================================================================
+	-->
+	<!-- all lights OFF if not powered -->
+	<animation>
+		<type>material</type>
+		<object-name>cautions_default</object-name>
+		<object-name>cautions_warnings</object-name>
+		<condition>
+			<not><property>bell412/power/output/cautions/state</property></not>
+    	</condition>
+		<ambient>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</ambient>
+		<diffuse>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</diffuse>
+		<emission>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</emission>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>cautions_default</object-name>
+		<condition>
+			<property>bell412/power/output/cautions/state</property>
+    	</condition>
+		<ambient>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</ambient>
+		<diffuse>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</diffuse>
+		<emission>
+			<red>0.8</red>
+			<green>0.8</green>
+			<blue>0.8</blue>
+			<factor-prop>bell412/power/buses/soundstate</factor-prop>
+		</emission>
+	</animation>
+
+	<!-- all lights ON with power AND test switch -->
+	<animation>
+		<type>material</type>
+		<object-name>cautions_warnings</object-name>
+		<object-name>cautions_default</object-name>
+		<condition>
+			<and>
+				<property>controls/cautions/switches/test</property>
+				<property>bell412/power/output/cautions/state</property>
+			</and>
+    	</condition>
+		<ambient>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</ambient>
+		<diffuse>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</diffuse>
+		<emission>
+			<red>0.8</red>
+			<green>0.8</green>
+			<blue>0.8</blue>
+		</emission>
+	</animation>
+
+	<!-- when power goes on (see above), 'warnings' (red ones) are off if no test switch -->
+	<animation>
+		<type>material</type>
+		<object-name>cautions_warnings</object-name>
+		<condition>
+			<not><property>controls/cautions/switches/test</property></not>
+    	</condition>
+		<ambient>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</ambient>
+		<diffuse>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</diffuse>
+		<emission>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</emission>
+	</animation>
+
+	<!-- 
+		 ==============================================================================
+		 CAUTIONS CONDITIONAL LIGHTNING (via selection)
+		 ==============================================================================
+	-->
+	<!-- MASTER CAUTION (main board) -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.MASTERSTATE</object-name>		<!-- pilot/cop MASTER CAUTION -->
+		<condition>
+			<or>
+				<and>
+					<property>bell412/power/output/cautions/master</property>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+
+	<!-- CYC CTR (main board) -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.CYCCTRSTATE</object-name>		<!-- pilot/cop CYC CTR -->
+		<condition>
+			<or>
+				<and>
+					<property>bell412/power/output/cautions/cycctr</property>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	
+	<!-- RPM (main board) -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.RPMSTATE</object-name>		<!-- RPM out of range -->
+		<condition>
+			<or>
+				<and>
+					<or>
+						<less-than>
+							<property>bell412/mechanics/engines/nr</property>
+							<value>95</value>
+						</less-than>
+						<greater-than>
+							<property>bell412/mechanics/engines/nr</property>
+							<value>104</value>
+						</greater-than>
+					</or>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</condition>
+		<!--
+		<action>
+			<binding>
+				<command>property-toggle</command>
+				<property>bell412/power/output/cautions/alarm</property>
+			</binding>
+		</action>
+		-->
+	</animation>
+
+	<!-- OVERTORQUE (main board) -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.OVERTORQUESTATE</object-name>		<!-- OVER TORQUE -->
+		<condition>
+			<or>
+				<and>
+					<greater-than>
+						<property>bell412/mechanics/engines/torquepct</property>
+						<value>90</value>
+					</greater-than>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+
+	<!-- BATTERY -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.BATTERY</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>bell412/power/buses/bus[0]/state</property>
+					<property>bell412/power/buses/bus[1]/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+
+	<!-- BRAKE -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.ROTORBRAKE</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>controls/engines/brake</property>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	
+	<!-- DOOR LOCK -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.DOORLOCK</object-name>
+		<condition>
+			<or>
+				<and>
+					<or>
+						<property>controls/doors/front/left</property>
+						<property>controls/doors/front/right</property>
+						<property>controls/doors/middle/left</property>
+						<property>controls/doors/middle/right</property>
+						<property>controls/doors/back/left</property>
+						<property>controls/doors/back/right</property>
+						<property>controls/doors/nose</property>
+						<property>controls/doors/tail</property>
+					</or>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	
+	<!-- GEN1 OVHT -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.1.GENOVHT</object-name>
+		<condition>
+			<or>
+				<and>
+					<greater-than>
+						<property>bell412/power/buses/bus[0]/gentemp</property>
+						<value>54</value>
+					</greater-than>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- GEN2 OVHT -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.2.GENOVHT</object-name>
+		<condition>
+			<or>
+				<and>
+					<greater-than>
+						<property>bell412/power/buses/bus[1]/gentemp</property>
+						<value>54</value>
+					</greater-than>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	
+
+	<!-- ENGINE OUT 1 (main board) -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.1.OUTSTATE</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>bell412/mechanics/engines/engine[0]/state</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+
+	<!-- ENGINE OUT 2 (main board) -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.2.OUTSTATE</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>bell412/mechanics/engines/engine[1]/state</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+
+	<!-- INVERTER 1 -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.1.INVERTER</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/power/switches/inv1</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+
+	<!-- INVERTER 2 -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.2.INVERTER</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/power/switches/inv2</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+
+	<!-- FUEL INTCON -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.FUELINTCON</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/fuel/intcon</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- FUEL XFEED -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.FUELXFEED</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/fuel/xfeed</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- E1 CHIP (metal particle) default off -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.1.ENGINECHIP</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>controls/fuel/engine[0]/chip</property>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- E2 CHIP (metal particle) default off -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.2.ENGINECHIP</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>controls/fuel/engine[1]/chip</property>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- FUEL E1 TRANS -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.1.FUELTRANS</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/fuel/engine[0]/trans</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- FUEL E1 BOOST PUMP -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.1.FUELBOOST</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/fuel/engine[0]/pump</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- FUEL E1 VALVE -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.1.FUELVALVE</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/fuel/engine[0]/valve</property></not>
+					<property>bell412/power/buses/state</property>
+					<less-than-equals>
+						<property>bell412/mechanics/engines/engine[0]/fuelpress</property>
+						<value>4</value>
+					</less-than-equals>
+				</and>
+				<property>controls/cautions/switches/test</property>
+				<less-than-equals>
+					<property>bell412/mechanics/engines/engine[0]/fuelpress</property>
+					<value>4</value>
+				</less-than-equals>
+			</or>
+    	</condition>
+	</animation>
+	<!-- E1 GOVERNOR -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.1.GOVMANUAL</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/engines/engine[0]/gov</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- E1 PARTSEP -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.1.PARTSEPOFF</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/engines/engine[0]/partsep</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- E1 HYDR -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.1.HYDRAULIC</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/engines/engine[0]/hydr</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- E1 OILPRESS -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.1.OILPRESSURE</object-name>
+		<condition>
+			<or>
+				<and>
+					<less-than>
+						<property>bell412/mechanics/engines/engine[0]/oilpress</property>
+						<value>40</value>
+					</less-than>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+
+
+	<!-- FUEL E2 TRANS -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.2.FUELTRANS</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/fuel/engine[1]/trans</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- FUEL E2 BOOST PUMP -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.2.FUELBOOST</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/fuel/engine[1]/pump</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- FUEL E2 VALVE -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.2.FUELVALVE</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/fuel/engine[1]/valve</property></not>
+					<property>bell412/power/buses/state</property>
+					<less-than-equals>
+						<property>bell412/mechanics/engines/engine[1]/fuelpress</property>
+						<value>4</value>
+					</less-than-equals>
+				</and>
+				<property>controls/cautions/switches/test</property>
+				<less-than-equals>
+					<property>bell412/mechanics/engines/engine[1]/fuelpress</property>
+					<value>4</value>
+				</less-than-equals>
+			</or>
+    	</condition>
+	</animation>
+	<!-- E2 GOVERNOR -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.2.GOVMANUAL</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/engines/engine[1]/gov</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- E2 PARTSEP -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.2.PARTSEPOFF</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/engines/engine[1]/partsep</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- E2 HYDR -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.2.HYDRAULIC</object-name>
+		<condition>
+			<or>
+				<and>
+					<not><property>controls/engines/engine[1]/hydr</property></not>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+	<!-- E2 OILPRESS -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.2.OILPRESSURE</object-name>
+		<condition>
+			<or>
+				<and>
+					<less-than>
+						<property>bell412/mechanics/engines/engine[1]/oilpress</property>
+						<value>40</value>
+					</less-than>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+    	</condition>
+	</animation>
+
+	<!-- RADIO ALT DH DESIRED HEIGHT -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Cautions.RALTDH</object-name>
+		<condition>
+			<or>
+				<and>
+					<property>controls/instruments/radioalt/alarm</property>
+					<property>bell412/power/buses/state</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</condition>
+	</animation>
+
+	
+	<!-- Rembrandt rendering -->
+	<effect>
+    	<inherits-from>Effects/model-transparent</inherits-from>
+    	<condition>
+      		<property>sim/rendering/rembrandt/enabled</property>
+    	</condition>
+		<object-name>5.Cockpit Panel Main Cautions.1.AFCS</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.DCGENERATOR</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.ENGINECHIP</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.FUELBOOST</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.FUELTRANS</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.FUELVALVE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.GENOVHT</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.GOVMANUAL</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.HYDRAULIC</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.INVERTER</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.OILPRESSURE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.PARTSEPOFF</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.AFCS</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.DCGENERATOR</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.ENGINECHIP</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.FUELBOOST</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.FUELTRANS</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.FUELVALVE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.GENOVHT</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.GOVMANUAL</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.HYDRAULIC</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.INVERTER</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.OILPRESSURE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.PARTSEPOFF</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.BATTERY</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.BATTERYTEMP</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.CBOXOILPRESSURE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.CBOXOILTEMP</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.DOORLOCK</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.EXTERNALPOWER</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.FIRE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.FUELINTCON</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.FUELXFEED</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.ROTORBRAKE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.XMSNOILPRESSURE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.XMSNOILTEMP</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.1.OUTSTATE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.2.OUTSTATE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.MASTERSTATE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.CYCCTRSTATE</object-name>
+		<object-name>5.Cockpit Panel Main Cautions.RALTDH</object-name>				<!-- radio alt warning -->
+		<object-name>5.Cockpit Panel Main Cautions.RPMSTATE</object-name>			<!-- RPM out of range -->
+		<object-name>5.Cockpit Panel Main Cautions.OVERTORQUESTATE</object-name>	<!-- OVER TORQUE -->
+  	</effect>
+	
+</PropertyList>

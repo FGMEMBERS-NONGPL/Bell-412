@@ -5,7 +5,7 @@
 	<parameters>
 		<lightmap-enabled type="int">1</lightmap-enabled>
 		<texture n="3">
-			<image>../Models/Controls/instruments-needles-lights.png</image>
+			<image>../Models/Controls/instruments-controls-lights.png</image>
 		</texture>
 		<lightmap-factor type="float" n="0">
 			<use>/bell412/power/output/consoles/state</use>

@@ -2,8 +2,9 @@
 <PropertyList>
 	<sim>
 		<description>Bell-412</description>
-		<author>vslash.com</author>
-		<status>V0.1</status>
+		<author>Valery Seys</author>
+		<status>in_progress</status>
+        <aircraft-version>0.2</aircraft-version>
     	<license>notfree</license>
 
 		<flight-model>yasim</flight-model>
@@ -11,7 +12,8 @@
     	<fuel-fraction>0.5</fuel-fraction>
 
 		<startup>
-			<splash-texture>Aircraft/Bell-412/Splash/412.png</splash-texture>
+			<!-- <splash-texture>Aircraft/Bell-412/Splash/412.png</splash-texture> -->
+			<splash-texture>Aircraft/Bell-412/Splash/splash.png</splash-texture>
 		</startup>
 
 		<model>
@@ -22,6 +24,9 @@
         		<engine type="float">0</engine>
         		<rotor-step-deg type="float">-1</rotor-step-deg>
 			</bell412>
+			<livery>
+				<file type="string">Default</file>
+			</livery>
 		</model>
 
 		<view>
@@ -47,29 +52,37 @@
 		<sound>
 			<path>Aircraft/Bell-412/Sounds/Bell-412-sound.xml</path>
 		</sound>
-		
+
+		<help include="Dialogs/Bell-412-help.xml"/>
+		<!-- <checklists include="c172-checklists.xml"/> -->
+		<!-- <tutorials include="Tutorials/c172-tutorials.xml"/> -->
+
+		<!-- b412 max. Takeoff Weight	5.398 kg	11.901 - 6861  ==> max load = 5040 lbs -->
 		<weight n="0">
 			<name>Pilot</name>
-			<weight-lb>180</weight-lb>
-			<max-lb>300</max-lb>
+			<weight-lb>160</weight-lb>
+			<max-lb>250</max-lb>
 		</weight>
-
 		<weight n="1">
 			<name>Co-Pilot</name>
-			<weight-lb>180</weight-lb>
-			<max-lb>300</max-lb>
+			<weight-lb>160</weight-lb>
+			<max-lb>250</max-lb>
 		</weight>
 
 		<weight n="2">
-			<name>RPassenger</name>
-			<weight-lb>180</weight-lb>
-			<max-lb>300</max-lb>
+			<name>Passenger1</name>
+			<weight-lb>0</weight-lb>
+			<max-lb>500</max-lb>
 		</weight>
-
 		<weight n="3">
-			<name>LPassenger</name>
-			<weight-lb>180</weight-lb>
-			<max-lb>300</max-lb>
+			<name>Passenger2</name>
+			<weight-lb>0</weight-lb>
+			<max-lb>500</max-lb>
+		</weight>
+		<weight n="4">
+			<name>Load</name>
+			<weight-lb>0</weight-lb>
+			<max-lb>3000</max-lb>
 		</weight>
 
 		<menubar include="Dialogs/Bell-412-menu.xml"/> 
@@ -85,8 +98,8 @@
 				<int n="6" type="int">  0 </int>  <!-- 5 immat -->
 				<int n="7" type="int">  0 </int>  <!-- 6 immat -->
 				<int n="8" alias="/controls/lighting/beacon-state/state"/> 		<!-- beacon state -->
-				<int n="9" alias="/controls/lighting/nav-lights"/> 				<!-- nav lights -->
-				<int n="10" alias="/bell412/power/buses"/> 						<!-- bat. buses state -->
+				<int n="9" alias="/controls/lighting/switches/navlights"/>		<!-- nav lights -->
+				<int n="10" alias="/bell412/power/buses/state"/>				<!-- bat. buses state -->
 			</generic>
 		</multiplay>
 	</sim>
@@ -97,43 +110,132 @@
 
 	<!-- controls: everythings related to the user controls/switches/knob -->
 	<controls>
-		<engines>	<!-- TODO old set -->
+		<engines>
+			<brake type="float">0</brake>					<!-- OH rotor brake handle, default to 0% off  -->
+			<starteron type="float">0</starteron>			<!-- which engine is currently starting (0: none, n: n-1, ... -->
 			<engine n="0">
-				<magnetos>0</magnetos>
+				<starter type="bool">false</starter>		<!-- E1 starter switch -->
+				<stop type="bool">false</stop>				<!-- E1 idle stop switch -->
+				<thrust type="float">0</thrust>				<!-- E1 'thrust' handle (throttle already set => collectiv) -->
+				<brake type="bool">true</brake>				<!-- E1 brake state -->
+				<gov type="bool">false</gov>				<!-- E1 governor (pedestal) -->
+				<partsep type="bool">false</partsep>		<!-- E1 part sep (pedestal) -->
+				<hydr type="bool">false</hydr>				<!-- E1 hydr sys (pedestal) -->
 			</engine>
 			<engine n="1">
-				<magnetos>0</magnetos>
+				<starter type="bool">false</starter>		<!-- E2 starter switch -->
+				<stop type="bool">false</stop>				<!-- E2 idle stop switch -->
+				<thrust type="float">0</thrust>				<!-- E1 'thrust' handle (throttle already set => collectiv) -->
+				<brake type="bool">true</brake>				<!-- E2 brake state -->
+				<gov type="bool">false</gov>				<!-- E2 governor (pedestal) -->
+				<partsep type="bool">false</partsep>		<!-- E2 part sep (pedestal) -->
+				<hydr type="bool">false</hydr>				<!-- E2 hydr sys (pedestal) -->
 			</engine>
 		</engines>
+		<system>
+			<ap>
+				<afcs>										<!-- flight control system -->
+					<ap1 type="bool">false</ap1>			<!-- ap1 switch (pedestal) -->
+					<ap2 type="bool">false</ap2>			<!-- ap2 switch (pedestal) -->
+					<yaw type="float">50</yaw>
+					<roll type="float">50</roll>
+					<pitch type="float">50</pitch>
+					<sas type="bool">false</sas>			<!-- sas/att switch (pedestal) (mutually exclusive) -->
+					<att type="bool">false</att>			<!-- sas/att switch (pedestal) (mutually exclusive) -->
+				</afcs>
+				<stby type="bool">false</stby>				<!-- flight director system (aka autopilot) -->
+				<nav type="bool">false</nav>
+				<alt type="bool">false</alt>
+				<ias type="bool">false</ias>
+				<vs  type="bool">false</vs>
+				<hdg type="bool">false</hdg>
+			</ap>
+		</system>
 		<gear>	<!-- TODO old set -->
 			<brake-parking>1</brake-parking>
 		</gear>
-		<rotor>
-			<reltarget>1</reltarget>
-			<maxreltorque>1</maxreltorque>
-		</rotor>
+		<rotorgear>
+			<starter>0</starter>
+			<reltarget>0</reltarget>
+			<maxreltorque>0</maxreltorque>
+		</rotorgear>
 		<lighting>
+			<beacon-state type="bool">false</beacon-state> <!-- flash on/off -->
 			<switches>
 				<beacon type="bool">false</beacon>			<!-- OH beacon sw -->
 				<navlights type="bool">false</navlights>	<!-- OH nav sw -->
-				<conslt type="double">0</conslt>			<!-- OH console light dimmer -->
-				<pilotlt type="double">0</pilotlt>			<!-- OH pilot light dimmer -->
+				<conslt type="float">0.5</conslt>			<!-- OH console light dimmer -->
+				<pilotlt type="float">1.0</pilotlt>			<!-- OH pilot light dimmer -->
+				<pedlt type="float">1.0</pedlt>				<!-- OH pedestal light dimmer -->
 			</switches>
 		</lighting>
 		<power>
 			<switches>
-				<bus1 type="bool">false</bus1>				<!-- OH Buses -->
-				<inv1 type="bool">false</inv1>				<!-- OH inverters -->
+				<bus1 type="bool">false</bus1>				<!-- OH Buses (DC) -->
 				<bus2 type="bool">false</bus2>
+				<inv1 type="bool">false</inv1>				<!-- OH inverters (AC) -->
 				<inv2 type="bool">false</inv2>
+				<gen1 type="bool">false</gen1>				<!-- OH generator -->
+				<gen2 type="bool">false</gen2>
 			</switches>
 		</power>
 		<consoles>
 			<switches>
 				<bat1 type="bool">false</bat1>				<!-- console bat -->
-				<bat2 type="bool">false</bat2>
+				<bat2 type="bool">false</bat2>				<!-- att -->
 			</switches>
 		</consoles>
+		<cautions>
+			<switches>
+				<test type="bool">false</test>
+				<reset type="bool">false</reset>
+			</switches>
+		</cautions>
+		<fuel>
+			<intcon type="bool">false</intcon>
+			<xfeed type="bool">false</xfeed>
+			<testbus type="bool">false</testbus>
+			<engine n="0">
+				<trans type="bool">0</trans>
+				<pump type="bool">0</pump>
+				<valve type="bool">0</valve>
+			</engine>
+			<engine n="1">
+				<trans type="bool">0</trans>
+				<pump type="bool">0</pump>
+				<valve type="bool">0</valve>
+			</engine>
+		</fuel>
+		<doors>												<!-- doors handle switches -->
+			<soundopen type="float">0</soundopen>			<!-- sound trigger -->
+			<soundclose type="float">0</soundclose>			<!-- sound trigger -->
+			<front>
+				<left type="float">0</left>
+				<right type="float">0</right>
+			</front>
+			<middle>
+				<left type="bool">0</left>
+				<right type="bool">0</right>
+			</middle>
+			<back>
+				<left type="bool">0</left>
+				<right type="bool">0</right>
+			</back>
+			<nose type="bool">0</nose>
+			<tail type="bool">0</tail>
+		</doors>
+		<options>
+			<shake type="bool">1</shake>
+		</options>
+		<sound>
+			<engineshutdown type="float">0</engineshutdown>
+		</sound>
+		<instruments>
+			<radioalt>
+				<set type="float">0</set>
+				<alarm type="bool">0</alarm>
+			</radioalt>
+		</instruments>
 	</controls>
 
 	<rotors>	<!-- TODO old set -->
@@ -153,24 +255,37 @@
 			<roll-deg type="float">0</roll-deg>
 			<yaw-deg type="float">0</yaw-deg>
 		</bar2>
+		<gear>
+			<torque-sound-filtered type="float">0</torque-sound-filtered>
+		</gear>
 	</rotors>
 
 	<!-- bell412 state and nasal ipc -->
 	<!-- see Docs/_schematic.graphml ; Docs/_Framework.txt -->
 	<bell412>
-		<!-- Power Inputs -->	
 		<power>
-			<bus1>
-				<ampload type="float">0</ampload>
-				<dcload type="float">0</dcload>
-				<acload type="float">0</acload>
-			</bus1>
-			<bus2>
-				<ampload type="float">0</ampload>
-				<dcload type="float">0</dcload>
-				<acload type="float">0</acload>
-			</bus2>
-			<buses type="double">0</buses>								<!-- main buses = bus1 + bus2 -->
+			<!-- Power Source -->
+			<buses>														<!-- main buses = bus1 + bus2 -->
+				<state type="bool">false</state>						<!-- global power state -->
+				<soundstate type="float">0</soundstate>					<!-- slowly power in/out -->
+				<charge type="float">1</charge>							<!-- global charge available -->
+				<bus n="0">
+					<state type="bool">0</state>
+					<dcload type="float">0</dcload>
+					<acload type="float">0</acload>
+					<ampload type="float">0</ampload>
+					<battemp type="float">0</battemp>
+					<gentemp type="float">0</gentemp>
+				</bus>
+				<bus n="1">
+					<state type="bool">0</state>
+					<dcload type="float">0</dcload>
+					<acload type="float">0</acload>
+					<ampload type="float">0</ampload>
+					<battemp type="float">0</battemp>
+					<gentemp type="float">0</gentemp>
+				</bus>
+			</buses>
 
 			<!-- Power Outputs -->	
 			<output>
@@ -179,33 +294,62 @@
 					<navlights type="bool">false</navlights>
 				</lights>
 				<consoles>
-					<state type="bool">false</state>					<!-- activated by bat1 OR bat2-aft on the console -->
-					<instruments type="double">0.0</instruments>		<!-- instrument powered  -->
-					<conslt type="double">0</conslt>					<!-- console light powered -->
-					<pilotlt type="double">0.0</pilotlt>				<!-- pilot instruments lights powered -->
-					<pedestallt type="double">0.0</pedestallt>			<!-- pedestal lights powered -->
+					<state type="bool">false</state>					<!-- activated by bat1 OR bat2-att on the console -->
+					<instruments type="float">0.0</instruments>			<!-- instrument powered  -->
+					<conslt type="float">0</conslt>						<!-- console light powered -->
+					<pilotlt type="float">0.0</pilotlt>					<!-- pilot instruments lights powered -->
+					<pedlt type="float">0.0</pedlt>						<!-- pedestal lights powered -->
 				</consoles>
 				<engines>
 					<state type="bool">false</state>					<!-- powered -->
-					<starter n="0" type="bool">false</starter>			<!-- starter 1 -->
-					<starter n="1" type="bool">false</starter>			<!-- starter 2 -->
+					<engine n="0">
+						<state type="bool">false</state>
+					</engine>
+					<engine n="1">
+						<state type="bool">false</state>
+					</engine>
 				</engines>
+				<cautions>
+					<state type="bool">false</state>					<!-- powered -->
+					<test_mode type="bool">false</test_mode>
+					<alarm type="bool">false</alarm>					<!-- audible alarm -->
+					<master type="bool">true</master>					<!-- master caution annunciator default to true until all is OK -->
+					<cycctr type="bool">false</cycctr>					<!-- cyclic constraint -->
+				</cautions>
 			</output>
 		</power>
 		<mechanics>
 			<engines>
-				<engine n="0" type="float">
-					<state type="float">0</state>
-					<rpm type="float">0</rpm>
+				<nr type="float">0</nr>									<!-- rotor rpm -->
+				<torquepct type="float">0</torquepct>					<!-- torque percentage -->
+				<gearbox type="float">0</gearbox>						<!-- c'box press -->
+				<xmsn type="float">0</xmsn>								<!-- trans press -->
+				<hydr n="0">
+					<temp type="float">-50</temp>						<!-- hydr temp to -50 == not set -->
+					<press type="float">0</press>
+				</hydr>
+				<hydr n="1">
+					<temp type="float">-50</temp>						<!-- hydr temp to -50 == not set -->
+					<press type="float">0</press>
+				</hydr>
+				<engine n="0">
+					<state type="float">0</state>						<!-- 0:OFF, 1-4:STARTING STATES, 5:RUNNING -->
+					<runnable type="bool">0</runnable>					<!-- all check ok -->
+					<n1 type="float">0</n1>
+					<n2 type="float">0</n2>
 					<itt type="float">0</itt>
 					<oilpress type="float">0</oilpress>
+					<oiltemp type="float">-50</oiltemp>					<!-- oil temp to -50 == not set -->
 					<fuelpress type="float">0</fuelpress>
 				</engine>
-				<engine n="1" type="float">
+				<engine n="1">
 					<state type="float">0</state>
-					<rpm type="float">0</rpm>
+					<runnable type="bool">0</runnable>
+					<n1 type="float">0</n1>
+					<n2 type="float">0</n2>
 					<itt type="float">0</itt>
 					<oilpress type="float">0</oilpress>
+					<oiltemp type="float">-50</oiltemp>					<!-- oil temp to -50 == not set -->
 					<fuelpress type="float">0</fuelpress>
 				</engine>
 			</engines>
@@ -230,9 +374,13 @@
 
 	<nasal>
 		<bell412>
-			<file>Aircraft/Bell-412/Nasal/bell412.nas</file>
-			<file>Aircraft/Bell-412/Nasal/immat.nas</file>
-			<file>Aircraft/Bell-412/Nasal/electrical.nas</file>
+			<file>Aircraft/Bell-412/Nasal/electrical.nas</file>			<!-- power system -->
+			<file>Aircraft/Bell-412/Nasal/cautions.nas</file>			<!-- system state monitoring -->
+			<file>Aircraft/Bell-412/Nasal/bell412.nas</file>			<!-- engine system -->
+			<file>Aircraft/Bell-412/Nasal/immat.nas</file>				<!-- callsign tweak -->
+			<file>Aircraft/Bell-412/Nasal/sounds.nas</file>				<!-- sounds tweak -->
+			<file>Aircraft/Bell-412/Nasal/shakemehoney.nas</file>		<!-- effect -->
+			<file>Aircraft/Bell-412/Nasal/livery.nas</file>				<!-- livery -->
 		</bell412>
 	</nasal>
 

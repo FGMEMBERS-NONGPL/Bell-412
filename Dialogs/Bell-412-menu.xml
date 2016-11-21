@@ -12,7 +12,20 @@
 					<script>bell412.immat_dialog.toggle()</script>
 				</binding>
 			</item>
+			<item>
+                <label>Aircraft Options</label>
+                <binding>
+                    <command>dialog-show</command>
+                    <dialog-name>aircraft-options</dialog-name>
+                </binding>
+            </item>
+			<item>
+				<label>Select Livery</label>
+				<binding>
+					<command>nasal</command>
+					<script>aircraft.livery.dialog.open();</script>
+				</binding>
+			</item>
 		</menu>
 	</default>
 </PropertyList>
-
