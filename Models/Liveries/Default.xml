@@ -4,8 +4,14 @@
   <model>
     <livery>
       <name type="string">Default</name>
-	  <texture-fuselage></texture-fuselage>
-	  <texture-queue></texture-queue>
+	  <texture-fuselage>Liveries/1.FuselageHD.png</texture-fuselage>
+	  <texture-queue>Liveries/1.FuselageQueueHD.png</texture-queue>
+	  <texture-blades>Liveries/Blades.png</texture-blades>
+	  <texture-blades-x>Liveries/Blades_x.png</texture-blades-x>
+	  <texture-blades-blur>Liveries/rotors_main_blur.png</texture-blades-blur>
+	  <texture-tail-blur>Liveries/rotors_tail_blur.png</texture-tail-blur>
+	  <shine>15</shine>
+	  <spec>0.12</spec>
 	  <!-- <texture-doorsinside>2.Doors Inside.png</texture-doorsinside> -->
     </livery>
   </model>

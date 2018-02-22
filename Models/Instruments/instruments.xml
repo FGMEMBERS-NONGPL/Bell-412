@@ -5,16 +5,11 @@
 
 	<!-- 
 	=============================================================================================
-	Indicators - meshes apart which origin needs to be at the center in order to animate properly
-	TODO :
-		move to indicators:
-			X hsi_disc	!! attn: Effect won't work without an absolute path 
-			X AI Ball	!! idem  + testing center and axes
-			> other needles.
-			X all needles textures to Indicators/.
+	Instruments Indicators Animations
 	=============================================================================================
 	-->
-	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/ai_ball.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/ai.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/ai_ball.xml</path></model>		<!-- ball & disc have use Effects, must be def. for each instr. -->
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/hsi_disc.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/AmpMeter1.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/AmpMeter2.xml</path></model>
@@ -23,9 +18,6 @@
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/vdcmeter1.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/vdcmeter2.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/radioalt.xml</path></model>
-	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/ai_turn.xml</path></model>
-	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/ai_roll.xml</path></model>
-	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/ai_slip.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/airspeed.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/eng_fuelpsi1.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/eng_fuelpsi2.xml</path></model>
@@ -39,30 +31,40 @@
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/eng_rpm2.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/eng_itt1.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/eng_itt2.xml</path></model>
-	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/tacho_e1.xml</path></model>
-	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/tacho_e2.xml</path></model>
-	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/tacho_nr.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/tacho.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/torque_mast.xml</path></model>
-	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/clock.xml</path></model>
+	<!--<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/clock.xml</path></model>-->
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/vsi.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/alt.xml</path></model>
-	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/aist_ball.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/aist.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/radioalt_set.xml</path></model>
-
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/eng_fuel.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Instruments/Indicators/ahrs_actuators.xml</path></model>
 	<!-- Controls / Switches / Knobs stuff -->
 	<model><path>Aircraft/Bell-412/Models/Instruments/Controls/controls.xml</path></model>
-	
 	<!-- Cautions Lights -->
 	<model><path>Aircraft/Bell-412/Models/Instruments/Cautions/cautions.xml</path></model>
 
+	<!-- Glasses -->
+	<!--
+	<model><path>Aircraft/Bell-412/Models/Instruments/Glasses/instruments_glasses.xml</path></model>
+	-->
 	<!-- 
 	==============================================================================
-	Lighting
+	Shadow ALS
+	XXX : FG limitations: you cannot have 2 effects on the same object,
+	so I leave this here for future use if ...
 	============================================================================== 
 	-->
-	<!-- instruments set 1 -->
+	<!-- 
 	<effect>
-		<inherits-from>Effects/instruments-1-lights2</inherits-from>
+		<inherits-from>Effects/interior-shadow</inherits-from>
+		<object-name>5.Cockpit Panel Main Board</object-name>
+		<object-name>5.Cockpit Panel Main Cover</object-name>
+		<object-name>5.Cockpit Panel Main Central</object-name>
+		<object-name>5.Cockpit Panel Pedestal</object-name>
+		<object-name>5.Cockpit Panel OH</object-name>
+		<object-name>5.Cockpit Panel OH Fuse</object-name>
 		<object-name>5.Cockpit Panel Main Instruments Airspeed</object-name>
 		<object-name>5.Cockpit Panel Main Instruments VSI</object-name>
 		<object-name>5.Cockpit Panel Main Instruments CSI</object-name>
@@ -90,14 +92,84 @@
 		<object-name>5.Cockpit Panel Main Instruments HYDR1</object-name>
 		<object-name>5.Cockpit Panel Main Instruments HYDR2</object-name>
 		<object-name>5.Cockpit Panel Main Instruments Clock</object-name>
-	</effect>
-
-	<!-- instruments set 3 -->
-	<effect>
-		<inherits-from>Effects/instruments-3-lights</inherits-from>
 		<object-name>5.Cockpit Panel Main Instruments AP</object-name>
 		<object-name>5.Cockpit Panel Main Instruments Dafcs</object-name>
 		<object-name>5.Cockpit Panel Main Instruments DME</object-name>
+		<object-name>5.Cockpit Panel Main Controls CourseSet</object-name>
+	</effect>
+	-->
+
+	<!-- 
+	==============================================================================
+	Lighting
+	============================================================================== 
+	-->
+	<!-- XXX FG BUG: the inherits-from below ignore the <condition> property,
+		 so we cannot differenciate effects btw rembrandt and ALS, then the same 
+		 effect is used for the two rendering engine.
+	-->
+	<!-- Rembrandt + ALS -->
+	<!-- instruments set 1 -->
+	<!-- pilot -->
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/instruments-1-lights2</inherits-from>
+	<!-- 
+    	<condition>
+      		<property>sim/rendering/rembrandt/enabled</property>
+    	</condition>
+	-->
+		<object-name>5.Cockpit Panel Main Instruments Airspeed</object-name>
+		<object-name>5.Cockpit Panel Main Instruments VSI</object-name>
+		<object-name>5.Cockpit Panel Main Instruments CSI</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Altimeter</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Rotor</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Torque</object-name>
+		<object-name>5.Cockpit Panel Main Instruments RadioAlt</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngRPM1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngRPM2</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngITT1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngITT2</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngFuelPsi1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngFuelPsi2</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngOIL1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngOIL2</object-name>
+		<object-name>5.Cockpit Panel Main Instruments FUELQTY</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AmpMeter</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Volt1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Volt2</object-name>
+		<object-name>5.Cockpit Panel Main Instruments GearBox</object-name>
+		<object-name>5.Cockpit Panel Main Instruments XMSN</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AI</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AIST</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AIST Ladder</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AIST Plate</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Left</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HYDR1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HYDR2</object-name>
+		<!--<object-name>5.Cockpit Panel Main Instruments Clock</object-name>-->
+	</effect>
+	
+	<!-- copilot -->
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/instruments-1-lights2_c</inherits-from>
+        <object-name>5.Cockpit Panel Main Instruments COP Altimeter</object-name>
+        <object-name>5.Cockpit Panel Main Instruments COP Rotor</object-name>
+        <object-name>5.Cockpit Panel Main Instruments COP VSI</object-name>
+        <object-name>5.Cockpit Panel Main Instruments COP Airspeed</object-name>
+        <object-name>5.Cockpit Panel Main Instruments COP AI</object-name>
+        <object-name>5.Cockpit Panel Main Instruments COP HSI</object-name>
+        <object-name>5.Cockpit Panel Main Instruments COP Torque</object-name>
+        <object-name>5.Cockpit Panel Main Instruments COP RadioAlt</object-name>
+	</effect>
+
+	<!-- instruments set 2 : indicators/ -->
+
+	<!-- instruments set 3 -->
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/instruments-3-lights</inherits-from>
+		<object-name>5.Cockpit Panel Main Instruments AP</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Dafcs</object-name>
+		<object-name>5.Cockpit Panel Main Instruments DME bkg</object-name>
 		<object-name>5.Cockpit Panel Main Controls CourseSet</object-name>
 	</effect> 
 
@@ -108,27 +180,64 @@
 		<object-name>5.Cockpit Panel Main Instruments HSI Left</object-name>
 	</effect>
 	-->
+	<!-- ALS -->
+	<!-- instruments set 1 -->
+	<!--
+	<effect>
+		<inherits-from>Effects/instruments-1-lights2-als</inherits-from>
+		<object-name>5.Cockpit Panel Main Instruments Airspeed</object-name>
+		<object-name>5.Cockpit Panel Main Instruments VSI</object-name>
+		<object-name>5.Cockpit Panel Main Instruments CSI</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Altimeter</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Rotor</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Torque</object-name>
+		<object-name>5.Cockpit Panel Main Instruments RadioAlt</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngRPM1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngRPM2</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngITT1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngITT2</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngFuelPsi1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngFuelPsi2</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngOIL1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments EngOIL2</object-name>
+		<object-name>5.Cockpit Panel Main Instruments FUELQTY</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AmpMeter</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Volt1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Volt2</object-name>
+		<object-name>5.Cockpit Panel Main Instruments GearBox</object-name>
+		<object-name>5.Cockpit Panel Main Instruments XMSN</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AI</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AIST</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Left</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HYDR1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HYDR2</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Clock</object-name>
+		<condition>
+			<not>
+				<property>sim/rendering/rembrandt/enabled</property>
+			</not>
+    	</condition>
+	</effect>
+	-->
 
-	<!-- needles -->
+	<!-- Rembrandt + ALS -->
+	<!-- needles Pilot -->
 	<animation>
 		<type>material</type>
-        <object-name>5.Cockpit Panel Main Instruments Airspeed Needle</object-name>
-        <object-name>5.Cockpit Panel Main Instruments VSI Needle</object-name>
-		<object-name>5.Cockpit Panel Main Instruments AI Needle Hor</object-name>
-		<object-name>5.Cockpit Panel Main Instruments AI Needle Vert</object-name>
-		<object-name>5.Cockpit Panel Main Instruments Alt Needle 1000</object-name>
-		<object-name>5.Cockpit Panel Main Instruments Alt Needle 100</object-name>
-		<object-name>5.Cockpit Panel Main Instruments HSI needle</object-name>
+		<object-name>5.Cockpit Panel Main Instruments Alt Pilot</object-name>
+        <object-name>5.Cockpit Panel Main Instruments Airspeed Pilot</object-name>
+        <object-name>5.Cockpit Panel Main Instruments VSI Pilot</object-name>
+        <object-name>5.Cockpit Panel Main Instruments Torque Pilot</object-name>
+        <object-name>5.Cockpit Panel Main Instruments Tacho Pilot</object-name>
+        <object-name>5.Cockpit Panel Main Instruments AI Pilot</object-name>
+
 		<object-name>5.Cockpit Panel Main Instruments AmpMeter Needle1</object-name>
 		<object-name>5.Cockpit Panel Main Instruments AmpMeter Needle2</object-name>
         <object-name>5.Cockpit Panel Main Instruments Volt1 Needle AC</object-name>
         <object-name>5.Cockpit Panel Main Instruments Volt2 Needle AC</object-name>
         <object-name>5.Cockpit Panel Main Instruments Volt1 Needle DC</object-name>
         <object-name>5.Cockpit Panel Main Instruments Volt2 Needle DC</object-name>
-        <object-name>5.Cockpit Panel Main Instruments RadioAlt Needle</object-name>
-        <object-name>5.Cockpit Panel Main Instruments AI turn</object-name>
-        <object-name>5.Cockpit Panel Main Instruments AI roll</object-name>
-		<object-name>5.Cockpit Panel Main Instruments AI slip</object-name>
+		<object-name>5.Cockpit Panel Main Instruments RadioAlt Needle</object-name>
 		<object-name>5.Cockpit Panel Main Instruments EngFuelPsi1 Needle</object-name>
 		<object-name>5.Cockpit Panel Main Instruments EngFuelPsi2 Needle</object-name>
 		<object-name>5.Cockpit Panel Main Instruments HYDR1 Needle T</object-name>
@@ -141,58 +250,144 @@
         <object-name>5.Cockpit Panel Main Instruments EngRPM2 Needle</object-name>
         <object-name>5.Cockpit Panel Main Instruments EngITT1 Needle</object-name>
         <object-name>5.Cockpit Panel Main Instruments EngITT2 Needle</object-name>
-        <object-name>5.Cockpit Panel Main Instruments Rotor Needle E1</object-name>
-        <object-name>5.Cockpit Panel Main Instruments Rotor Needle E2</object-name>
-        <object-name>5.Cockpit Panel Main Instruments Rotor Needle R</object-name>
-        <object-name>5.Cockpit Panel Main Instruments Torque Needle</object-name>
+		<!--
         <object-name>5.Cockpit Panel Main Instruments Clock Needle H</object-name>
 		<object-name>5.Cockpit Panel Main Instruments Clock Needle M</object-name>
-        <object-name>5.Cockpit Panel Main Instruments RadioAlt Needdle Set</object-name>
+		-->
+		<object-name>5.Cockpit Panel Main Instruments RadioAlt Needdle Set</object-name>
 		<object-name>5.Cockpit Panel Main Instruments RadioAlt Needdle Off</object-name>
+		<object-name>5.Cockpit Panel Main Instruments FUELQTY Needle 1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments FUELQTY Needle 2</object-name>
+
+		<object-name>5.Cockpit Panel Main Instruments HSI Needle HSET</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Needle GS</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Needle BRG</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Flag NAV</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Flag OFF</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Flag GS</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AIST Visor</object-name>
+		<object-name>5.Cockpit Panel Main Instruments AI Visor</object-name>
         <ambient>
             <red>1.0</red>
             <green>1.0</green>
             <blue>1.0</blue>
         </ambient>
         <diffuse>
+            <red>0.9</red>
+            <green>0.9</green>
+            <blue>0.9</blue>
+        </diffuse>
+        <emission>
+            <red>0.46</red>
+            <green>0.48</green>
+            <blue>0.46</blue>
+			<factor-prop>bell412/electrical/output/lights/pilotlt</factor-prop>
+        </emission>
+	</animation>
+	<!-- needles CoPilot -->
+	<animation>
+		<type>material</type>
+		<object-name>5.Cockpit Panel Main Instruments Alt CoPilot</object-name>
+        <object-name>5.Cockpit Panel Main Instruments Airspeed CoPilot</object-name>
+        <object-name>5.Cockpit Panel Main Instruments VSI CoPilot</object-name>
+        <object-name>5.Cockpit Panel Main Instruments Torque CoPilot</object-name>
+        <object-name>5.Cockpit Panel Main Instruments Tacho CoPilot</object-name>
+        <object-name>5.Cockpit Panel Main Instruments AI CoPilot</object-name>
+        <ambient>
             <red>1.0</red>
             <green>1.0</green>
             <blue>1.0</blue>
+        </ambient>
+        <diffuse>
+            <red>0.9</red>
+            <green>0.9</green>
+            <blue>0.9</blue>
         </diffuse>
         <emission>
-            <red>0.8</red>
-            <green>0.9</green>
-            <blue>0.7</blue>
-			<factor-prop>/bell412/power/output/consoles/pilotlt</factor-prop>
+            <red>0.46</red>
+            <green>0.48</green>
+            <blue>0.46</blue>
+			<factor-prop>bell412/electrical/output/lights/copilotlt</factor-prop>
         </emission>
 	</animation>
 
 	<!-- console -->
 	<effect>
-		<inherits-from>Effects/console-lights</inherits-from>
+		<inherits-from>Aircraft/Bell-412/Effects/console-lights</inherits-from>
 		<object-name>5.Cockpit Panel Main Board</object-name>
 		<object-name>5.Cockpit Panel Main Central</object-name>
 	</effect>
-	<!-- pedestal -->
+	<!-- pedestal effect 1 shader -->
 	<effect>
-		<inherits-from>Effects/pedestal-lights</inherits-from>
-		<object-name>5.Cockpit Panel Pedestal</object-name>
-		<object-name>5.Cockpit Panel Pedestal Instruments r_com1</object-name>
-		<object-name>5.Cockpit Panel Pedestal Instruments r_com2</object-name>
-		<object-name>5.Cockpit Panel Pedestal Instruments r_nav1</object-name>
-		<object-name>5.Cockpit Panel Pedestal Instruments r_nav2</object-name>
-		<object-name>5.Cockpit Panel Pedestal Instruments r_adf</object-name>
-		<object-name>5.Cockpit Panel Pedestal Instruments r_xpdr</object-name>
+		<inherits-from>Aircraft/Bell-412/Effects/pedestal-lights</inherits-from>
+		<object-name>5.Cockpit Panel Pedestal Plate AFCS</object-name>
+		<object-name>5.Cockpit Panel Pedestal Plate AFCS Actu</object-name>
+		<object-name>5.Cockpit Panel Pedestal Plate Engine</object-name>
+		<object-name>5.Cockpit Panel Pedestal Plate Hydrau</object-name>
+		<object-name>5.Cockpit Panel Pedestal Plate Comm</object-name>
+		<object-name>5.Cockpit Panel Pedestal Plate AHRS</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_com1 bkg</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_com2 bkg</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_nav1 bkg</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_nav2 bkg</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_adf bkg</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_xpdr bkg</object-name>
 	</effect>
+	<!-- pedestal effect 2 : emissive lighting -->
+	<!-- TODO 29/07/17 09:51 -->
+	<!--
+	<animation>
+		<condition>
+			<not>
+				<property>sim/rendering/rembrandt/enabled</property>
+			</not>
+    	</condition>
+		<type>material</type>
+		<object-name>5.Cockpit Panel Pedestal Plate AFCS</object-name>
+		<object-name>5.Cockpit Panel Pedestal Plate AFCS Actu</object-name>
+		<object-name>5.Cockpit Panel Pedestal Plate Engine</object-name>
+		<object-name>5.Cockpit Panel Pedestal Plate Hydrau</object-name>
+		<object-name>5.Cockpit Panel Pedestal Plate Comm</object-name>
+		<object-name>Plate Void.000</object-name>
+		<object-name>Plate Void.001</object-name>
+		<object-name>Plate Void.002</object-name>
+		<object-name>Plate Radio.000</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_adf bkg</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_com1 bkg</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_com2 bkg</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_nav1 bkg</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_nav2 bkg</object-name>
+		<object-name>5.Cockpit Panel Pedestal Instruments r_xpdr bkg</object-name>
+        <ambient>
+            <red>0.0</red>
+            <green>0.0</green>
+            <blue>0.0</blue>
+        </ambient>
+        <diffuse>
+            <red>0.0</red>
+            <green>0.0</green>
+            <blue>0.0</blue>
+        </diffuse>
+        <emission>
+            <red>0.3</red>
+            <green>0.3</green>
+            <blue>0.3</blue>
+        </emission>
+	</animation>
+	-->
+
 	<!-- OH Panel -->
 	<effect>
-		<inherits-from>Effects/paneloh-lights</inherits-from>
+		<inherits-from>Aircraft/Bell-412/Effects/paneloh-lights</inherits-from>
 		<object-name>5.Cockpit Panel OH</object-name>
 		<object-name>5.Cockpit Panel OH Fuse</object-name>
 	</effect>
 
-
-
+	<!-- 
+	==============================================================================
+	Transparency
+	============================================================================== 
+	-->
 	<!-- Rembrandt transparency rendering -->
 	<effect>
     	<inherits-from>Effects/model-transparent</inherits-from>
@@ -203,5 +398,35 @@
 		<object-name>5.Cockpit Panel Main Instruments MARKER.M0</object-name>
 		<object-name>5.Cockpit Panel Main Instruments MARKER.M1</object-name>
 		<object-name>5.Cockpit Panel Main Instruments MARKER.O</object-name>
+		<object-name>5.Cockpit Panel Main Instruments DME Led</object-name>
   	</effect>
+	
+	<!-- 
+	==============================================================================
+	LED Indicator / Power
+	============================================================================== 
+	-->
+	<animation>
+		<type>material</type>
+		<object-name>5.Cockpit Panel Main Instruments DME Led</object-name>
+		<condition>
+			<property>instrumentation/dme/powered</property>
+		</condition>
+        <ambient>
+            <red>0.8</red>
+            <green>0.0</green>
+            <blue>0.0</blue>
+        </ambient>
+        <diffuse>
+            <red>0.8</red>
+            <green>0.0</green>
+            <blue>0.0</blue>
+        </diffuse>
+        <emission>
+            <red>0.8</red>
+            <green>0.0</green>
+            <blue>0.0</blue>
+        </emission>
+	</animation>
+
 </PropertyList>

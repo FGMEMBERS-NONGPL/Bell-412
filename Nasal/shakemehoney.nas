@@ -34,7 +34,8 @@ var theShakeEffect = func() {
 	var dt = 1;
 
 	if ( shake_effect_state.getBoolValue() ) {
-		if ( speed.getValue() > 100 and ralt.getValue() < 0.001 ) {
+		#if ( speed.getValue() > 100 and ralt.getValue() < 0.001 ) {
+		if ( speed.getValue() > 100 ) {
 			settimer(func {
 				userview_heading.setValue(current_userview_heading + factor );
 				}, 0.02);

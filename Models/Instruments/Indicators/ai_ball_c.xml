@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>ai_ball.ac</path>
+
+	<!-- ball -->
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Main Instruments AI Ball</object-name>
+		<property>instrumentation/ai/indicated-roll-deg</property>
+		<factor>1</factor>
+		<axis>
+			<x> 1 </x>
+			<y> 0 </y>
+			<z> 0 </z>
+		</axis>
+		<center>
+			<x-m>  0.05408 </x-m>
+			<y-m>  0.00062 </y-m>
+			<z-m>  0.00523 </z-m>
+		</center>
+	</animation>  
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Main Instruments AI Ball</object-name>
+		<property>instrumentation/ai/indicated-pitch-deg</property>
+		<factor>1</factor>
+  		<interpolation>
+            <entry><ind>-999</ind><dep>-50</dep></entry>
+            <entry><ind>-50</ind><dep>-53</dep></entry>
+            <entry><ind>-40</ind><dep>-42.5</dep></entry>
+            <entry><ind>-30</ind><dep>-32.5</dep></entry>
+            <entry><ind>-20</ind><dep>-21.8</dep></entry>
+            <entry><ind>-10</ind><dep>-11.0</dep></entry>
+            <entry><ind>0</ind><dep>0</dep></entry>
+            <entry><ind>10</ind><dep>10.0</dep></entry>
+            <entry><ind>20</ind><dep>20.5</dep></entry>
+            <entry><ind>30</ind><dep>31</dep></entry>
+            <entry><ind>40</ind><dep>41</dep></entry>
+            <entry><ind>50</ind><dep>50</dep></entry>
+            <entry><ind>999</ind><dep>50</dep></entry>
+        </interpolation>
+		<axis>
+			<x> 0 </x>
+			<y> 1 </y>
+			<z> 0 </z>
+		</axis>
+		<center>
+			<x-m>  -0.05408 </x-m>
+			<y-m>  0.00062 </y-m>
+			<z-m>  0.00523 </z-m>
+		</center>
+	</animation>  
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/instruments-2c-lights</inherits-from>
+		<object-name>5.Cockpit Panel Main Instruments AI Ball</object-name>
+	</effect>
+</PropertyList>

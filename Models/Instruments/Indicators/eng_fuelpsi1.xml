@@ -12,7 +12,7 @@
     <animation>
         <type>rotate</type>
         <object-name>5.Cockpit Panel Main Instruments EngFuelPsi1 Needle</object-name>
-		<property>/bell412/mechanics/engines/engine[0]/fuelpress</property>
+		<property>bell412/mechanics/engines/engine[0]/fuelpress</property>
         <axis>
             <x>-1</x>
             <y>0</y>

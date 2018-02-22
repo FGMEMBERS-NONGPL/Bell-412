@@ -7,7 +7,7 @@
 	<animation> 
 		<type>rotate</type>
 		<object-name>5.Cockpit Control Rudder left</object-name>
-		<property>controls/flight/rudder</property>
+		<property>controls/flight/servos/yaw</property>
 		<factor>15</factor>
 		<axis> 
 			<x>0</x>
@@ -23,7 +23,7 @@
 	<animation> 
 		<type>rotate</type>
 		<object-name>5.Cockpit Control Rudder right</object-name>
-		<property>controls/flight/rudder</property>
+		<property>controls/flight/servos/yaw</property>
 		<factor>-15</factor>
 		<axis> 
 			<x>0</x>

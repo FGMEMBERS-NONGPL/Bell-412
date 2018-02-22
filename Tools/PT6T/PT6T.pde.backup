@@ -1,0 +1,209 @@
+//import penner.easing.*;
+import controlP5.*;
+
+int centerX, centerY, radio;
+float angle, angle0, a;
+boolean doRotateN1;
+
+float accel_deg;
+final float MAX_ACCEL_DEG = 200000; // deg/sec. - 1681 ~= 324rpm
+float accelTimer = 0;
+float time0, etime, atime; // time_now, elapsedTime, accumulatorTime
+float rpm = 0;
+
+PFont font, font1, font_label;
+// PT63D - value (ref. EASA TCDS_IM.E.059_20153010)
+// PT6T-3D Twin: 
+//    max takeoff(kW)    : 1342 (single 671)
+//    max cont. power(kW): 1194 (single 597)
+//    cbox speed(rpm)    : 6600 (6798 takeoff = 103%)
+//    turbine speed(rpm) : 38800 (39300 takeoff = 103.2%)
+//    max torque takeoff : 1000 N.m (at cbox)
+//    max torque OEI     : 1104 N.m (at cbox)
+
+// Turbine(x,y,power,torque,speed,accelFactor,minIdle,maxIdle)
+Turbine engine = new Turbine(0,0,597,1104,38800,0.05,40,103.2);
+
+// gui control
+boolean starter = false;
+float throttle = 0;
+float alt=0;
+
+void setup() {
+    size(750, 550);
+    frameRate(30);
+    time0 = etime = millis();
+    atime = 0;
+    centerX = width/2;
+    centerY = height/2;
+    angle = 0;
+    radio = 200;
+    accel_deg = 2;
+    doRotateN1 = false;
+    smooth();
+    background(0);
+    font = loadFont("LucidaSans-Typewriter-10.vlw");
+    font1 = loadFont("HelveticaRounded-Bold-20.vlw");
+    font_label = loadFont("HelveticaRounded-Bold-20.vlw");
+    textFont(font);
+    
+    initEasings();    // init hashmap of ease methods
+    engine.setDisplayAt(10,10);
+    //noLoop();
+    setupGui();
+}
+
+void draw() {
+    etime = elapsedTimeFrom(time0);
+    //rotateN1();
+    engine.setStarter(starter);
+    engine.setThrottle(throttle);
+    engine.update();
+    printFrame();
+    time0 = millis(); // dt1 - dt0 = fps
+}
+
+void rotateN1() {
+    float h;
+    if ( doRotateN1 ) {
+        //calcAccel(4);
+        accel_deg = _interpolate(20,accel_deg, 1.0, MAX_ACCEL_DEG);
+        angle = angle + (2*PI/360) * (accel_deg/frameRate);    // whatever fps, display the same apparent speed
+        rpm = calcSpeed(angle0,angle,etime);
+        angle0 = angle;
+    }
+    pushMatrix();
+    translate(centerX, centerY);
+    colorMode(HSB, 360,100,100);
+    h = 240 + accel_deg * ( (330-240) / MAX_ACCEL_DEG);
+    fill(h,80,100);
+    noStroke();
+    ellipse(0, 0, radio*2+4, radio*2+4);
+    stroke(0,0,100);
+    strokeWeight(3);
+    line(0,0, radio*sin(angle), -radio*cos(angle)); // cw
+    popMatrix();
+}
+
+float _interpolate(float duration_sec, float value, float minValue, float maxValue) {
+    if ( value < maxValue ) {
+        float dt = round(duration_sec * frameRate);
+        accelTimer += 1;
+        value = quintEaseIn(accelTimer, minValue, maxValue, dt);
+    } else
+        accelTimer = 0;
+
+    return value;
+}
+
+float calcSpeed(float a0_rad, float a1_rad, float etime_millis) {
+    float delta = ((abs(a1_rad - a0_rad)/etime_millis) * 1000) / (2*PI); // in sec.
+    float deltaPerMin = delta * 60;
+    
+    return deltaPerMin;
+}
+
+float elapsedTimeFrom(float dt0) {
+    return millis() - dt0;
+}
+
+void mousePressed() {
+    doRotateN1 = !doRotateN1;
+}
+
+void keyPressed() {
+    if ( key == ' ' ) {
+        doRotateN1 = false;
+        accel_deg = 1;
+    }
+}
+
+float rpm0 = 0, rpm_mean = 0;
+
+void printFrame() {
+    String s = "";
+    int x = width - 150;
+    int y = height;
+    
+    //translate(0, 0);  // restore coord space
+    noStroke();
+    fill(0);
+    rectMode(CORNER);
+    rect(x, height-80, 200, 80);
+    fill(255);
+    
+    if ( atime < .25 ) {
+        atime += (etime/1000);
+        rpm0 = rpm;
+    }
+    else {
+        atime = 0;
+        rpm_mean = round((rpm0 + rpm) / 2);
+    }
+    
+    textFont(font);
+    textAlign(LEFT);
+    s = "Speed(rad/mn) : " + rpm;
+    text(s, x, y - 60);
+    s = "eTime(sec)    : " + etime/1000;
+    text(s, x, y - 50);
+    s = "AccTimer      : " + accelTimer;
+    text(s, x, y - 40);
+    s = "Acc(degC/s)   : " + accel_deg;
+    text(s, x, y - 30);
+    s = "Angle(rad)    : " + angle;
+    text(s, x, y - 20);
+    s = "fps           : " + frameRate;
+    text(s, x, y - 10);
+    
+//    textFont(font1);
+//    translate(width/2,height/2);
+//    fill(0);
+//    ellipse(0,0,80,80);
+//    textAlign(CENTER);
+//    fill(255);
+//    text((int)rpm_mean,0,5);
+    
+}
+
+
+
+
+
+// ==============================================================================
+//void rotateN1() {
+//    if ( doRotateN1 ) {
+//        if ( angle >= ( 2 * PI) ) {
+////            a = 0;
+//            angle = 0;
+////            accel = 1;
+//        }
+//        // ---- 1st: we use 2*PI as the total time
+//        //a = a + (2*PI/360);  // div in 360 == 6*60fps = 6 sec.
+//        //accel = elasticEaseIn(a,1.0,3.5,2*PI);
+//        //angle = a *  accel;
+//        // ---- 2cd: we use time n seconds as the total time 
+//        calcAccel(4);
+//        angle = angle + (2*PI/360) * accel;
+//        angle0 = angle;
+//    }
+//    pushMatrix();
+//    translate(centerX, centerY);
+//    ellipse(0, 0, radio*2, radio*2);
+//    //line(-radio*cos(angle),radio*sin(angle),radio*cos(angle),-radio*sin(angle)); // ccw
+//    //line(-radio*sin(angle), radio*cos(angle), radio*sin(angle), -radio*cos(angle)); // cw
+//    //line(-radio*sin(angle+PI/2), radio*cos(angle+PI/2), radio*sin(angle+PI/2), -radio*cos(angle+PI/2)); // cw
+//    strokeWeight(4);
+//    line(0,0, radio*sin(angle), -radio*cos(angle)); // cw
+//    popMatrix();
+//}
+
+//void calcAccel(float duration_sec) {
+//    float dt = round(duration_sec * frameRate);
+//    
+//    if ( accel_deg < MAX_ACCEL_DEG ) {
+//        accelTimer += 1;
+//        accel_deg = bounceEaseIn(accelTimer,1.0,MAX_ACCEL_DEG,dt);
+//    } else
+//        accelTimer = 0;
+//}

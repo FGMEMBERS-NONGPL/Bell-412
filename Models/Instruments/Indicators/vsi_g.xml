@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>vsi.ac</path>
+    <animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Main Instruments VSI Needle</object-name>
+        <property>instrumentation/vertical-speed-indicator/indicated-speed-fpm</property>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+		<interpolation>
+			<entry><ind>3000</ind><dep>147</dep></entry>
+			<entry><ind>2500</ind><dep>127</dep></entry>
+			<entry><ind>2000</ind><dep>107</dep></entry>
+			<entry><ind>1000</ind><dep>66</dep></entry>
+			<entry><ind>500</ind><dep>31</dep></entry>
+			<entry><ind>0</ind><dep>0.0</dep></entry>
+			<entry><ind>-500</ind><dep>-31</dep></entry>
+			<entry><ind>-1000</ind><dep>-67</dep></entry>
+			<entry><ind>-2000</ind><dep>-110</dep></entry>
+			<entry><ind>-2500</ind><dep>-127</dep></entry>
+			<entry><ind>-3000</ind><dep>-147</dep></entry>
+		</interpolation>
+    </animation>
+</PropertyList>
+

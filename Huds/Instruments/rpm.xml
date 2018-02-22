@@ -1,0 +1,16 @@
+<PropertyList>
+	<label>
+		<name>RPMBox</name>
+		<x>-15</x>
+		<y>0</y>
+		<width>30</width>
+		<height>12</height>
+		<halign>center</halign>
+		<format>%03.0f</format>
+		<box>true</box>
+		<input>
+			<property>rotors/main/rpm</property>
+		</input>
+  </label>
+</PropertyList>
+

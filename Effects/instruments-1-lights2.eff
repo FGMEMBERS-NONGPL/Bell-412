@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PropertyList>
 	<name>instruments-1-lights2</name>
-	<inherits-from>/Effects/model-combined-deferred</inherits-from>
+	<inherits-from>Effects/model-combined-deferred</inherits-from>
 	<parameters>
 		<lightmap-enabled type="int">1</lightmap-enabled>
 		<lightmap-multi type="int">1</lightmap-multi>
@@ -15,13 +15,13 @@
 
 		<!-- instruments inside -->
 		<lightmap-factor type="float" n="0">
-			<use>/bell412/power/output/consoles/pilotlt</use>
+			<use>bell412/electrical/output/lights/pilotlt</use>
 		</lightmap-factor>
 		<lightmap-color type="vec3d" n="0"> 0.9 1.0 0.8 </lightmap-color>
 
 		<!-- instruments outside -->
 		<lightmap-factor type="float" n="1">
-			<use>/bell412/power/output/consoles/conslt</use>
+			<use>bell412/electrical/output/lights/conslt</use>
 		</lightmap-factor>
 		<lightmap-color type="vec3d" n="1"> 0.8 0.8 0.65 </lightmap-color>
 

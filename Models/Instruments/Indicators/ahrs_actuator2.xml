@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>ahrs_actuator.ac</path>
+	<animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Pedestal Control AHRS Actuator</object-name>
+		<property>instrumentation/ahrs/variation-deg</property>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+    </animation>
+</PropertyList>
+

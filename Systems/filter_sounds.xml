@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	 Bell-412 Sounds logic
+-->
+<PropertyList>
+	<logic>
+		<name>powerup</name>
+		<input>
+			<and>
+				<greater-than>
+					<property>bell412/electrical/output/cluster[0]/ease</property>
+					<value>0</value>
+				</greater-than>
+				<not><property>sim/crashed</property></not>
+				<not><property>controls/sound/headset</property></not>
+			</and>
+		</input>
+		<output>controls/sound/powerup</output>
+	</logic>
+
+	<logic>
+		<name>engine_s1</name>
+		<input>
+			<and>
+				<or>
+					<property>controls/engines/engine[0]/starter</property>
+					<property>controls/engines/engine[1]/starter</property>
+				</or>
+				<or>
+					<property>bell412/electrical/output/engines/igniter[0]</property>
+					<property>bell412/electrical/output/engines/igniter[1]</property>
+				</or>
+			</and>
+		</input>
+		<output>controls/sound/engine_s1</output>
+	</logic>
+
+	<logic>
+		<name>engine_s2</name>
+		<input>
+			<and>
+				<or>
+					<greater-than>
+						<property>bell412/mechanics/engines/engine[0]/state</property>
+						<value>1</value>
+					</greater-than>
+					<greater-than>
+						<property>bell412/mechanics/engines/engine[1]/state</property>
+						<value>1</value>
+					</greater-than>
+				</or>
+			</and>
+		</input>
+		<output>controls/sound/engine_s2</output>
+	</logic>
+
+	<logic>
+		<name>engine_s3</name>
+		<input>
+			<and>
+				<or>
+					<greater-than>
+						<property>bell412/mechanics/engines/engine[0]/state</property>
+						<value>2</value>
+					</greater-than>
+					<greater-than>
+						<property>bell412/mechanics/engines/engine[1]/state</property>
+						<value>2</value>
+					</greater-than>
+				</or>
+				<or>
+					<property>bell412/electrical/output/engines/igniter[0]</property>
+					<property>bell412/electrical/output/engines/igniter[1]</property>
+				</or>
+			</and>
+		</input>
+		<output>controls/sound/engine_s3</output>
+	</logic>
+
+	<logic>	<!-- TODO : must be audible at 150 rpm only, but able to slow down below 150 -->
+		<name>engine_s4</name>
+		<input>
+			<and>
+				<greater-than>
+					<property>rotors/main/rpm</property>
+					<value>80</value>
+				</greater-than>
+				<not><property>sim/crashed</property></not>
+				<not><property>controls/sound/headset</property></not>
+			</and>
+		</input>
+		<output>controls/sound/engine_s4</output>
+	</logic>
+	
+</PropertyList>
+

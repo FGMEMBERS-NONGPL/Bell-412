@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<label>
+		<name>AltimeterBox</name>
+		<x>-19</x>
+		<y>0</y>
+		<width>38</width>
+		<height>12</height>
+		<halign>center</halign>
+		<format>%04.0f</format>
+		<box>true</box>
+		<!--
+		<option>bottom</option>
+		<pointer-width>7</pointer-width
+		-->
+		<input>
+			<property>instrumentation/radar-altimeter/gear-agl-ft</property>
+		</input>
+  </label>
+</PropertyList>
+

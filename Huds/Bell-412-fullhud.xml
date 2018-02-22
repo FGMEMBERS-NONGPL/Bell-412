@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<name>Bell-412-mainhud</name>
+	<enable3d>true</enable3d>
+
+	<import>
+		<path>Aircraft/Bell-412/Huds/Instruments/heading-compass.xml</path>
+		<x-offset>0</x-offset>
+		<y-offset>160</y-offset>
+	</import>
+	<!--
+	<import>
+		<path>Aircraft/Bell-412/Huds/Instruments/airspeed.xml</path>
+		<x-offset>-60</x-offset>
+		<y-offset>160</y-offset>
+	</import>
+	-->
+	<import>
+		<path>Aircraft/Bell-412/Huds/Instruments/groundspeed.xml</path>
+		<x-offset>-72</x-offset>
+		<y-offset>18</y-offset>
+	</import>
+	<import>
+		<path>Aircraft/Bell-412/Huds/Instruments/altimeter.xml</path>
+		<x-offset>72</x-offset>
+		<y-offset>18</y-offset>
+	</import>
+	<import>
+		<path>Aircraft/Bell-412/Huds/Instruments/rpm.xml</path>
+		<x-offset>-72</x-offset>
+		<y-offset>-5</y-offset>
+	</import>
+	<import>
+		<path>Aircraft/Bell-412/Huds/Instruments/torque.xml</path>
+		<x-offset>72</x-offset>
+		<y-offset>-5</y-offset>
+	</import>
+	<import>
+		<path>Aircraft/Bell-412/Huds/Instruments/turn-bank-indicator.xml</path>
+		<y-offset>-14</y-offset>
+	</import>
+	<import>
+		<path>Aircraft/Bell-412/Huds/Instruments/controls.xml</path>
+	</import>
+	<import>
+		<path>Aircraft/Bell-412/Huds/Instruments/ladder.xml</path>
+	</import>
+	
+	<import>
+		<path>Aircraft/Bell-412/Huds/Instruments/wind-label.xml</path>
+		<x-offset>25</x-offset>
+		<y-offset>162</y-offset>
+	</import>
+</PropertyList>

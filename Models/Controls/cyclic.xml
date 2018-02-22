@@ -1,10 +1,31 @@
 <?xml version="1.0"?>
 <PropertyList> 
 	<path>cyclic.ac</path>
+	<animation>
+		<type>translate</type>
+		<object-name>5.Cockpit Control Cyclic Pilot Switch ForceTrim</object-name>
+		<property>controls/flight/cyclic/force-trim-release</property>
+		<interpolation>
+			<entry>
+				<ind>0</ind>
+				<dep>0</dep>
+			</entry>
+			<entry>
+				<ind>1</ind>
+				<dep>0.006</dep>
+			</entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>0.6</y>
+			<z>-1</z>
+		</axis>
+	</animation>
 	<animation> 
 		<type>rotate</type>
 		<object-name>5.Cockpit Control Cyclic Pilot</object-name>
-		<property>controls/flight/elevator</property>
+		<!-- <property>controls/flight/elevator</property> -->
+		<property>controls/flight/servos/pitch</property>
 		<interpolation> 
 			<entry> 
 				<ind>-1.0</ind>
@@ -33,7 +54,8 @@
 	<animation> 
 		<type>rotate</type>
 		<object-name>5.Cockpit Control Cyclic Pilot</object-name>
-		<property>controls/flight/aileron</property>
+		<!-- <property>controls/flight/aileron</property>-->
+		<property>controls/flight/servos/roll</property>
 		<interpolation> 
 			<entry> 
 				<ind>-1.0</ind>

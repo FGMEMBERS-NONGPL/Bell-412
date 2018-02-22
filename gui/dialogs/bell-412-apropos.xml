@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+
+<!--
+	 Copyright - Valéry Seys - vslash.com 2017 - Paris
+-->
+
+<PropertyList>
+    <name>bell412-apropos-dialog</name>
+    <layout>vbox</layout>
+    <resizable>false</resizable>
+    <modal>false</modal>
+    <draggable>true</draggable>
+
+    <group>
+        <layout>hbox</layout>
+        <empty><stretch>true</stretch></empty>
+        <text>
+            <label>About - Bell-412</label>
+        </text>
+        <empty><stretch>true</stretch></empty>
+        <button>
+            <legend/>
+            <key>Esc</key>
+            <pref-width>16</pref-width>
+            <pref-height>16</pref-height>
+            <binding>
+                <command>dialog-close</command>
+            </binding>
+        </button>
+    </group>
+
+    <hrule/>
+
+    <group>
+        <layout>vbox</layout>
+        <padding>6</padding>
+        <group>
+            <layout>vbox</layout>
+            <group>
+                <layout>hbox</layout>
+                <canvas>
+                    <name>About Bell-412</name>
+                    <valign>fill</valign>
+                    <halign>fill</halign>
+                    <stretch>false</stretch>
+                    <pref-width>600</pref-width>
+                    <pref-height>338</pref-height>
+                    <!--height>480</height-->
+                    <nasal>
+                        <load>
+                            <![CDATA[
+
+                            # you can add your canvas-specific code here
+                            # this will get a handle to the parent canvas
+                            var my_canvas = canvas.get(cmdarg());
+
+                            var root = my_canvas.createGroup();
+                            var path = "Aircraft/Bell-412/gui/dialogs/Bell-412-Welcome.png";
+                            var child = root.createChild("image")
+                                .setFile(path)
+                                .setSize(600, 338)
+                                .setTranslation(2,2);
+                            ]]>
+                      </load>
+                    </nasal>
+                </canvas>
+            </group>
+
+            <group>
+                <layout>vbox</layout>
+                <group>
+                    <layout>hbox</layout>
+                    <default-padding>4</default-padding>
+                    <stretch>false</stretch>
+                    <text>
+                        <halign>left</halign>
+                        <label>Bell-412 version: x.x</label>
+   						<format>Bell-412 version: %-0.1f</format>
+                        <property>/sim/aircraft-version</property>
+                    </text>
+                </group>
+
+                <hrule/>
+                <group>
+                    <layout>hbox</layout>
+                    <default-padding>4</default-padding>
+                    <text>
+                        <halign>left</halign>
+                        <label>Author</label>
+   						<format>Author: %s</format>
+                        <property>/sim/author</property>
+                    </text>
+					<empty><stretch>true</stretch></empty>
+                </group>
+                <group>
+                    <layout>vbox</layout>
+                    <default-padding>4</default-padding>
+                    <text>
+                        <halign>left</halign>
+						<label>Check for the latest version @sourceforge below.</label>
+                    </text>
+					<empty><stretch>true</stretch></empty>
+                    <text>
+                        <halign>left</halign>
+						<label>How to start ? use "Help Menu" + "Checklist"</label>
+                    </text>
+                    <text>
+                        <halign>left</halign>
+						<label>or use the Bell-412-Manual.pdf included in this package</label>
+                    </text>
+                    <text>
+                        <halign>left</halign>
+						<label>Please be kind and report any bug at the @sourceforge project, thank you.</label>
+                    </text>
+                </group>
+
+				<!--
+                <text>
+                    <halign>left</halign>
+					<label>Description:</label>
+					<format>Description: %s</format>
+                    <wrap>true</wrap>
+                    <property>/sim/long-description</property>
+                </text>
+				-->
+				<!--
+                <textbox>
+                    <name>basic description</name>
+                    <halign>fill</halign>
+                    <stretch>false</stretch>
+                    <pref-height>100</pref-height>
+                    <height>200</height>
+                    <pref-width>200</pref-width>
+                    <editable>false</editable>
+                    <wrap>true</wrap>
+                    <live>true</live>
+                    <top-line>0</top-line>
+                    <property>/sim/long-description</property>
+				</textbox>
+				-->
+            </group>
+
+        </group>
+    </group>
+    <hrule/>
+
+    <group>
+        <layout>hbox</layout>
+        <default-padding>6</default-padding>
+
+        <button>
+            <halign>center</halign>
+            <legend>Open SF Repository in Browser</legend>
+            <binding>
+                <command>nasal</command>
+                <script>fgcommand("open-browser", props.Node.new({"url":"https://sourceforge.net/projects/bell-412/"}));</script>
+            </binding>
+        </button>
+        <button>
+            <halign>center</halign>
+            <legend>Open Doc in Browser</legend>
+			<binding>
+				<command>open-browser</command>
+				<path>Aircraft/Bell-412/Docs/Flightgear Bell-412 Manual.pdf</path>
+			</binding>
+        </button>
+        <empty><stretch>true</stretch></empty>
+        <button>
+            <halign>right</halign>
+            <legend>Close</legend>
+            <equal>true</equal>
+            <key>Esc</key>
+            <default>true</default>
+            <binding>
+                <command>dialog-close</command>
+            </binding>
+        </button>
+    </group>
+</PropertyList>

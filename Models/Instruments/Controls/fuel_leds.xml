@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<PropertyList>
+	<path>fuel_leds.ac</path>
+
+	<!-- 
+		 General settings
+	-->
+	<animation>
+		<object-name>fuel001</object-name>
+		<object-name>fuel010</object-name>
+		<object-name>fuel100</object-name>
+	</animation>
+
+	<animation>
+		<type>noshadow</type>
+		<object-name>fuel001</object-name>
+		<object-name>fuel010</object-name>
+		<object-name>fuel100</object-name>
+	</animation>
+	
+	<effect>
+    	<condition>
+      		<property>sim/rendering/rembrandt/enabled</property>
+    	</condition>
+    	<inherits-from>Effects/model-transparent</inherits-from>
+		<object-name>fuel001</object-name>
+		<object-name>fuel010</object-name>
+		<object-name>fuel100</object-name>
+	</effect>
+
+	<!-- 
+		 Selection
+	-->
+	<animation>
+		<type>select</type>
+		<object-name>FUEL_LEDS</object-name>
+		<condition>
+			<property>instrumentation/fuelgauge/powered</property>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>scale</type>
+		<object-name>fuel001</object-name>
+		<object-name>fuel010</object-name>
+		<object-name>fuel100</object-name>
+		<x-offset>1.0</x-offset>
+		<y-offset>1.0</y-offset>
+		<z-offset>0.7</z-offset>
+	</animation>
+
+	<!-- 
+		 Lighting
+	-->
+	<animation>
+		<type>material</type>
+		<object-name>FUEL_LEDS</object-name>
+		<object-name>fuel001</object-name>
+		<object-name>fuel010</object-name>
+		<object-name>fuel100</object-name>
+		<condition>
+			<property>instrumentation/fuelgauge/powered</property>
+    	</condition>
+		<ambient>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</ambient>
+		<diffuse>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</diffuse>
+		<emission>
+			<red>0.8</red>
+			<green>0.4</green>
+			<blue>0.0</blue>
+			<factor-prop>bell412/electrical/output/cluster[0]/ease</factor-prop>
+		</emission>
+	</animation>
+
+	<!-- 
+		 Texture Translation
+	-->
+    <animation>
+        <type>textranslate</type>
+		<object-name>fuel001</object-name>
+		<property>bell412/fuel/total-fuel-gals</property>
+        <step>1</step>
+        <factor>0.1</factor>
+        <bias>0.0001</bias>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>textranslate</type>
+		<object-name>fuel010</object-name>
+		<property>bell412/fuel/total-fuel-gals</property>
+        <step>10</step>
+        <factor>0.01</factor>
+        <bias>0.0001</bias>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+	</animation>
+    <animation>
+        <type>textranslate</type>
+		<object-name>fuel100</object-name>
+		<property>bell412/fuel/total-fuel-gals</property>
+		<object-name>DME_KT_100</object-name>
+        <step>100</step>
+        <factor>0.001</factor>
+        <bias>0.0001</bias>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+</PropertyList>

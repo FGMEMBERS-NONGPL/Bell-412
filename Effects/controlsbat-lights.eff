@@ -5,11 +5,10 @@
 	<parameters>
 		<lightmap-enabled type="int">1</lightmap-enabled>
 		<texture n="3">
-			<image>../Models/Controls/instruments-controls-lights.png</image>
+			<image>../Models/Instruments/Controls/instruments-controls-lights.png</image>
 		</texture>
 		<lightmap-factor type="float" n="0">
-			<!-- <use>/bell412/power/output/consoles/state</use> -->
-			<use>/bell412/power/buses/state</use>
+			<use>bell412/electrical/output/lights/pilotlt</use>
 		</lightmap-factor>
 		<lightmap-color type="vec3d" n="0"> 1.0 1.0 1.0 </lightmap-color>
 		<!-- alpha channel -->

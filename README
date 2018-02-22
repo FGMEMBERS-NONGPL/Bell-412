@@ -1,0 +1,63 @@
+*********************************************************************************
+									BELL-412 
+									   for 
+							Flightgear Flight Simulator
+*********************************************************************************
+
+Authors / Copyright
+	Valéry Seys / valery@vslash.com
+	see COPYRIGHT
+
+Other Licenses & Term Of Use:
+	see COPYRIGHT_3RD_PARTY
+
+1st Release Date	: 2016
+	This code is available at:
+	https://sourceforge.net/projects/bell-412/
+
+Update: see CHANGELOG
+
+Docs: nice pdf manual included with this package.
+
+Softwares use:
+	- Flightgear - Free Flight Simulator
+	- Blender 2.77 - Free 3D Modeling
+		- YASim XML Importer by Cem Aydin
+		- AC3D Import/Export by Chris Marr
+	- Adobe Photoshop/Illustrator CS3
+	- Sweep 0.9.3 Free Audio editor - sweep.sourceforge.net
+	- ffmpeg (conversion, video shots)
+	- Imagemagick (command line image conversion)
+	- Yed 3.14 Graph editor - YWorks Gmbh 2016 (schematic)
+	- Vim editor (the best one !)
+	- Eclipse IDE (SVN, publishing, xml editing)
+	- sourceforge.net (SVN hosting & sharing)
+	- Processing.org v1.5.1 (realtime animation processing in Java)
+	- Texture Maker v3.1 (as it say)
+	- Makehuman v1.1 (free character model generator)
+
+Codes: all codes are written from scratch with the help of the Flightgear
+wiki and doc and the source code of the Yasim FDM.
+
+3D Models:
+- 3dcadbrowser.com
+- 3dwarehouse.com
+- M2 Gun by azlyirnizam (MarcosStyLL) from free3d.com
+
+Textures:
+- all textures are copyrighted to Valéry Seys, Paris
+
+Sounds Sources:
+All sounds have been edited and modified.
+
+Air conditionning 		: https://www.youtube.com/watch?v=meE8z_19J6M
+Battery/Engine			: https://www.youtube.com/watch?v=zl51qoP4ZOQ
+Engine outside			: https://www.youtube.com/watch?v=kGqUIGQqQss
+Engine inside			: https://www.youtube.com/watch?v=-3lpI7TMbM8
+Alarm sound:			: freesound.org/kwahmah_02
+Door Chime				: freesound.org/metrostock99
+Engine Starter Grind	: freesound.org/lonemonk
+Sliding Crew Doors		: freesound/368084__magnesus__sliding-doors
+sophiehall3535			: freesound.org/people/sophiehall3535/sounds/245940/
+SpliceSound				: freesound.org/people/SpliceSound/sounds/369880/
+

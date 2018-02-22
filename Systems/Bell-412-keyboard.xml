@@ -1,76 +1,234 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <PropertyList>
-  <key n="78">
-    <name>N</name>
-    <desc>Toggle rotor brake</desc>
-    <binding>
-      <command>nasal</command>
-      <script>
-        var p = "/controls/rotor/brake";
-        setprop(p, !getprop(p));
-      </script>
-    </binding>
-  </key>
+	<!--
+	<key n="78">
+		<name>N</name>
+		<desc>Toggle rotor brake</desc>
+		<binding>
+			<command>nasal</command>
+			<script>
+				var p = "/controls/rotor/brake";
+				setprop(p, !getprop(p));
+			</script>
+		</binding>
+	</key>
 
-  <key n="110">
-    <name>n</name>
-    <desc>Apply rotor brake</desc>
-    <binding>
-      <command>nasal</command>
-      <script>interpolate("/controls/engines/brake", 100, 4)</script>
-    </binding>
-    <mod-up>
-      <binding>
-        <command>nasal</command>
-        <script>interpolate("/controls/engines/brake", 0.0, 2)</script>
-      </binding>
-    </mod-up>
-  </key>
+	<key n="110">
+		<name>n</name>
+		<desc>Apply rotor brake</desc>
+		<binding>
+			<command>nasal</command>
+			<script>interpolate("/controls/engines/brake", 100, 4)</script>
+		</binding>
+		<mod-up>
+			<binding>
+				<command>nasal</command>
+				<script>interpolate("/controls/engines/brake", 0.0, 2)</script>
+			</binding>
+		</mod-up>
+	</key>
+	-->
 
-  <key n="115">
-	  <name>s</name>
-	  <desc>Engine[0] Start</desc>
-	  <binding>
-		  <command>property-toggle</command>
-		  <property>controls/engines/engine[0]/starter</property>
-	  </binding>
-	  <binding>
-		  <command>nasal</command>
-		  <script>bell412.iBell412.engine_start(0)</script>
-	  </binding>
-  </key>
+	<key n="115">
+		<name>s</name>
+		<desc>Engine[0] Start</desc>
+		<binding>
+			<command>property-toggle</command>
+			<property>controls/engines/engine[0]/starter</property>
+		</binding>
+		<binding>
+			<command>nasal</command>
+			<script>bell412.iBell412.engine_start(0)</script>
+		</binding>
+	</key>
 
-  <key n="83">
-	  <name>S</name>
-	  <desc>Engine[1] Start</desc>
-	  <binding>
-		  <command>property-toggle</command>
-		  <property>controls/engines/engine[1]/starter</property>
-	  </binding>
-	  <binding>
-		  <command>nasal</command>
-		  <script>bell412.iBell412.engine_start(1)</script>
-	  </binding>
-  </key>
+	<key n="83">
+		<name>S</name>
+		<desc>Engine[1] Start</desc>
+		<binding>
+			<command>property-toggle</command>
+			<property>controls/engines/engine[1]/starter</property>
+		</binding>
+		<binding>
+			<command>nasal</command>
+			<script>bell412.iBell412.engine_start(1)</script>
+		</binding>
+	</key>
+	
+	<key n="114">
+		<name>r</name>
+		<desc>Increase throttle or autopilot autothrottle</desc>
+		<repeatable type="bool">true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				controls.incThrottle(0.01, 1.0)
+			</script>
+		</binding>
+	</key>
 
-  <!--
+	<key n="102">
+		<name>f</name>
+		<desc>Decrease throttle or autopilot autothrottle</desc>
+		<repeatable type="bool">true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				controls.incThrottle(-0.01, -1.0)
+			</script>
+		</binding>
+	</key>
+
+	<key n="100">
+		<name>d</name>
+		<desc>Move rudder left</desc>
+		<repeatable type="bool">true</repeatable>
+		<binding>
+			<command>property-adjust</command>
+			<property>/controls/flight/rudder</property>
+			<step type="double">-0.01</step>
+		</binding>
+	</key>
+	<key n="103">
+		<name>g</name>
+		<desc>Move rudder right</desc>
+		<repeatable type="bool">true</repeatable>
+		<binding>
+			<command>property-adjust</command>
+			<property>/controls/flight/rudder</property>
+			<step type="double">0.01</step>
+		</binding>
+	</key>
+
+	<key n="101">
+		<name>e</name>
+		<desc>Cyclic Trimmer</desc>
+		<binding>
+			<command>property-toggle</command>
+			<property>controls/cyclic/trimmer</property>
+		</binding>
+		<binding>
+			<command>show-message</command>
+			<id>cyclic-trim</id>
+			<label>Cyclic Trim %s</label>
+			<property>/controls/cyclic/trimmer</property>
+			<delay>0.50</delay>
+		</binding>
+	</key>
+	<key n="116">
+		<name>t</name>
+		<desc>Cyclic Force Trim Release</desc>
+		<binding>
+			<command>property-toggle</command>
+			<property>controls/flight/cyclic/force-trim-release</property>
+		</binding>
+		<binding>
+			<command>show-message</command>
+			<id>cyclic-ftrim-release</id>
+			<label>Force Trim Release: %s</label>
+			<property>/controls/flight/cyclic/force-trim-release</property>
+			<delay>0.50</delay>
+		</binding>
+	</key>
+	<key n="121">
+		<name>y</name>
+		<desc>AFCS YAW Control (TRA)</desc>
+		<binding>
+			<command>property-toggle</command>
+			<property>controls/flight/afcs/tra</property>
+		</binding>
+		<binding>
+			<command>show-message</command>
+			<id>afcs-yaw</id>
+			<label>AFCS YAW Control: %s</label>
+			<property>/controls/flight/afcs/tra</property>
+			<delay>0.50</delay>
+		</binding>
+	</key>
+
+	<key n="99">
+		<name>c</name>
+		<desc>Crew Doors Open/Close Left</desc>
+		<!-- open -->
+		<binding>
+			<condition>
+				<less-than>
+					<property>controls/doors/back/left</property>
+					<value type="float">1</value>
+				</less-than>
+			</condition>
+			<command>nasal</command>
+			<script>bell412.cargoDoorOpen("/controls/doors/back/left","left");</script>
+		</binding>
+		<!-- close -->
+		<binding>
+			<condition>
+				<greater-than>
+					<property>controls/doors/back/left</property>
+					<value type="float">0</value>
+				</greater-than>
+			</condition>
+			<command>nasal</command>
+			<script>bell412.cargoDoorClose("/controls/doors/back/left","left");</script>
+		</binding>
+		<binding>
+			<command>show-message</command>
+			<id>Crew Door Left</id>
+			<label>Crew Door Left</label>
+			<delay>0.80</delay>
+		</binding>
+	</key>
+
+	<key n="67">
+		<name>C</name>
+		<desc>Crew Doors Open</desc>
+		<!-- open -->
+		<binding>
+			<condition>
+				<less-than>
+					<property>controls/doors/back/right</property>
+					<value type="float">1</value>
+				</less-than>
+			</condition>
+			<command>nasal</command>
+			<script>bell412.cargoDoorOpen("/controls/doors/back/right","right");</script>
+		</binding>
+		<!-- close -->
+		<binding>
+			<condition>
+				<greater-than>
+					<property>controls/doors/back/right</property>
+					<value type="float">0</value>
+				</greater-than>
+			</condition>
+			<command>nasal</command>
+			<script>bell412.cargoDoorClose("/controls/doors/back/right","right");</script>
+		</binding>
+		<binding>
+			<command>show-message</command>
+			<id>Crew Door Right</id>
+			<label>Crew Door Right</label>
+			<delay>0.80</delay>
+		</binding>
+	</key>
+	<!--
   <key n="123">
-    <name>{</name>
-    <desc>Shutdown Engines</desc>
-    <binding>
-      <command>nasal</command>
-      <script>bell412.engines(0)</script>
-    </binding>
+	<name>{</name>
+	<desc>Shutdown Engines</desc>
+	<binding>
+	  <command>nasal</command>
+	  <script>bell412.engines(0)</script>
+	</binding>
   </key>
 
   <key n="125">
-    <name>}</name>
-    <desc>Start Engines</desc>
-    <binding>
-      <command>nasal</command>
-      <script>bell412.engines(1)</script>
-    </binding>
+	<name>}</name>
+	<desc>Start Engines</desc>
+	<binding>
+	  <command>nasal</command>
+	  <script>bell412.engines(1)</script>
+	</binding>
   </key>
 	-->
 </PropertyList>

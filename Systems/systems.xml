@@ -1,0 +1,27 @@
+<PropertyList>
+	<!--
+  	<electrical>
+		<name>electrical</name>
+		<number>0</number>
+		<path>Aircraft/Bell-412/Systems/electrical.xml</path>
+	</electrical>
+	-->
+	<pitot>
+		<name>pitot</name>
+		<number>0</number>
+	</pitot>
+
+	<static>
+		<name>static</name>
+		<number>0</number>
+		<tau>1</tau>
+	</static>
+
+	<vacuum>
+		<name>vacuum</name>
+		<number>0</number>
+		<rpm>/bell412/mechanics/vacuum/spin</rpm>
+		<scale>1.0</scale>
+	</vacuum>
+
+</PropertyList>

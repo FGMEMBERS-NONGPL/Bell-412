@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PropertyList>
+	<name>instruments-1-lights2-als</name>
+	<inherits-from>/Effects/model-combined-deferred</inherits-from>
+	<parameters>
+		<lightmap-enabled type="int">1</lightmap-enabled>
+		<lightmap-multi type="int">1</lightmap-multi>
+		<texture n="3">
+			<image>../Models/Instruments/instruments-1-lights2.png</image>
+			<filter>linear-mipmap-linear</filter>
+			<internal-format>normalized</internal-format>
+            <wrap-s>clamp</wrap-s>
+            <wrap-t>clamp</wrap-t>
+		</texture>
+
+		<!-- instruments inside -->
+		<lightmap-factor type="float" n="0">
+			<use>bell412/electrical/output/lights/pilotlt</use>
+		</lightmap-factor>
+		<!--<lightmap-color type="vec3d" n="0"> 0.8 0.83 0.76 </lightmap-color> -->
+		<lightmap-color type="vec3d" n="0"> 0.1 0.1 0.1 </lightmap-color>
+
+		<!-- instruments outside -->
+		<lightmap-factor type="float" n="1">
+			<use>bell412/electrical/output/lights/conslt</use>
+		</lightmap-factor>
+		<lightmap-color type="vec3d" n="1"> 0.5 0.5 0.6 </lightmap-color>
+
+		<lightmap-factor type="float" n="2">0.0</lightmap-factor>
+		<lightmap-color type="vec3d" n="2"> 1.0 1.0 1.0 </lightmap-color>
+        <lightmap-factor type="float" n="3">0.0</lightmap-factor>
+		<lightmap-color type="vec3d" n="3">1.0 1.0 1.0</lightmap-color>
+	</parameters>
+</PropertyList>
+

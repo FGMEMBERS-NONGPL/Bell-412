@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>hsi_hset.ac</path>
+	<name>5.Cockpit Panel Main Control HSI HSet</name>
+	
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/controls-lights</inherits-from>
+		<object-name>5.Cockpit Panel Main Control HSI HSet</object-name>
+	</effect>
+	
+	<animation>
+		<type>knob</type>
+		<object-name>5.Cockpit Panel Main Control HSI HSet</object-name>
+		<property>instrumentation/heading-indicator/heading-bug-deg</property>
+		<factor>10</factor>
+		<center>
+			<x>0</x>
+			<y>0</y>
+			<z>0</z>
+		</center>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<action>
+			<button>3</button>
+			<binding>
+				<command>property-adjust</command>
+				<property>instrumentation/heading-indicator/heading-bug-deg</property>
+				<factor>1</factor>
+				<min>0</min>
+				<max>360</max>                
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<command>property-adjust</command>
+				<property>autopilot/settings/heading-bug-deg</property>
+				<factor>1</factor>
+				<min>0</min>
+				<max>360</max>                
+				<wrap>true</wrap>
+			</binding>
+		</action>
+		<action>
+			<button>4</button>
+			<binding>
+				<command>property-adjust</command>
+				<property>instrumentation/heading-indicator/heading-bug-deg</property>
+				<factor>1</factor>
+				<min>0</min>
+				<max>360</max>                
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<command>property-adjust</command>
+				<property>autopilot/settings/heading-bug-deg</property>
+				<factor>1</factor>
+				<min>0</min>
+				<max>360</max>                
+				<wrap>true</wrap>
+			</binding>
+		</action>
+	</animation>
+
+</PropertyList>
+

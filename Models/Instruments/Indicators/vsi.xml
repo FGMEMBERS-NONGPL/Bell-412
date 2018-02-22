@@ -1,29 +1,26 @@
 <?xml version="1.0"?>
 
 <PropertyList>
-	<path>vsi.ac</path>
-	<offsets>
-		<x-m>-2.81568</x-m>
-		<y-m>0.55557</y-m>
-		<z-m>0.35016</z-m>
-		<pitch-deg>-8.39</pitch-deg>
-	</offsets>
-    <animation>
-        <type>rotate</type>
-        <object-name>5.Cockpit Panel Main Instruments VSI Needle</object-name>
-        <property>instrumentation/vertical-speed-indicator/indicated-speed-fpm</property>
-        <axis>
-            <x>-1</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
-		<interpolation>
-			<entry><ind>2000.0</ind><dep>170</dep></entry>
-			<entry><ind>500.000</ind><dep>60</dep></entry>
-			<entry><ind>0</ind><dep>0.0</dep></entry>
-			<entry><ind>-500.000</ind><dep>-60</dep></entry>
-			<entry><ind>-2000.000</ind><dep>-170</dep></entry>
-		</interpolation>
-    </animation>
+	<model>
+		<name>5.Cockpit Panel Main Instruments VSI Pilot</name>
+		<path>vsi_g.xml</path>
+		<offsets>
+			<x-m>-2.81568</x-m>
+			<y-m>0.55557</y-m>
+			<z-m>0.35016</z-m>
+			<pitch-deg>-8.39</pitch-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<name>5.Cockpit Panel Main Instruments VSI CoPilot</name>
+		<path>vsi_g.xml</path>
+		<offsets>
+			<x-m>-2.81861</x-m>
+			<y-m>-0.31833</y-m>
+			<z-m>0.36637</z-m>
+			<pitch-deg>-8.39</pitch-deg>
+		</offsets>
+	</model>
 </PropertyList>
 

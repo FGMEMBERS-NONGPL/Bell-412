@@ -11,7 +11,7 @@
     <animation>
         <type>rotate</type>
         <object-name>5.Cockpit Panel Main Instruments EngOIL2 Needle T</object-name>
-		<property>/bell412/mechanics/engines/engine[1]/oiltemp</property>
+		<property>bell412/mechanics/engines/engine[1]/oiltemp</property>
         <axis>
             <x>-1</x>
             <y>0</y>

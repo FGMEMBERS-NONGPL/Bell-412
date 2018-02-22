@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<model>
+		<path>ahrs_actuator1.xml</path>
+		<name>actuator1</name>
+		<offsets>
+			<x-m>-2.38289</x-m>
+			<y-m>-0.07398</y-m>
+			<z-m>0.03532</z-m>
+			<!-- <pitch-deg>-18.649</pitch-deg> -->
+			<pitch-deg>-71.351</pitch-deg>
+		</offsets>
+	</model>
+	<model>
+		<path>ahrs_actuator2.xml</path>
+		<name>actuator2</name>
+		<offsets>
+			<x-m>-2.38289</x-m>
+			<y-m>0.07683</y-m>
+			<z-m>0.03532</z-m>
+			<!-- <pitch-deg>-18.649</pitch-deg> -->
+			<pitch-deg>-71.351</pitch-deg>
+		</offsets>
+	</model>
+</PropertyList>
+

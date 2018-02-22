@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+<!-- Wind -->
+	<label>
+		<name>Wind direction</name>
+		<x>0</x>
+		<y>0</y>
+		<width>1</width>
+		<height>1</height>
+		<input>
+			<property>environment/wind-from-heading-deg</property>
+			<factor>1</factor>
+			<damp>0.0</damp>
+		</input>
+		<format>%3.0f</format>
+		<prefix>></prefix>
+		<halign>left</halign>
+	</label>
+	<label>
+		<name>Wind speed</name>
+		<x>30</x>
+		<y>0</y>
+		<width>1</width>
+		<height>1</height>
+		<input>
+			<property>environment/wind-speed-kt</property>
+			<factor>1</factor>
+			<damp>0.0</damp>
+		</input>
+		<format>%2.0fkt</format>
+		<halign>left</halign>
+	</label>
+</PropertyList>
+

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<!-- WARNING: add every object to the rembrandt effect feature at the bottom -->
+
+<PropertyList>
+	<path>instruments_glasses.ac</path>
+
+	<!-- Glasses Rembrandt transparency -->
+
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<condition>
+			<property>sim/rendering/rembrandt/enabled</property>
+		</condition>
+		<object-name>5.Cockpit Panel Main Instruments AI Glass</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Left Glass</object-name>
+	</effect>
+	<!-- Glasses Reflection Rembrandt / ALS -->
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/instruments-glass</inherits-from>
+		<object-name>5.Cockpit Panel Main Instruments AI Glass</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Left Glass</object-name>
+	</effect>
+</PropertyList>

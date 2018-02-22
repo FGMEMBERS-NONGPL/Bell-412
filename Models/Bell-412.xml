@@ -3,6 +3,28 @@
 <PropertyList>
 	<!-- Main fuselage -->
 	<path>412.ac</path>
+
+	<!-- Livery tweaks ( http://wiki.flightgear.org/Livery_over_MP ) -->
+	<!-- MP tweaks
+	  ##############################################################################
+	  # The on-load Nasal is not executed when this file is loaded as the user
+	  # aircraft. The code is only executed if the file is loaded for a remote
+	  # aircraft in Multi-Player mode (MP)
+	  ##############################################################################
+	-->
+	<nasal>
+		<load>
+			cmdarg().getNode("sim/model/ac-type", 1).setValue("Bell-412");
+            var livery_update = aircraft.livery_update.new("Aircraft/Bell-412/Models/Liveries",10, func { print("[Bell-412] ! livery update")} );
+		</load>
+		<unload>
+			cmdarg().getNode("sim/model/ac-type", 1).setValue("");
+            livery_update.stop();
+		</unload>
+	</nasal>
+	<!-- MP Sounds -->
+	<sound><path>Aircraft/Bell-412/Sounds/Bell-412-sound-mp.xml</path></sound>
+
 	<!-- <texture-path>./Textures</texture-path> useless, blender export don't understand this -->
 	<offsets>
 		<pitch-deg>0</pitch-deg>   
@@ -12,30 +34,12 @@
 		<z-m>0.1</z-m>	<!-- splatch zboeing at startup ... it's alive ! -->
 	</offsets>
 
-	<!-- Glasses Rembrandt transparency -->
-	<effect>
-		<inherits-from>Effects/model-transparent</inherits-from>
-		<condition>
-			<property>sim/rendering/rembrandt/enabled</property>
-		</condition>
-		<object-name>3.Glasses Front Interior</object-name>
-	</effect>
-	<effect>
-		<inherits-from>Effects/model-transparent</inherits-from>
-		<condition>
-			<property>sim/rendering/rembrandt/enabled</property>
-		</condition>
-		<object-name>3.Glasses Front</object-name>
-		<object-name>3.Glasses Door Front Left 1</object-name>
-		<object-name>3.Glasses Door Front Left 2</object-name>
-		<object-name>3.Glasses Door Front Right 1</object-name>
-		<object-name>3.Glasses Door Front Right 2</object-name>
-		<object-name>3.Glasses Middle Left</object-name>
-		<object-name>3.Glasses Middle Right</object-name>
-		<object-name>3.Glasses Back Left</object-name>
-		<object-name>3.Glasses Back Right</object-name>
-	</effect>
-
+	<!-- Missing parts -->
+	<!--
+	<model><path>Aircraft/Bell-412/Models/Bell-412-parts.xml</path></model>
+	-->
+	<!-- checklist marker -->
+	<model><path>Aircraft/Generic/marker.xml</path></model>
 	<!-- Immatriculation -->
 	<model><path>Aircraft/Bell-412/Models/Immat/immat.xml</path></model>
 	<!-- Instruments -->
@@ -46,11 +50,140 @@
 	<model><path>Aircraft/Bell-412/Models/Lights/lights.xml</path></model>
 	<!-- Aircraft Controls (cyclic,collectiv,rudders -->
 	<model><path>Aircraft/Bell-412/Models/Controls/controls.xml</path></model>
+	
+	<model><path>Aircraft/Bell-412/Models/Misc/backseats.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Pedestal/pedestal.xml</path></model>
+	<model>
+		<name>Pilot</name>
+		<path>Aircraft/Bell-412/Models/Pilots/pilot-mh.xml</path>
+		<offsets>
+			<x-m>-2.05125</x-m>
+			<y-m>0.57</y-m>
+			<z-m>0.05298</z-m>
+		</offsets>
+	</model>
+	<model>
+		<name>Copilot</name>
+		<path>Aircraft/Bell-412/Models/Pilots/copilot-mh.xml</path>
+		<offsets>
+			<x-m>-2.05125</x-m>
+			<y-m>-0.57</y-m>
+			<z-m>0.05298</z-m>
+		</offsets>
+	</model>
+	<model><path>Aircraft/Bell-412/Models/Pilots/passengers.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Weapons/weapons.xml</path></model>
 
-	<!-- Livery setup Fuselage -->
+	<!-- ALS 3d shadow vol 12/11/17 15:30: canceled, very weird & dirty effect -->
+	<!-- <model><path>Aircraft/Bell-412/Effects/3dshadow-als.xml</path></model> -->
+
+	<!-- Glasses Rembrandt transparency -->
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<condition>
+			<property>sim/rendering/rembrandt/enabled</property>
+		</condition>
+		<object-name>3.Glasses Front Interior Dirty</object-name>
+		<object-name>3.Glasses Back Left Inner</object-name>
+		<object-name>3.Glasses Back Right Inner</object-name>
+		<object-name>3.Glasses Middle Left Inner</object-name>
+		<object-name>3.Glasses Middle Right Inner</object-name>
+		<object-name>1.Fuselage Tail Vent</object-name>
+		<object-name>1.Fuselage Engine Top Airing</object-name>
+		<object-name>1.Fuselage Engine Top Back Airing</object-name>
+	</effect>
+	
+	<!-- Glasses Reflection Exterior Rembrandt / ALS -->
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/reflection_exterior-both</inherits-from>
+		<object-name>3.Glasses Front</object-name>
+		<object-name>3.Glasses Door Front Left</object-name>
+		<object-name>3.Glasses Door Front Left sl</object-name>
+		<object-name>3.Glasses Door Front Right</object-name>
+		<object-name>3.Glasses Door Front Right sl</object-name>
+		<object-name>3.Glasses Middle Left</object-name>
+		<object-name>3.Glasses Middle Right</object-name>
+		<object-name>3.Glasses Back Left</object-name>
+		<object-name>3.Glasses Back Right</object-name>
+	</effect>
+
+	<!-- Glasses Reflection Interior Rembrandt / ALS -->
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/reflection_interior_front-both</inherits-from>
+		<object-name>3.Glasses Front Interior</object-name>
+	</effect>
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/reflection_interior_frontdoors-both</inherits-from>
+		<object-name>3.Glasses Door Front Left Inner</object-name>
+		<object-name>3.Glasses Door Front Left sl Inner</object-name>
+		<object-name>3.Glasses Door Front Right Inner</object-name>
+		<object-name>3.Glasses Door Front Right sl Inner</object-name>
+		<object-name>3.Glasses Front Interior Top</object-name>
+		<object-name>3.Glasses Front Interior Nose</object-name>
+	</effect>
+
+	<!-- Fuselage Reflection - Rembrandt / ALS -->
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/reflection_fuselage-both</inherits-from>
+		<object-name>1.Fuselage</object-name>
+		<object-name>1.Fuselage ExtPowCap</object-name>
+		<object-name>2.Door Back Left Outer</object-name>
+		<object-name>2.Door Back Right Outer</object-name>
+		<object-name>2.Door Front Left Outer</object-name>
+		<object-name>2.Door Front Right Outer</object-name>
+		<object-name>2.Door Middle Left Outer</object-name>
+		<object-name>2.Door Middle Right Outer</object-name>
+		<object-name>2.Door Nose Outer</object-name>
+		<object-name>3.Glasses Frame Front Bottom</object-name>
+	</effect>
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/reflection_fuselage_tail-both</inherits-from>
+		<object-name>1.Fuselage Air Entry Left</object-name>
+		<object-name>1.Fuselage Air Entry Right</object-name>
+		<object-name>1.Fuselage Engine Top</object-name>
+		<object-name>1.Fuselage Engine Top Back</object-name>
+		<object-name>1.Fuselage Tail</object-name>
+		<object-name>1.Fuselage Tail Aileron</object-name>
+		<object-name>1.Fuselage Turbine Exit</object-name>
+		<object-name>2.Door Tail Outer</object-name>
+	</effect>
+
+	<!--
+	<effect>
+		<inherits-from>Effects/Bell-412-Cabin-floor-bumpspecs</inherits-from>
+		<object-name>5.Cockpit Control Cyclic Left Bottom</object-name>
+		<object-name>5.Cockpit Control Cyclic Right Bottom</object-name>
+		<object-name>6.Cabin Floor and Front</object-name>
+	</effect>
+	<effect>
+		<inherits-from>Effects/Bell-412-Cabin-roof-bumpspecs</inherits-from>
+		<object-name>6.Cabin Roof</object-name>
+	</effect>
+	-->
+	<!--
+	<effect>
+		<inherits-from>Effects/cockpitSeats-bump</inherits-from>
+		<object-name>5.Cockpit Seats Front</object-name>
+	</effect>
+	<effect>
+		<inherits-from>Effects/doors_inside-bump</inherits-from>
+		<object-name>2.Door Front Left Inner</object-name>
+		<object-name>2.Door Front Right Inner</object-name>
+		<object-name>2.Door Back Left Inner</object-name>
+		<object-name>2.Door Back Right Inner</object-name>
+		<object-name>2.Door Middle Left Inner</object-name>
+		<object-name>2.Door Middle Right Inner</object-name>
+	 </effect>
+	-->
+
+	<!-- 
+		 LIVERIES 
+	  -->
+	<!-- Livery Fuselage -->
 	<animation>
 		<type>material</type>
 		<object-name>1.Fuselage</object-name>
+		<object-name>1.Fuselage ExtPowCap</object-name>
 		<object-name>2.Door Front Left Outer</object-name>
 		<object-name>2.Door Front Right Outer</object-name>
 		<object-name>2.Door Middle Left Outer</object-name>
@@ -60,13 +193,45 @@
 		<object-name>2.Door Nose Outer</object-name>
 		<property-base>sim/model/livery</property-base>
 		<texture-prop>texture-fuselage</texture-prop>
-		<!--	<texture>Roger-1.FuselageQueue.png</texture> -->
+		<texture>Liveries/1.FuselageHD.png</texture>
+        <ambient>
+			<red>1.0</red>
+			<red-prop>amb</red-prop>
+			<green>1.0</green>
+			<green-prop>amb</green-prop>
+			<blue>1.0</blue>
+            <blue-prop>amb</blue-prop>
+        </ambient>
+		<diffuse>
+			<red>1.0</red>
+			<red-prop>diff</red-prop>
+			<green>1.0</green>
+			<green-prop>diff</green-prop>
+			<blue>1.0</blue>
+            <blue-prop>diff</blue-prop>
+		</diffuse>
+		<specular>
+			<red>0.1</red>
+			<red-prop>spec</red-prop>
+			<green>0.1</green>
+			<green-prop>spec</green-prop>
+			<blue>0.1</blue>
+            <blue-prop>spec</blue-prop>
+		</specular>
+        <emission>
+            <red>0.00</red>
+            <green>0.00</green>
+            <blue>0.00</blue>
+        </emission>
+		<shininess>20.0</shininess>
+		<shininess-prop>shine</shininess-prop>
 	</animation>
-	<!-- Livery setup Tail -->
+	<!-- Livery Fuselage Boom Tail -->
 	<animation>
 		<type>material</type>
 		<object-name>1.Fuselage Tail</object-name>
 		<object-name>1.Fuselage Engine Top</object-name>
+		<object-name>1.Fuselage Engine Top Back</object-name>
 		<object-name>1.Fuselage Turbine Exit</object-name>
 		<object-name>1.Fuselage Air Entry Left</object-name>
 		<object-name>1.Fuselage Air Entry Right</object-name>
@@ -74,7 +239,78 @@
 		<object-name>2.Door Tail Outer</object-name>
 		<property-base>sim/model/livery</property-base>
 		<texture-prop>texture-queue</texture-prop>
-		<!--	<texture>Roger-1.FuselageQueue.png</texture> -->
+		<texture>Liveries/1.FuselageQueueHD.png</texture>
+        <ambient>
+			<red>1.0</red>
+			<red-prop>amb</red-prop>
+			<green>1.0</green>
+			<green-prop>amb</green-prop>
+			<blue>1.0</blue>
+            <blue-prop>amb</blue-prop>
+        </ambient>
+		<diffuse>
+			<red>1.0</red>
+			<red-prop>diff</red-prop>
+			<green>1.0</green>
+			<green-prop>diff</green-prop>
+			<blue>1.0</blue>
+            <blue-prop>diff</blue-prop>
+		</diffuse>
+		<specular>
+			<red>0.1</red>
+			<red-prop>spec</red-prop>
+			<green>0.1</green>
+			<green-prop>spec</green-prop>
+			<blue>0.1</blue>
+            <blue-prop>spec</blue-prop>
+		</specular>
+        <emission>
+            <red>0.00</red>
+            <green>0.00</green>
+            <blue>0.00</blue>
+        </emission>
+		<shininess>20.0</shininess>
+		<shininess-prop>shine</shininess-prop>
+	</animation>
+	<!-- Livery Rotors -->
+	<animation>
+		<type>material</type>
+		<object-name>4.Mechanic Rotor Blade.000</object-name>
+		<object-name>4.Mechanic Rotor Blade.001</object-name>
+		<object-name>4.Mechanic Rotor Blade.002</object-name>
+		<object-name>4.Mechanic Rotor Blade.003</object-name>
+		<object-name>4.Mechanic Rotor Tail Blade.000</object-name>
+		<object-name>4.Mechanic Rotor Tail Blade.001</object-name>
+		<property-base>sim/model/livery</property-base>
+		<texture-prop>texture-blades</texture-prop>
+		<texture>Liveries/Blades.png</texture>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>4.Mechanic Rotor Blade.005</object-name>
+		<object-name>4.Mechanic Rotor Blade.006</object-name>
+		<object-name>4.Mechanic Rotor Blade.007</object-name>
+		<object-name>4.Mechanic Rotor Blade.008</object-name>
+		<property-base>sim/model/livery</property-base>
+		<texture-prop>texture-blades-x</texture-prop>
+		<texture>Liveries/Blades_x.png</texture>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>4.Mechanic Rotor Blur.000</object-name>
+		<object-name>4.Mechanic Rotor Blur.001</object-name>
+		<object-name>4.Mechanic Rotor Blur.002</object-name>
+		<object-name>4.Mechanic Rotor Blur.003</object-name>
+		<property-base>sim/model/livery</property-base>
+		<texture-prop>texture-blades-blur</texture-prop>
+		<texture>Liveries/rotors_main_blur.png</texture>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>4.Mechanic Rotor Tail Blur</object-name>
+		<property-base>sim/model/livery</property-base>
+		<texture-prop>texture-tail-blur</texture-prop>
+		<texture>Liveries/rotors_tail_blur.png</texture>
 	</animation>
 	<!-- Livery setup Doors Inside (FG BUG : childs object-->
 	<!--
@@ -114,8 +350,40 @@
             <red>0.08</red>
             <green>0.10</green>
             <blue>0.09</blue>
-			<factor-prop>/bell412/power/output/consoles/conslt</factor-prop>
+			<factor-prop>bell412/electrical/output/lights/conslt</factor-prop>
         </emission>
+	</animation>
+
+	<!-- Cockpit Glasses Front Interior Transparency -->
+	<animation>
+		<type>select</type>
+		<object-name>3.Glasses Front Interior</object-name>
+		<object-name>3.Glasses Door Front Left Inner</object-name>
+		<object-name>3.Glasses Door Front Left sl Inner</object-name>
+		<object-name>3.Glasses Door Front Right Inner</object-name>
+		<object-name>3.Glasses Door Front Right sl Inner</object-name>
+		<object-name>3.Glasses Front Interior Top</object-name>
+		<object-name>3.Glasses Front Interior Nose</object-name>
+		<condition>
+			<property>controls/options/cockpit-texture-reflection</property>
+		</condition>
+		<!--
+		<type>blend</type>
+		<expression>
+			<product>
+				<property>controls/options/cockpit-texture-reflection</property>
+				<property>controls/effects/interior-glasses-alpha</property>
+			</product>
+		</expression>
+		-->
+		<!--
+		<type>material</type>
+		<transparency>
+			<alpha-prop>controls/effects/interior-glasses-alpha</alpha-prop>
+			<factor>1</factor>
+			<offset>1</offset>
+		</transparency>
+		-->
 	</animation>
 	
 	<!-- Doors -->
@@ -154,9 +422,13 @@
 		<type>rotate</type>
 		<object-name>2.Door Front Right Outer</object-name>
 		<object-name>2.Door Front Right Inner</object-name>
-		<object-name>3.Glasses Door Front Right 1</object-name>
-		<object-name>3.Glasses Door Front Right 2</object-name>
-		<property>controls/doors/front/right</property>
+		<object-name>3.Glasses Door Front Right</object-name>
+		<object-name>3.Glasses Door Front Right Inner</object-name>
+		<object-name>3.Glasses Door Front Right sl</object-name>
+		<object-name>3.Glasses Door Front Right sl Inner</object-name>
+		<object-name>3.Glasses Door Front Right Gutter</object-name>
+		<!-- <property>controls/doors/front/right</property> -->
+		<property>sim/multiplay/generic/float[0]</property>
 		<axis>
 			<x>0</x>
 			<y>0</y>
@@ -213,9 +485,13 @@
 		<type>rotate</type>
 		<object-name>2.Door Front Left Outer</object-name>
 		<object-name>2.Door Front Left Inner</object-name>
-		<object-name>3.Glasses Door Front Left 1</object-name>
-		<object-name>3.Glasses Door Front Left 2</object-name>
-		<property>controls/doors/front/left</property>
+		<object-name>3.Glasses Door Front Left</object-name>
+		<object-name>3.Glasses Door Front Left Inner</object-name>
+		<object-name>3.Glasses Door Front Left sl</object-name>
+		<object-name>3.Glasses Door Front Left sl Inner</object-name>
+		<object-name>3.Glasses Door Front Left Gutter</object-name>
+		<!-- <property>controls/doors/front/left</property> -->
+		<property>sim/multiplay/generic/float[1]</property>
 		<axis>
 			<x>0</x>
 			<y>0</y>
@@ -237,22 +513,363 @@
 			</entry>
 		</interpolation>
 	</animation>
-	<!-- Livery tweaks ( http://wiki.flightgear.org/Livery_over_MP ) -->
-	<nasal>
-		<load>
-			<!--
-		  ##############################################################################
-		  # The on-load Nasal is not executed when this file is loaded as the user
-		  # aircraft. The code is only executed if the file is loaded for a remote
-		  # aircraft in Multi-Player mode (MP)
-		  ##############################################################################
-		-->
-		<![CDATA[
-		var livery_update = aircraft.livery_update.new("Aircraft/747/Models/Liveries");
-		]]></load>
-		<unload><![CDATA[
-			livery_update.stop();
-			]]></unload>
-	</nasal>
+	<!-- Back left -->
+	<animation>
+		<type>pick</type>
+		<object-name>2.Door Back Left Handles</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<!-- open -->
+			<binding>
+				<condition>
+					<less-than>
+						<property>controls/doors/back/left</property>
+						<value type="float">1</value>
+					</less-than>
+				</condition>
+				<command>nasal</command>
+				<script>bell412.cargoDoorOpen("/controls/doors/back/left","left");</script>
+			</binding>
+			<!-- close -->
+			<binding>
+				<condition>
+					<greater-than>
+						<property>controls/doors/back/left</property>
+						<value type="float">0</value>
+					</greater-than>
+				</condition>
+				<command>nasal</command>
+				<script>bell412.cargoDoorClose("/controls/doors/back/left","left");</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>2.Door Back Left Outer</object-name>
+		<object-name>2.Door Back Left Inner</object-name>
+		<object-name>3.Glasses Back Left</object-name>
+		<object-name>3.Glasses Back Left Inner</object-name>
+		<object-name>2.Door Back Left Handles</object-name>
+		<!-- <property>controls/doors/back/left</property> -->
+		<property>sim/multiplay/generic/float[3]</property>
+		<interpolation>
+			<entry><ind> 0.0 </ind><dep>  0.000 </dep></entry>
+			<entry><ind> 0.2 </ind><dep> -0.030 </dep></entry>
+			<entry><ind> 1.0 </ind><dep> -0.100 </dep></entry>
+		</interpolation>
+		<axis>
+			<x> 0 </x>
+			<y> 1 </y>
+			<z> 0 </z>
+		</axis>
+	</animation>
+	<animation>
+		<type>rotate</type>
+		<object-name>2.Door Back Left Outer</object-name>
+		<object-name>2.Door Back Left Inner</object-name>
+		<object-name>3.Glasses Back Left</object-name>
+		<object-name>3.Glasses Back Left Inner</object-name>
+		<object-name>2.Door Back Left Handles</object-name>
+		<!-- <property>controls/doors/back/left</property> -->
+		<property>sim/multiplay/generic/float[3]</property>
+		<interpolation>
+			<entry><ind> 0.0 </ind><dep>  0 </dep></entry>
+			<entry><ind> 0.2 </ind><dep>  0 </dep></entry>
+			<entry><ind> 1.0 </ind><dep> 17.0 </dep></entry>
+		</interpolation>
+		<center>
+			<x-m>-0.08448</x-m>
+			<y-m>-1.19711</y-m>
+			<z-m>0.14066</z-m>
+		</center>
+		<axis>
+			<x> 0.1 </x>
+			<y> 0 </y>
+			<z> 1 </z>
+		</axis>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>2.Door Back Left Outer</object-name>
+		<object-name>2.Door Back Left Inner</object-name>
+		<object-name>3.Glasses Back Left</object-name>
+		<object-name>3.Glasses Back Left Inner</object-name>
+		<object-name>2.Door Back Left Handles</object-name>
+		<!-- <property>controls/doors/back/left</property> -->
+		<property>sim/multiplay/generic/float[3]</property>
+		<interpolation>
+			<entry><ind> 0.0 </ind><dep>  0 </dep></entry>
+			<entry><ind> 0.2 </ind><dep>  0 </dep></entry>
+			<entry><ind> 1.0 </ind><dep>  1.8 </dep></entry>
+		</interpolation>
+		<center>
+			<x-m>-0.08448</x-m>
+			<y-m>-1.19711</y-m>
+			<z-m>0.14066</z-m>
+		</center>
+		<axis>
+			<x> 1 </x>
+			<y> -0.055 </y>
+			<z> -0.07 </z>
+		</axis>
+	</animation>
+	<!-- Back right -->
+	<animation>
+		<type>pick</type>
+		<object-name>2.Door Back Right Handles</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<!-- open -->
+			<binding>
+				<condition>
+					<less-than>
+						<!-- <property>controls/doors/back/right</property> -->
+						<property>sim/multiplay/generic/float[2]</property>
+						<value type="float">1</value>
+					</less-than>
+				</condition>
+				<command>nasal</command>
+				<script>bell412.cargoDoorOpen("/controls/doors/back/right","right");</script>
+			</binding>
+			<!-- close -->
+			<binding>
+				<condition>
+					<greater-than>
+						<!-- <property>controls/doors/back/right</property> -->
+						<property>sim/multiplay/generic/float[2]</property>
+						<value type="float">0</value>
+					</greater-than>
+				</condition>
+				<command>nasal</command>
+				<script>bell412.cargoDoorClose("/controls/doors/back/right","right");</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>2.Door Back Right Outer</object-name>
+		<object-name>2.Door Back Right Inner</object-name>
+		<object-name>3.Glasses Back Right</object-name>
+		<object-name>3.Glasses Back Right Inner</object-name>
+		<object-name>2.Door Back Right Handles</object-name>
+		<!-- <property>controls/doors/back/right</property> -->
+		<property>sim/multiplay/generic/float[2]</property>
+		<interpolation>
+			<entry><ind> 0.0 </ind><dep>  0.000 </dep></entry>
+			<entry><ind> 0.2 </ind><dep> 0.030 </dep></entry>
+			<entry><ind> 1.0 </ind><dep> 0.100 </dep></entry>
+		</interpolation>
+		<axis>
+			<x> 0 </x>
+			<y> 1 </y>
+			<z> 0 </z>
+		</axis>
+	</animation>
+	<animation>
+		<type>rotate</type>
+		<object-name>2.Door Back Right Outer</object-name>
+		<object-name>2.Door Back Right Inner</object-name>
+		<object-name>3.Glasses Back Right</object-name>
+		<object-name>3.Glasses Back Right Inner</object-name>
+		<object-name>2.Door Back Right Handles</object-name>
+		<!-- <property>controls/doors/back/right</property> -->
+		<property>sim/multiplay/generic/float[2]</property>
+		<interpolation>
+			<entry><ind> 0.0 </ind><dep>  0 </dep></entry>
+			<entry><ind> 0.2 </ind><dep>  0 </dep></entry>
+			<entry><ind> 1.0 </ind><dep> 17.0 </dep></entry>
+		</interpolation>
+		<center>
+			<x-m>-0.08448</x-m>
+			<y-m>1.20129</y-m>
+			<z-m>0.14066</z-m>
+		</center>
+		<axis>
+			<x> -0.1 </x>
+			<y> 0 </y>
+			<z> -1 </z>
+		</axis>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>2.Door Back Right Outer</object-name>
+		<object-name>2.Door Back Right Inner</object-name>
+		<object-name>3.Glasses Back Right</object-name>
+		<object-name>3.Glasses Back Right Inner</object-name>
+		<object-name>2.Door Back Right Handles</object-name>
+		<!-- <property>controls/doors/back/right</property> -->
+		<property>sim/multiplay/generic/float[2]</property>
+		<interpolation>
+			<entry><ind> 0.0 </ind><dep>  0 </dep></entry>
+			<entry><ind> 0.2 </ind><dep>  0 </dep></entry>
+			<entry><ind> 1.0 </ind><dep>  1.8 </dep></entry>
+		</interpolation>
+		<center>
+			<x-m>-0.08448</x-m>
+			<y-m>1.20129</y-m>
+			<z-m>0.14066</z-m>
+		</center>
+		<axis>
+			<x> 1 </x>
+			<y> 0.055 </y>
+			<z> -0.07 </z>
+		</axis>
+	</animation>
+	
+	<!-- Pilot Glasses Up/Down -->
+	<animation>
+		<type>pick</type>
+		<object-name>3.Glasses Door Front Right Gutter</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/doors/glasses/right</property>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>3.Glasses Door Front Right Gutter</object-name>
+		<object-name>3.Glasses Door Front Right</object-name>
+		<object-name>3.Glasses Door Front Right Inner</object-name>
+		<!-- <property>controls/doors/glasses/right</property> -->
+		<property>sim/multiplay/generic/float[4]</property>
+		<interpolation>
+			<entry><ind> 0.0 </ind><dep>  0.000 </dep></entry>
+			<entry><ind> 1.0 </ind><dep> -0.320 </dep></entry>
+		</interpolation>
+		<axis>
+			<x> +0.03 </x>
+			<y> -0.01 </y>
+			<z> +1.00 </z>
+		</axis>
+	</animation>
+
+	<!-- CoPilot Glasses Up/Down -->
+	<animation>
+		<type>pick</type>
+		<object-name>3.Glasses Door Front Left Gutter</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/doors/glasses/left</property>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>3.Glasses Door Front Left Gutter</object-name>
+		<object-name>3.Glasses Door Front Left</object-name>
+		<object-name>3.Glasses Door Front Left Inner</object-name>
+		<!-- <property>controls/doors/glasses/left</property> -->
+		<property>sim/multiplay/generic/float[5]</property>
+		<interpolation>
+			<entry><ind> 0.0 </ind><dep>  0.000 </dep></entry>
+			<entry><ind> 1.0 </ind><dep> -0.320 </dep></entry>
+		</interpolation>
+		<axis>
+			<x> +0.07 </x>
+			<y> +0.01 </y>
+			<z> +1.00 </z>
+		</axis>
+	</animation>
+	
+	<!-- External Power Cap -->
+	<animation>
+		<type>pick</type>
+		<object-name>1.Fuselage ExtPowCap</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/doors/extpower</property>
+				<step>1</step>
+				<min>0</min>
+				<max>1</max>
+				<wrap>true</wrap>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>rotate</type>
+		<object-name>1.Fuselage ExtPowCap</object-name>
+		<property>controls/doors/extpower</property>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-3.74329</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.20547</z-m>
+		</center>  
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>0</dep>
+			</entry>
+			<entry>
+				<ind>1</ind>
+				<dep>-60</dep>
+			</entry>
+		</interpolation>
+	</animation>
+
+	<!-- Pilots -->
+	<animation> 
+		<type>select</type>
+		<object-name>Pilot</object-name>
+		<condition>
+			<and>
+				<not>
+					<equals>
+						<property>sim/current-view/view-number</property>
+						<value>0</value>
+					</equals>
+				</not>
+				<property>sim/multiplay/generic/int[11]</property>
+			</and>
+		</condition>
+	</animation>
+	<animation> 
+		<type>select</type>
+		<object-name>Copilot</object-name>
+		<condition>
+			<and>
+				<not>
+					<equals>
+						<property>sim/current-view/view-number</property>
+						<value>9</value>
+					</equals>
+				</not>
+				<property>sim/multiplay/generic/int[12]</property>
+			</and>
+		</condition>
+	</animation>
+
+	<!-- ALS Shadow -->
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/interior-shadow</inherits-from>
+		<object-name>6.Cabin Roof</object-name>
+		<object-name>6.Cabin Floor and Front</object-name>
+		<object-name>6.Cabin Framework Front Middle</object-name>
+		<object-name>5.Cockpit Seats Front</object-name>
+		<object-name>5.Cockpit Seats Back.000</object-name>
+		<object-name>2.Door Front Left Inner</object-name>
+		<object-name>2.Door Front Right Inner</object-name>
+		<object-name>2.Door Middle Left Inner</object-name>
+		<object-name>2.Door Middle Right Inner</object-name>
+		<object-name>2.Door Back Left Inner</object-name>
+		<object-name>2.Door Back Right Inner</object-name>
+	</effect>
+
 </PropertyList>
 

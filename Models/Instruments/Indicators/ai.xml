@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<PropertyList>
+	<model>
+		<name>5.Cockpit Panel Main Instruments AI Pilot</name>
+		<path>ai_g.xml</path>
+		<offsets>
+			<x-m>-2.81371</x-m>
+			<y-m>0.44067</y-m>
+			<z-m>0.42673</z-m>
+			<pitch-deg>-8.39</pitch-deg>
+		</offsets>
+	</model>
+	<model>
+		<name>5.Cockpit Panel Main Instruments AI CoPilot</name>
+		<path>ai_g.xml</path>
+		<offsets>
+			<x-m>-2.81371</x-m>
+			<y-m>-0.43554</y-m>
+			<z-m>0.42673</z-m>
+			<pitch-deg>-8.39</pitch-deg>
+		</offsets>
+	</model>
+</PropertyList>
+

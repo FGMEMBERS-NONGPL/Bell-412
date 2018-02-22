@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>hsi_disc.ac</path>
+	
+	<animation>
+		<type>noshadow</type>
+		<object-name>5.Cockpit Panel Main Instruments HSI Needle HSET</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Flag NAV</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Flag OFF</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Flag GS</object-name>
+	</animation>
+
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/instruments-2-lights</inherits-from>
+		<object-name>5.Cockpit Panel Main Instruments HSI Disc</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI CDisc</object-name>
+	</effect>
+	<!--
+	<effect>
+    	<inherits-from>Effects/model-transparent</inherits-from>
+    	<condition>
+      		<property>sim/rendering/rembrandt/enabled</property>
+		</condition>
+		<object-name>5.Cockpit Panel Main Instruments HSI Needle HSET</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Flag NAV0</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Flag NAV1</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Flag OFF</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Flag GS</object-name>
+	</effect>
+	-->
+
+    <animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Main Instruments HSI Disc</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Needle CSET</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Needle HSET</object-name>
+        <object-name>5.Cockpit Panel Main Instruments HSI Needle BRG</object-name>
+		<property>instrumentation/hsi/indicated-heading-deg</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+        <type>rotate</type>
+		<object-name>5.Cockpit Panel Main Instruments HSI Needle HSET</object-name>
+		<property>autopilot/settings/heading-bug-deg</property>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+	</animation>
+
+	<!-- CDI Course Set - FG don't like child object, we make it apart from HSI Disc -->
+	<animation>
+        <type>rotate</type>
+		<object-name>5.Cockpit Panel Main Instruments HSI Needle CSET</object-name>
+		<property>instrumentation/nav/radials/selected-deg</property>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+	</animation>
+	<animation>
+        <type>rotate</type>
+		<object-name>5.Cockpit Panel Main Instruments HSI CDisc</object-name>
+		<property>instrumentation/nav/radials/selected-deg</property>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+	</animation>
+	<animation>
+        <type>translate</type>
+		<object-name>5.Cockpit Panel Main Instruments HSI Needle CDEV</object-name>
+		<property>instrumentation/cdi/heading-needle-deflection</property>
+		<factor>0.0017</factor>
+        <axis>
+            <x>0</x>
+            <y>1</y>
+            <z>0</z>
+		</axis>
+	</animation>
+	
+	<!-- GS -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Instruments HSI Flag GS</object-name>
+		<condition>
+			<property>instrumentation/hsi/flags/gs</property>
+		</condition>
+	</animation>
+    <animation>
+        <type>translate</type>
+        <object-name>5.Cockpit Panel Main Instruments HSI Needle GS</object-name>
+		<property>instrumentation/hsi/gs-pointer</property>
+        <axis>
+            <x>0</x>
+            <y>0</y>
+            <z>1</z>
+		</axis>
+  		<interpolation>
+            <entry><ind>-1</ind><dep>-0.02</dep></entry>
+            <entry><ind>-0.5</ind><dep>-0.01</dep></entry>
+            <entry><ind>0</ind><dep>0</dep></entry>
+            <entry><ind>0.5</ind><dep>0.01</dep></entry>
+            <entry><ind>1</ind><dep>0.02</dep></entry>
+		</interpolation>
+	</animation>
+	
+	<!-- BRG Pointer -->
+    <animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Main Instruments HSI Needle BRG</object-name>
+		<property>instrumentation/hsi/bearing-pointer</property>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+	</animation>
+
+	<!-- OFF Flag -->
+	<animation>
+		<type>select</type>
+        <object-name>5.Cockpit Panel Main Instruments HSI Flag OFF</object-name>
+		<condition>
+			<property>instrumentation/hsi/flags/off</property>
+		</condition>
+	</animation>
+
+	<!-- NAV Flag -->
+	<animation>
+		<type>select</type>
+        <object-name>5.Cockpit Panel Main Instruments HSI Flag NAV</object-name>
+		<condition>
+			<property>instrumentation/hsi/flags/nav</property>
+		</condition>
+	</animation>
+
+	<!-- ADF Needle -->
+    <animation>
+        <type>rotate</type>
+        <object-name>5.Cockpit Panel Main Instruments HSI Needle ADF</object-name>
+		<property>instrumentation/hsi/adf-pointer</property>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+		</axis>
+	</animation>
+
+	<!-- ALS Bug : ALS overwrite any color with material anim. from non-texturized object 
+				   ALS doesn't like emissive child object too, so this is the trick ..
+				   each non-texturized object must be defined emissive with their respective colors
+	-->
+	<!-- Yellow illuminate --> 
+	<animation>
+		<object-name>5.Cockpit Panel Main Instruments HSI Needle CSET</object-name>
+		<object-name>5.Cockpit Panel Main Instruments HSI Needle CDEV</object-name>
+		<type>material</type>
+        <ambient>
+            <red>0.70</red>
+            <green>0.8</green>
+            <blue>0.0</blue>
+        </ambient>
+        <diffuse>
+            <red>0.70</red>
+            <green>0.8</green>
+            <blue>0.0</blue>
+        </diffuse>
+        <emission>
+            <red>0.65</red>
+            <green>0.75</green>
+            <blue>0.00</blue>
+			<factor-prop>bell412/electrical/output/lights/copilotlt</factor-prop>
+        </emission>
+	</animation>
+	<!-- Orange illuminate --> 
+	<animation>
+		<object-name>5.Cockpit Panel Main Instruments HSI Needle ADF</object-name>
+		<type>material</type>
+        <ambient>
+			<red>1.0</red>
+            <green>0.3</green>
+            <blue>0.0</blue>
+        </ambient>
+        <diffuse>
+            <red>1.0</red>
+            <green>0.3</green>
+            <blue>0.0</blue>
+        </diffuse>
+        <emission>
+            <red>0.9</red>
+            <green>0.25</green>
+            <blue>0.00</blue>
+			<factor-prop>bell412/electrical/output/lights/copilotlt</factor-prop>
+        </emission>
+	</animation>
+</PropertyList>
+

@@ -5,8 +5,21 @@
 		<menu n="100"> 
 			<label>Bell-412</label> 
 			<enabled type="bool">true</enabled>
+
+            <item>
+                <label>About the Bell-412</label>
+                <binding>
+                    <command>dialog-show</command>
+                    <dialog-name>bell412-apropos-dialog</dialog-name>
+                </binding>
+            </item>
+            <item>
+                <label>------------------</label>
+                <enabled>false</enabled>
+            </item>
+            
 			<item>
-				<label>Callsign</label>
+				<label>Immatriculation</label>
 				<binding>
 					<command>nasal</command>
 					<script>bell412.immat_dialog.toggle()</script>
@@ -24,6 +37,29 @@
 				<binding>
 					<command>nasal</command>
 					<script>aircraft.livery.dialog.open();</script>
+				</binding>
+			</item>
+			<item>
+				<label>Select Copilot</label>
+				<binding>
+					<command>nasal</command>
+					<script>
+						dual_control_tools.copilot_dialog.show(aircraft_dual_control.copilot_type);
+					</script>
+				</binding>
+			</item>
+			<item>
+				<label>DevOpen</label>
+				<binding>
+					<command>nasal</command>
+					<script>bell412.display_dev();</script>
+				</binding>
+			</item>
+			<item>
+				<label>DevClose</label>
+				<binding>
+					<command>nasal</command>
+					<script>bell412.close_dev();</script>
 				</binding>
 			</item>
 		</menu>

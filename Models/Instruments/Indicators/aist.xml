@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>aist.ac</path>
+	<!--
+	<object-name>5.Cockpit Panel Main Instruments AIST Ball</object-name>
+	<object-name>5.Cockpit Panel Main Instruments AIST Visor</object-name>
+	<object-name>5.Cockpit Panel Main Instruments AIST Ladder</object-name>
+	<object-name>5.Cockpit Panel Main Instruments AIST Flag</object-name>
+	-->
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Main Instruments AIST Ball</object-name>
+		<property>instrumentation/ai-stby/indicated-roll-deg</property>
+		<factor>1</factor>
+		<axis>
+			<x> 1 </x>
+			<y> 0 </y>
+			<z> 0 </z>
+		</axis>
+		<center>
+			<x-m>  2.86055 </x-m>
+			<y-m>  0.23507 </y-m>
+			<z-m>  0.46867 </z-m>
+		</center>
+	</animation>  
+
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Main Instruments AIST Ball</object-name>
+		<property>instrumentation/ai-stby/indicated-pitch-deg</property>
+		<factor>1</factor>
+  		<interpolation>
+            <entry><ind>-999</ind><dep>-75</dep></entry>
+            <entry><ind>-180</ind><dep>-65</dep></entry>
+            <entry><ind>-40</ind><dep>-44</dep></entry>
+            <entry><ind>-35</ind><dep>-34</dep></entry>
+            <entry><ind>-30</ind><dep>-24.5</dep></entry>
+            <entry><ind>-20</ind><dep>-18</dep></entry>
+            <entry><ind>-10</ind><dep>-12.5</dep></entry>
+            <entry><ind>0</ind><dep>1</dep></entry>
+            <entry><ind>10</ind><dep>14.0</dep></entry>
+            <entry><ind>20</ind><dep>19</dep></entry>
+            <entry><ind>30</ind><dep>26</dep></entry>
+            <entry><ind>40</ind><dep>45</dep></entry>
+            <entry><ind>180</ind><dep>65</dep></entry>
+            <entry><ind>999</ind><dep>75</dep></entry>
+        </interpolation>
+		<axis>
+			<x> 0 </x>
+			<y> 1 </y>
+			<z> 0 </z>
+		</axis>
+		<center>
+			<x-m>  -2.84693 </x-m>
+			<y-m>  0.23507 </y-m>
+			<z-m>  0.47068 </z-m>
+		</center>
+	</animation>  
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Main Instruments AIST Ladder</object-name>
+		<property>instrumentation/ai-stby/indicated-bank-deg</property>
+		<factor>1</factor>
+		<axis>
+			<x> 1 </x>
+			<y> 0 </y>
+			<z> 0 </z>
+		</axis>
+		<center>
+			<x-m>  -2.83228 </x-m>
+			<y-m>  0.23518 </y-m>
+			<z-m>  0.47444 </z-m>
+		</center>
+	</animation>  
+	
+	<!-- flags -->
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Instruments AIST Flag</object-name>
+		<condition>
+			<not><property>instrumentation/ai-stby/serviceable</property></not>
+		</condition>
+	</animation>
+
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/instruments-2-lights</inherits-from>
+		<object-name>5.Cockpit Panel Main Instruments AIST Ball</object-name>
+	</effect>
+
+</PropertyList>

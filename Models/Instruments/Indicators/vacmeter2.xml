@@ -11,8 +11,8 @@
 	</offsets>
     <animation>
         <type>rotate</type>
-        <object-name>5.Cockpit Panel Main Instruments Volt2 Needle AC</object-name>
-		<property>/bell412/power/buses/bus[1]/acload</property>
+		<object-name>5.Cockpit Panel Main Instruments Volt2 Needle AC</object-name>
+		<property>bell412/electrical/buses/bus[10]/voltage</property>
         <axis>
             <x>-1</x>
             <y>0</y>
@@ -28,9 +28,6 @@
             <entry><ind>130</ind><dep>145</dep></entry>
             <entry><ind>999</ind><dep>100</dep></entry>
         </interpolation>
-		<condition>
-			<property>bell412/power/buses/bus[1]/state</property>
-		</condition>
     </animation>
 </PropertyList>
 

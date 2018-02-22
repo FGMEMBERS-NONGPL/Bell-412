@@ -8,11 +8,8 @@
 		<mode>once</mode>
 		<path>Aircraft/Bell-412/Sounds/click.wav</path>
 		<condition>
-			<property>/sim/sound/switch</property>
+			<property>controls/sound/switch</property>
 		</condition>
-		<volume>
-			<offset> 1 </offset>
-		</volume>
 		<pitch>
 			<factor>1.2</factor>
 		</pitch>
@@ -23,12 +20,9 @@
 		<path>Aircraft/Bell-412/Sounds/click.wav</path>
 		<condition>
 			<not>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</not>
 		</condition>
-		<volume>
-			<offset> 1 </offset>
-		</volume>
 		<pitch>
 			<factor>1.2</factor>
 		</pitch>
@@ -39,11 +33,8 @@
 		<mode>once</mode>
 		<path>Aircraft/Bell-412/Sounds/switch2.wav</path>
 		<condition>
-			<property>/sim/sound/button</property>
+			<property>controls/sound/button</property>
 		</condition>
-		<volume>
-			<offset>4.0 </offset>
-		</volume>
 	</switch>
 	<switch>
 		<name>button off</name>
@@ -51,12 +42,9 @@
 		<path>Aircraft/Bell-412/Sounds/switch2.wav</path>
 		<condition>
 			<not>
-				<property>/sim/sound/button</property>
+				<property>controls/sound/button</property>
 			</not>
 		</condition>
-		<volume>
-			<offset>4.0</offset>
-		</volume>
 		<pitch>
 			<factor>0.75</factor>
 		</pitch>
@@ -68,23 +56,46 @@
 		<mode>looped</mode>
 		<path>Aircraft/Bell-412/Sounds/powerOn.wav</path>
 		<condition>
-			<greater-than>
-				<property>/bell412/power/buses/soundstate</property>
-				<value>0</value>
-			</greater-than>
+			<property>controls/sound/powerup</property>
 		</condition>
-		<reference-dist>3</reference-dist>
-		<max-dist>50</max-dist>
+		<reference-dist>1</reference-dist>
+		<max-dist>10</max-dist>
 		<volume>
-			<offset> 2.2 </offset>
+			<property>bell412/electrical/output/cluster[0]/ease</property>
+			<factor>0.2</factor>
 		</volume>
+	</power>
+	<!-- headset - power startup and air cond. -->
+	<!--
+	<headset>
+		<name>headset-poweron</name>
+		<mode>looped</mode>
+		<path>Aircraft/Bell-412/Sounds/headset_poweron.wav</path>
+		<condition>
+			<and>
+				<greater-than>
+					<property>bell412/power/buses/soundstate</property>
+					<value>0</value>
+				</greater-than>
+				<not><property>sim/crashed</property></not>
+				<property>controls/sound/headset</property>
+			</and>
+		</condition>
+		<position>
+			<x>-2.5</x>
+			<y>+0.4</y>
+			<z>+0.6</z>
+		</position>
+		<reference-dist>2</reference-dist>
+		<max-dist>3</max-dist>
 		<pitch>
-			<property>/bell412/power/buses/soundstate</property>
+			<property>bell412/power/buses/soundstate</property>
 			<factor>1</factor>
 			<offset>0.0</offset>
 			<max>1</max>
 		</pitch>
-	</power>
+	</headset>
+	-->
 	<!--			TODO : air switch hi/low
 	<power>
 		<name>air conditioner</name>
@@ -110,7 +121,6 @@
 		<condition>
 			<and>
 				<property>controls/sound/engineshutdown</property>
-				<property>bell412/power/buses/state</property>
 			</and>
 		</condition>
 		<pitch>
@@ -121,44 +131,26 @@
 		<max-dist>20</max-dist>
 	</engineshutdown>
 
-	<engine_s1_gen>
-		<name>s1gen</name>
+	<engine_s1>
+		<name>s1</name>
 		<mode>looped</mode>
 		<path>Aircraft/Bell-412/Sounds/engine_s1_gen.wav</path>
 		<condition>
-			<and>
-				<or>
-					<property>controls/engines/engine[0]/starter</property>
-					<property>controls/engines/engine[1]/starter</property>
-				</or>
-				<property>bell412/power/buses/state</property>
-			</and>
+			<property>controls/sound/engine_s1</property>
 		</condition>
 		<volume>
 			<factor>1</factor>
 		</volume>
 		<reference-dist>2</reference-dist>
 		<max-dist>50</max-dist>
-	</engine_s1_gen>
+	</engine_s1>
 	
 	<engine_s2>
 		<name>s2</name>
 		<mode>once</mode>
 		<path>Aircraft/Bell-412/Sounds/engine_s21.wav</path>		<!-- 6 sec. -->
 		<condition>
-			<and>
-				<or>
-					<greater-than>
-						<property>bell412/mechanics/engines/engine[0]/state</property>
-						<value>1</value>
-					</greater-than>
-					<greater-than>
-						<property>bell412/mechanics/engines/engine[1]/state</property>
-						<value>1</value>
-					</greater-than>
-				</or>
-				<property>bell412/power/buses/state</property>
-			</and>
+			<property>controls/sound/engine_s2</property>
 		</condition>
 		<volume>
 			<factor>1</factor>
@@ -172,19 +164,7 @@
 		<mode>once</mode>
 		<path>Aircraft/Bell-412/Sounds/engine_s3.wav</path>
 		<condition>
-			<and>
-				<or>
-					<greater-than>
-						<property>bell412/mechanics/engines/engine[0]/state</property>
-						<value>2</value>
-					</greater-than>
-					<greater-than>
-						<property>bell412/mechanics/engines/engine[1]/state</property>
-						<value>2</value>
-					</greater-than>
-				</or>
-				<property>bell412/power/buses/state</property>
-			</and>
+			<property>controls/sound/engine_s3</property>
 		</condition>
 		<volume>
 			<factor>1</factor>
@@ -193,64 +173,40 @@
 		<max-dist>90</max-dist>
 	</engine_s3>
 
-
-	<engine>
-		<name>warmup</name>
-		<mode>once</mode>
-		<path>Aircraft/Bell-412/Sounds/engine_startup2.wav</path>
-		<condition>
-			<greater-than>
-				<property>sim/model/bell412/state</property>
-				<value>0</value>
-			</greater-than>
-		</condition>
-		<volume>
-			<factor>1.2</factor>
-		</volume>
-		<reference-dist>20</reference-dist>
-		<max-dist>500</max-dist>
-	</engine>
-
 	<rotor>	<!-- TODO : must be audible at 150 rpm only, but able to slow down below 150 -->
-		<name>stage4</name>
+		<name>s4</name>
 		<mode>looped</mode>
 		<path>Aircraft/Bell-412/Sounds/engine_step4.wav</path>
 		<condition>
-			<and>
-				<greater-than>
-					<property>rotors/main/rpm</property>
-					<value>80</value>
-				</greater-than>
-				<not>
-					<property>sim/crashed</property>
-				</not>
-			</and>
+			<property>controls/sound/engine_s4</property>
 		</condition>
 		<volume>
 			<property>rotors/gear/torque-sound-filtered</property>
-			<factor>1.00</factor>
+			<factor>0.50</factor>
 			<type>ln</type>
 		</volume>
 		<pitch>
 			<property>rotors/main/rpm</property>
-			<factor>0.003300</factor> 	<!-- 324  -->
+			<factor>0.003125</factor> 	<!-- 324  -->
 			<offset>0.0</offset>
-			<min>0.5</min>
-			<max>2.0</max>
+			<max>1.5</max>
 		</pitch>
+		<!--
 		<position>
 			<x> -1.0 </x>
 			<y> 0 </y>
 			<z> 1.6 </z>
 		</position>
-		<reference-dist>25</reference-dist>
-		<max-dist>500</max-dist>
+		-->
+		<reference-dist>01</reference-dist>
+		<max-dist>20</max-dist>
 	</rotor>
 
 	<!-- ********************************************* 
 		 inside 
 		 *********************************************	-->
 	<!-- stereo effects -->
+	<!--
 	<rotor>
 		<name>rotorinsideleft</name>
 		<mode>looped</mode>
@@ -264,10 +220,7 @@
 				<not>
 					<property>sim/crashed</property>
 				</not>
-				<equals>
-					<property>sim/current-view/view-number</property>
-					<value>0</value>
-				</equals>
+				<property>sim/current-view/internal</property>
 			</and>
 		</condition>
 		<position>
@@ -278,7 +231,6 @@
 		<volume>
 			<property>rotors/main/rpm</property>
 			<factor>0.00325</factor>
-			<factor>1.00</factor>
 			<type>ln</type>
 			<max>1.1</max>
 		</volume>
@@ -286,9 +238,9 @@
 			<property>rotors/main/rpm</property>
 			<factor>0.00325</factor>
 			<offset>-0.0</offset>
-			<max>1.1</max>
+			<max>1.0</max>
 		</pitch>
-		<reference-dist>50</reference-dist>
+		<reference-dist>20</reference-dist>
 		<max-dist>1000</max-dist>
 	</rotor>
 	<rotor>
@@ -304,10 +256,7 @@
 				<not>
 					<property>sim/crashed</property>
 				</not>
-				<equals>
-					<property>sim/current-view/view-number</property>
-					<value>0</value>
-				</equals>
+				<property>sim/current-view/internal</property>
 			</and>
 		</condition>
 		<position>
@@ -318,9 +267,8 @@
 		<volume>
 			<property>rotors/main/rpm</property>
 			<factor>0.00325</factor>
-			<factor>1.00</factor>
 			<type>ln</type>
-			<max>1.1</max>
+			<max>1.0</max>
 		</volume>
 		<pitch>
 			<property>rotors/main/rpm</property>
@@ -328,15 +276,129 @@
 			<offset>-0.0</offset>
 			<max>1.1</max>
 		</pitch>
-		<reference-dist>50</reference-dist>
+		<reference-dist>20</reference-dist>
 		<max-dist>1000</max-dist>
 	</rotor>
+	-->
+	<rotor>
+		<name>vibratinsideleft</name>
+		<mode>looped</mode>
+		<path>Aircraft/Bell-412/Sounds/running_left.wav</path>
+		<condition>
+			<and>
+				<greater-than>
+					<property>rotors/main/rpm</property>
+					<value>110</value>
+				</greater-than>
+				<not><property>sim/crashed</property></not>
+				<not><property>controls/sound/headset</property></not>
+				<property>sim/current-view/internal</property>
+			</and>
+		</condition>
+		<volume>
+			<property>rotors/gear/torque-sound-filtered</property>
+			<factor>0.85</factor>
+			<type>ln</type>
+		</volume>
+		<pitch>
+			<property>rotors/main/rpm</property>
+			<factor>0.003125</factor> 	<!-- 324  -->
+			<offset>0.0</offset>
+			<max>1.5</max>
+		</pitch>
+		<position>
+			<x>-1.0</x>
+			<y>+0.0</y>
+			<z>+0.0</z>
+		</position>
+		<reference-dist>01</reference-dist>
+		<max-dist>20</max-dist>
+	</rotor>
+	
+	<!-- headset + doors closed -->
+	<headset_on>
+		<name>headset-on</name>
+		<mode>once</mode>
+		<type>avionics</type>
+		<path>Aircraft/Bell-412/Sounds/radio_switch.wav</path>
+		<condition>
+			<and>
+				<property>controls/sound/headset</property>
+				<property>sim/current-view/internal</property>
+			</and>
+		</condition>
+		<reference-dist>0</reference-dist>
+		<max-dist>1</max-dist>
+	</headset_on>
+	<headset>
+		<name>headset-closed</name>
+		<mode>looped</mode>
+		<type>avionics</type>
+		<path>Aircraft/Bell-412/Sounds/headset_closed.wav</path>
+		<condition>
+			<and>
+				<greater-than>
+					<property>rotors/main/rpm</property>
+					<value>110</value>
+				</greater-than>
+				<not><property>sim/crashed</property></not>
+				<property>controls/sound/headset</property>
+				<property>sim/current-view/internal</property>
+			</and>
+		</condition>
+		<volume>
+			<property>rotors/gear/torque-sound-filtered</property>
+			<factor>0.30</factor>
+			<type>ln</type>
+		</volume>
+		<reference-dist>0</reference-dist>
+		<max-dist>1</max-dist>
+	</headset>
+	<!-- headset + doors opened -->
+	<headset>
+		<name>headset-opened</name>
+		<type>avionics</type>
+		<mode>looped</mode>
+		<path>Aircraft/Bell-412/Sounds/headset_opened.wav</path>
+		<condition>
+			<and>
+				<greater-than>
+					<property>rotors/main/rpm</property>
+					<value>110</value>
+				</greater-than>
+				<not><property>sim/crashed</property></not>
+				<property>controls/sound/headset</property>
+				<property>sim/current-view/internal</property>
+				<or>
+					<property>controls/doors/front/left</property>>
+					<property>controls/doors/front/right</property>>
+					<property>controls/doors/back/left</property>>
+					<property>controls/doors/back/right</property>
+					<property>controls/doors/glasses/left</property>
+					<property>controls/doors/glasses/right</property>
+				</or>
+			</and>
+		</condition>
+		<volume>
+			<property>rotors/gear/torque-sound-filtered</property>
+			<factor>0.30</factor>
+			<type>ln</type>
+		</volume>
+		<pitch>
+			<property>rotors/main/rpm</property>
+			<factor>0.003125</factor> 	<!-- 324  -->
+			<offset>0.0</offset>
+			<max>2.0</max>
+		</pitch>
+		<reference-dist>0</reference-dist>
+		<max-dist>1</max-dist>
+	</headset>
 
 	<!-- ********************************************* 
 		 outside 
 		 *********************************************	-->
 	<!-- rotor -->
-	<rotor>
+	<rotor-outside>
 		<name>rotoroutside</name>
 		<mode>looped</mode>
 		<path>Aircraft/Bell-412/Sounds/engine_outside.wav</path>
@@ -346,15 +408,22 @@
 					<property>rotors/main/rpm</property>
 					<value>50</value>
 				</greater-than>
-				<not>
-					<property>sim/crashed</property>
-				</not>
-				<not>
-					<equals>
-						<property>sim/current-view/view-number</property>
-						<value>0</value>
-					</equals>
-				</not>
+				<not><property>sim/crashed</property></not>
+				<or>
+					<not><property>sim/current-view/internal</property></not>
+					<and>
+						<property>sim/current-view/internal</property>
+						<not><property>controls/sound/headset</property></not>
+						<or>
+							<property>controls/doors/front/left</property>>
+							<property>controls/doors/front/right</property>>
+							<property>controls/doors/back/left</property>>
+							<property>controls/doors/back/right</property>
+							<property>controls/doors/glasses/left</property>
+							<property>controls/doors/glasses/right</property>
+						</or>
+					</and>
+				</or>
 			</and>
 		</condition>
 		<volume>
@@ -366,14 +435,16 @@
 			<offset>-0.0</offset>
 			<max>2.5</max>
 		</pitch>
+		<!-- TODO : outside at y=0, 2 others sounds for left or right doors/glasses opened -->
+		<!-- -x=fwd, +x=aft, -y=R, +y=L, -z=down, +z=up -->
 		<position>
-			<x> -4.9 </x>
-			<y>  0.0 </y>
-			<z>  1.5 </z>
+			<x> -3.0 </x>
+			<y> -0.4 </y>
+			<z>  0.0 </z>
 		</position>
-		<reference-dist>50</reference-dist>
+		<reference-dist>25</reference-dist>
 		<max-dist>3000</max-dist>
-	</rotor>
+	</rotor-outside>
 
 	<!-- tail -->
 	<rotor>
@@ -386,20 +457,13 @@
 					<property>rotors/main/rpm</property>
 					<value>50</value>
 				</greater-than>
-				<not>
-					<property>sim/crashed</property>
-				</not>
-				<not>
-					<equals>
-						<property>sim/current-view/view-number</property>
-						<value>0</value>
-					</equals>
-				</not>
+				<not><property>sim/crashed</property></not>
+				<not><property>sim/current-view/internal</property></not>
 			</and>
 		</condition>
 		<volume>
 			<property>rotors/gear/torque-sound-filtered</property>
-			<factor>0.80</factor>
+			<factor>0.25</factor>
 		</volume>
 		<pitch>
 			<property>rotors/tail/rpm</property>
@@ -420,8 +484,8 @@
 			<outer-angle>220</outer-angle>
 			<outer-gain>0.1</outer-gain>
 		</orientation>
-		<reference-dist>30</reference-dist>
-		<max-dist>2000</max-dist>
+		<reference-dist>10</reference-dist>
+		<max-dist>1500</max-dist>
 	</rotor>
 
 	<!-- ********************************************* 
@@ -433,12 +497,12 @@
 		<path>Aircraft/Bell-412/Sounds/alarm.wav</path>
 		<condition>
 			<and>
-				<property>/bell412/power/output/cautions/alarm</property>
+				<property>bell412/electrical/output/cautions/alarm</property>
 				<not><property>controls/cautions/switches/reset</property></not>
 			</and>
 		</condition>
 		<reference-dist>2</reference-dist>
-		<max-dist>50</max-dist>
+		<max-dist>5</max-dist>
 		<volume>
 			<offset> 1.0 </offset>
 		</volume>
@@ -449,15 +513,14 @@
 		<path>Aircraft/Bell-412/Sounds/ground_alarm.wav</path>
 		<condition>
 			<and>
-				<property>controls/instruments/radioalt/alarm</property>
+				<property>instrumentation/radar-altimeter/caution</property>
 				<not><property>controls/cautions/switches/reset</property></not>
 			</and>
 		</condition>
 		<reference-dist>2</reference-dist>
 		<max-dist>5</max-dist>
 		<volume>
-			<property>controls/instruments/radioalt/alarm</property>
-			<offset>0.2</offset>
+			<offset>1.0</offset>
 		</volume>
 	</alarmalt>
 	<dooropen>
@@ -470,8 +533,8 @@
 				<value>0</value>
 			</greater-than>
 		</condition>
-		<reference-dist>2</reference-dist>
-		<max-dist>50</max-dist>
+		<reference-dist>1</reference-dist>
+		<max-dist>20</max-dist>
 		<volume>
 			<offset> 1.0 </offset>
 		</volume>
@@ -486,8 +549,8 @@
 				<value>0.9</value>
 			</greater-than>
 		</condition>
-		<reference-dist>2</reference-dist>
-		<max-dist>50</max-dist>
+		<reference-dist>1</reference-dist>
+		<max-dist>20</max-dist>
 		<volume>
 			<offset> 1.0 </offset>
 		</volume>
@@ -502,12 +565,68 @@
 				<property>controls/doors/front/right</property>
 			</or>
 		</condition>
-		<reference-dist>2</reference-dist>
-		<max-dist>10</max-dist>
+		<reference-dist>1</reference-dist>
+		<max-dist>3</max-dist>
 		<volume>
 			<offset> 1.0 </offset>
 		</volume>
 	</doorwarning>
+	<cargodooropen>
+		<name>cargo door open</name>
+		<mode>once</mode>
+		<path>Sounds/door-cargo-open.wav</path>
+		<condition>
+			<and>
+				<or>
+					<greater-than>
+						<property>controls/doors/back/left</property>
+						<value>0.1</value>
+					</greater-than>
+					<greater-than>
+						<property>controls/doors/back/right</property>
+						<value>0.1</value>
+					</greater-than>
+				</or>
+				<equals>
+					<property>controls/doors/back/soundopen</property>
+					<value>1</value>
+				</equals>
+			</and>
+		</condition>
+		<reference-dist>1</reference-dist>
+		<max-dist>20</max-dist>
+		<volume>
+			<offset> 1.0 </offset>
+		</volume>
+	</cargodooropen>
+	<cargodoorclose>
+		<name>cargo door close</name>
+		<mode>once</mode>
+		<path>Sounds/door-cargo-close.wav</path>
+		<condition>
+			<and>
+				<or>
+					<less-than>
+						<property>controls/doors/back/left</property>
+						<value>0.9</value>
+					</less-than>
+					<less-than>
+						<property>controls/doors/back/right</property>
+						<value>0.9</value>
+					</less-than>
+				</or>
+				<equals>
+					<property>controls/doors/back/soundclose</property>
+					<value>1</value>
+				</equals>
+			</and>
+		</condition>
+		<reference-dist>1</reference-dist>
+		<max-dist>20</max-dist>
+		<volume>
+			<offset> 1.0 </offset>
+		</volume>
+	</cargodoorclose>
 	
 	<startergrind>
 		<name>starter grind 0</name>
@@ -515,13 +634,13 @@
 		<path>Sounds/engine-starter-grind.wav</path>
 		<condition>
 			<and>
-				<property>bell412/power/output/engines/engine[0]/state</property>
+				<property>bell412/electrical/output/engines/igniter[0]</property>
 				<property>controls/engines/engine[0]/starter</property>
 				<not><property>bell412/mechanics/engines/engine[0]/runnable</property></not>
 			</and>
 		</condition>
-		<reference-dist>2</reference-dist>
-		<max-dist>10</max-dist>
+		<reference-dist>1</reference-dist>
+		<max-dist>5</max-dist>
 		<volume>
 			<offset> 1.0 </offset>
 		</volume>
@@ -532,13 +651,13 @@
 		<path>Sounds/engine-starter-grind.wav</path>
 		<condition>
 			<and>
-				<property>bell412/power/output/engines/engine[1]/state</property>
+				<property>bell412/electrical/output/engines/igniter[1]</property>
 				<property>controls/engines/engine[1]/starter</property>
 				<not><property>bell412/mechanics/engines/engine[1]/runnable</property></not>
 			</and>
 		</condition>
-		<reference-dist>2</reference-dist>
-		<max-dist>10</max-dist>
+		<reference-dist>1</reference-dist>
+		<max-dist>5</max-dist>
 		<volume>
 			<offset>1.0</offset>
 		</volume>
@@ -560,8 +679,8 @@
 		<pitch>
 			<factor>0.01</factor>
 		</pitch>
-		<reference-dist>5.0</reference-dist>
-		<max-dist>10.0</max-dist>
+		<reference-dist>1.0</reference-dist>
+		<max-dist>5.0</max-dist>
 	</contact>
 
 	<wind>
@@ -571,9 +690,8 @@
 		<condition>
 			<and>
 				<property>velocities/airspeed-kt</property>
-				<not>
-					<property>sim/crashed</property>
-				</not>
+				<not><property>sim/crashed</property></not>
+				<not><property>controls/sound/headset</property></not>
 			</and>
 		</condition>
 		<volume>

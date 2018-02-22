@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<PropertyList> 
+	<path>pedestal.ac</path>
+
+<!-- ALS Shadow -->
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/interior-shadow</inherits-from>
+		<object-name>5.Cockpit Pedestal Board.002</object-name>
+		<object-name>5.Cockpit Pedestal Board.003</object-name>
+	</effect>
+
+</PropertyList> 
+

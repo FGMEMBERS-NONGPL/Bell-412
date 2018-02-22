@@ -1,0 +1,69 @@
+AC3Db
+MATERIAL "DefaultWhite" rgb 1.0000 1.0000 1.0000  amb 0.2000 0.2000 0.2000  emis 0.0000 0.0000 0.0000  spec 0.5000 0.5000 0.5000  shi 10 trans 0.0000
+MATERIAL "5.Cockpit Panel Control-x" rgb 0.5617 0.5617 0.5617  amb 0.7816 0.7816 0.7816  emis 0.0000 0.0000 0.0000  spec 0.0000 0.0000 0.0000  shi 12 trans 0.0000
+OBJECT world
+name "Blender_export__fuel_leds.ac"
+kids 1
+OBJECT group
+name "FUEL_LEDS"
+kids 3
+OBJECT poly
+name "fuel001"
+loc -0.0106589 -0.0086000 0.0631297
+crease 45.0
+texture "instruments-controls-x.png"
+texrep 1 1
+numvert 4
+0.0140560 0.0101720 -0.0553150
+0.0140560 0.0101720 -0.0623690
+0.0140560 0.0204170 -0.0623690
+0.0140560 0.0204170 -0.0553150
+numsurf 1
+SURF 0X10
+mat 1
+refs 4
+0 0.003043 0.780529
+1 0.092340 0.780530
+2 0.092302 0.888543
+3 0.003006 0.888543
+kids 0
+OBJECT poly
+name "fuel010"
+loc -0.0106589 -0.0086000 0.0631297
+crease 45.0
+texture "instruments-controls-x.png"
+texrep 1 1
+numvert 4
+0.0140560 0.0101720 -0.0553150
+0.0140560 0.0101720 -0.0482610
+0.0140560 0.0204170 -0.0482610
+0.0140560 0.0204170 -0.0553150
+numsurf 1
+SURF 0X10
+mat 1
+refs 4
+1 0.003043 0.780529
+0 0.092340 0.780530
+3 0.092302 0.888543
+2 0.003006 0.888543
+kids 0
+OBJECT poly
+name "fuel100"
+loc -0.0106589 -0.0086000 0.0631297
+crease 45.0
+texture "instruments-controls-x.png"
+texrep 1 1
+numvert 4
+0.0140560 0.0101720 -0.0412070
+0.0140560 0.0101720 -0.0482610
+0.0140560 0.0204170 -0.0482610
+0.0140560 0.0204170 -0.0412070
+numsurf 1
+SURF 0X10
+mat 1
+refs 4
+0 0.003043 0.780529
+1 0.092340 0.780530
+2 0.092302 0.888543
+3 0.003006 0.888543
+kids 0

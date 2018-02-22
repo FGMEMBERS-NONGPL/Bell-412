@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+# ======================================================================================================
+# Bell412 Instrumentation Logic 
+# 	(for the Flightgear Flight Simulator)
+# ======================================================================================================
+#
+# AUTHOR
+# 	Valery Seys		valery@vslash.com
+#
+# COPYRIGHT
+# 	Valery Seys, Paris /\
+# 	no distribution allowed
+# 	no commercial use
+# 	please contact the author for any use or question, thank you.
+# 	https://sourceforge.net/projects/bell-412/
+#
+# REFS
+# 	Textron BHT-412 Rotorcraft Flight Manual (rev. 9/2002)
+#	Textron 412-MM-VOL12
+# 	Flightgear Wiki: http://wiki.flightgear.org/
+#
+# CHANGELOG
+# 07/2017	: init
+# 30/12/17	: engine out, part sep, .. : fix bad value
+# 02/18		: cautions removed
+# ======================================================================================================
+-->
+
+<PropertyList>
+	<!-- AHRS -->
+	<filter>
+		<name>AHRS - Heading</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<enable>instrumentation/ahrs/powered</enable>
+		<input>
+			<condition>
+				<property>instrumentation/ahrs/magdg-switch</property>
+			</condition>
+			<property>instrumentation/ahrs/heading-magnetic-deg</property>
+			<!--
+			<offset>
+				<expression>
+					<sum>
+						<property>instrumentation/ahrs/mag-error</property>
+						<property>instrumentation/ahrs/offset-deg</property>
+					</sum>
+				</expression>
+			</offset>
+			-->
+		</input>
+		<input>
+			<property>instrumentation/ahrs/heading-dg-deg</property>
+			<offset>
+				<expression>
+					<difference>
+						<value>0</value>
+						<property>instrumentation/ahrs/dg-variation-deg</property>
+					</difference>
+				</expression>
+			</offset>
+		</input>
+		<output>
+			<property>instrumentation/ahrs/heading-deg</property>
+		</output>
+		<period>
+			<min>0</min>
+			<max>360</max>
+		</period>
+	</filter>
+	<filter>
+		<name>AHRS - Actuator</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<enable>instrumentation/ahrs/powered</enable>
+		<input>
+			<condition>
+				<property>instrumentation/ahrs/magdg-switch</property>
+			</condition>
+			<property>environment/magnetic-variation-deg</property>
+		</input>
+		<input>
+			<property>instrumentation/ahrs/dg-variation-deg</property>
+		</input>
+		<output>
+			<property>instrumentation/ahrs/variation-deg</property>
+		</output>
+	</filter>
+
+	<filter>
+		<name>HSI - Heading</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<enable>
+			<condition>
+				<property>instrumentation/hsi/powered</property>
+			</condition>
+		</enable>
+		<input>
+			<property>instrumentation/ahrs/heading-deg</property>
+		</input>
+		<output>instrumentation/hsi/indicated-heading-deg</output>
+	</filter>
+
+	<filter>
+		<name>HSI - NAVs CDI</name>
+		<type>noise-spike</type>
+		<max-rate-of-change>10.0</max-rate-of-change>
+		<input>
+			<condition>
+				<and>
+					<not><property>controls/instruments/brg-pointer</property></not>
+					<property>instrumentation/cdi/powered</property>
+				</and>
+			</condition>
+			<property>instrumentation/nav[0]/heading-needle-deflection</property>
+		</input>
+		<input>
+			<condition>
+				<and>
+					<property>controls/instruments/brg-pointer</property>
+					<property>instrumentation/cdi/powered</property>
+				</and>
+			</condition>
+			<property>instrumentation/nav[1]/heading-needle-deflection</property>
+		</input>
+		<output>instrumentation/cdi/heading-needle-deflection</output>
+	</filter>
+			
+	<filter>
+		<name>HSI - BRG pointer</name>
+		<type>noise-spike</type>
+		<max-rate-of-change>90</max-rate-of-change>
+		<input>
+			<condition>
+				<and>
+					<not><property>controls/instruments/brg-pointer</property></not>	<!-- nav0 -->
+					<property>instrumentation/hsi/powered</property>
+					<property>instrumentation/nav[0]/in-range</property>
+				</and>
+			</condition>
+			<expression>
+				<difference>
+					<property>instrumentation/nav[0]/heading-deg</property>
+					<property>instrumentation/ahrs/variation-deg</property>
+				</difference>
+			</expression>
+		</input>
+		<input>
+			<condition>
+				<and>
+					<property>controls/instruments/brg-pointer</property>				<!-- nav1 -->
+					<property>instrumentation/hsi/powered</property>
+					<property>instrumentation/nav[1]/in-range</property>
+				</and>
+			</condition>
+			<expression>
+				<difference>
+					<property>instrumentation/nav[1]/heading-deg</property>
+					<property>instrumentation/ahrs/variation-deg</property>
+				</difference>
+			</expression>
+		</input>
+		<input>instrumentation/hsi/bearing-pointer</input>
+		<output>instrumentation/hsi/data/brg-filtered</output>
+		<period>
+			<min>0</min>
+			<max>360</max>
+		</period>
+	</filter>
+	<filter>
+		<name>HSI - BRG lowpass</name>
+		<type>exponential</type>
+		<filter-time>instrumentation/hsi/data/cutoff-freq</filter-time>
+		<input>instrumentation/hsi/data/brg-filtered</input>
+		<output>instrumentation/hsi/bearing-pointer</output>
+	</filter>
+
+	<filter>
+		<name>HSI - ADF pointer</name>
+		<type>noise-spike</type>
+		<max-rate-of-change>40</max-rate-of-change>
+		<!-- absolute pos -->
+		<input>
+			<condition>
+				<and>
+					<property>instrumentation/adf/in-range</property>
+					<property>instrumentation/hsi/powered</property>
+				</and>
+			</condition>
+			<property>instrumentation/adf/indicated-bearing-deg</property>
+		</input>
+		<!-- or ADF caged to the HSI north -->
+		<input>
+			<value>0.0</value>
+			<expression>
+				<mod>
+					<difference>
+						<value>0.0</value>
+						<property>instrumentation/hsi/indicated-heading-deg</property>
+					</difference>
+					<value>360</value>
+				</mod>
+			</expression>
+		</input>
+		<output>instrumentation/hsi/data/adf-filtered</output>
+	</filter>
+	<filter>
+		<name>HSI - ADF lowpass</name>
+		<type>exponential</type>
+		<filter-time>instrumentation/hsi/data/cutoff-freq</filter-time>
+		<input>instrumentation/hsi/data/adf-filtered</input>
+		<output>instrumentation/hsi/adf-pointer</output>
+	</filter>
+
+	<filter>
+		<name>HSI - GS Pointer</name>
+		<type>noise-spike</type>
+		<max-rate-of-change>40.0</max-rate-of-change>
+		<input>
+			<condition>
+				<and>
+					<property>instrumentation/hsi/powered</property>
+					<not><property>/controls/instruments/brg-pointer</property></not>
+					<property>instrumentation/nav[0]/gs-in-range</property>
+				</and>
+			</condition>
+			<property>instrumentation/nav[0]/gs-needle-deflection-norm</property>
+		</input>
+		<input>
+			<condition>
+				<and>
+					<property>instrumentation/hsi/powered</property>
+					<property>controls/instruments/brg-pointer</property>
+					<property>instrumentation/nav[1]/gs-in-range</property>
+				</and>
+			</condition>
+			<property>instrumentation/nav[1]/gs-needle-deflection-norm</property>
+		</input>
+		<input>instrumentation/hsi/gs-pointer</input>
+		<output>instrumentation/hsi/gs-pointer</output>
+	</filter>
+
+	<!-- 
+		Logic 
+	-->
+	<logic>
+		<name>HSI - Heading Indicator, CDI Servicing</name>
+		<input>
+			<property>instrumentation/hsi/powered</property>
+		</input>
+		<input>
+			<value type="bool">false</value>
+		</input>
+		<output>instrumentation/heading-indicator/serviceable</output>
+		<output>instrumentation/cdi/serviceable</output>
+	</logic>
+
+	<logic>
+		<name>HSI Flag: OFF</name>
+		<inverted>true</inverted>
+		<input>
+			<property>instrumentation/hsi/powered</property>
+		</input>
+		<output>instrumentation/hsi/flags/off</output>
+	</logic>
+
+	<logic>
+		<name>HSI Flag: NAV</name>
+		<inverted>true</inverted>
+		<input>
+			<and>
+				<property>instrumentation/hsi/powered</property>
+				<or>
+					<and>
+						<not><property>controls/instruments/brg-pointer</property></not>	<!-- nav0 selected -->
+						<property>instrumentation/nav[0]/in-range</property>
+					</and>
+					<and>
+						<property>controls/instruments/brg-pointer</property>				<!-- nav1 selected -->
+						<property>instrumentation/nav[1]/in-range</property>
+					</and>
+				</or>
+			</and>
+		</input>
+		<output>instrumentation/hsi/flags/nav</output>
+	</logic>
+
+	<logic>
+		<name>HSI Flag: GS</name>
+		<inverted>true</inverted>
+		<input>
+			<or>
+				<and>
+					<equals>
+						<property>/controls/instruments/brg-pointer</property>
+						<value type="float">0</value>
+					</equals>
+					<property>instrumentation/hsi/powered</property>
+					<property>instrumentation/nav[0]/gs-in-range</property>
+				</and>
+				<and>
+					<equals>
+						<property>/controls/instruments/brg-pointer</property>
+						<value type="float">1</value>
+					</equals>
+					<property>instrumentation/hsi/powered</property>
+					<property>instrumentation/nav[1]/gs-in-range</property>
+				</and>
+			</or>
+		</input>
+		<output>instrumentation/hsi/flags/gs</output>
+	</logic>
+
+	<logic>
+		<name>Radar Altimeter Flag</name>
+		<inverted>true</inverted>
+		<input>
+			<property>instrumentation/radar-altimeter/powered</property>
+		</input>
+		<output>
+			<property>instrumentation/radar-altimeter/flag-off</property>
+		</output>
+	</logic>
+	
+	<logic>
+		<name>AI - Attitude Indicator Servicing</name>
+		<input>
+			<property>instrumentation/ai/powered</property>
+		</input>
+		<input>
+			<value type="bool">false</value>
+		</input>
+		<output>instrumentation/attitude-indicator/serviceable</output>
+		<output>instrumentation/slip-skid-ball/serviceable</output>
+		<output>instrumentation/turn-indicator/serviceable</output>
+	</logic>
+	
+	<logic>
+		<name>AI Flag: ATT</name>
+		<inverted>true</inverted>
+		<input>
+			<property>instrumentation/ai/powered</property>
+		</input>
+		<output>instrumentation/ai/flags/att</output>
+	</logic>
+	
+	<logic>
+		<name>AI Flag: RT</name>
+		<input>
+			<or>
+				<not><property>instrumentation/ai/powered</property></not>
+				<greater-than>
+					<property>instrumentation/ai/indicated-turn-rate</property>
+					<value type="double">2.2</value>
+				</greater-than>
+				<less-than>
+					<property>instrumentation/ai/indicated-turn-rate</property>
+					<value type="double">-2.2</value>
+				</less-than>
+			</or>
+		</input>
+		<output>instrumentation/ai/flags/rt</output>
+	</logic>
+
+	<logic>
+		<name>AI Flag: GS</name>
+		<inverted>true</inverted>
+		<input>
+			<and>
+				<property>instrumentation/ai/powered</property>
+				<or>
+					<and>
+						<property>/instrumentation/nav[0]/gs-in-range</property>
+						<equals>
+							<property>/controls/instruments/brg-pointer</property>
+							<value>0</value>
+						</equals>
+					</and>
+					<and>
+						<property>/instrumentation/nav[1]/gs-in-range</property>
+						<equals>
+							<property>/controls/instruments/brg-pointer</property>
+							<value>1</value>
+						</equals>
+					</and>
+				</or>
+			</and>
+		</input>
+		<output>instrumentation/ai/flags/gs</output>
+	</logic>
+	
+	<logic>
+		<name>AI-STBY - Servicing</name>
+		<input>
+			<and>
+				<property>instrumentation/ai-stby/powered</property>
+				<not><property>instrumentation/ai-stby/caged</property></not>
+			</and>
+		</input>
+		<input>
+			<value type="bool">false</value>
+		</input>
+		<output>instrumentation/ai-stby/serviceable</output>
+	</logic>
+	<filter>
+		<name>AI-STBY - Pitch</name>
+		<type>noise-spike</type>
+		<max-rate-of-change>18.0</max-rate-of-change>
+		<input>
+			<condition>
+				<and>
+					<property>instrumentation/ai-stby/serviceable</property>
+				</and>
+			</condition>
+			<property>instrumentation/ai/indicated-pitch-deg</property>
+		</input>
+		<input>
+			<value type="float">-20.0</value>
+		</input>
+		<output>instrumentation/ai-stby/indicated-pitch-deg</output>
+	</filter>
+	<filter>
+		<name>AI-STBY - Roll</name>
+		<type>noise-spike</type>
+		<max-rate-of-change>18.0</max-rate-of-change>
+		<input>
+			<condition>
+				<and>
+					<property>instrumentation/ai-stby/serviceable</property>
+				</and>
+			</condition>
+			<property>orientation/roll-deg</property>
+		</input>
+		<input>
+			<value type="float">20</value>
+		</input>
+		<output>instrumentation/ai-stby/indicated-roll-deg</output>
+		<output>instrumentation/ai-stby/indicated-bank-deg</output>
+	</filter>
+	
+	<logic>
+		<name>vertical-speed-indicator - Servicing</name>
+		<input>
+			<property>instrumentation/vertical-speed-indicator/powered</property>
+		</input>
+		<input>
+			<value type="bool">false</value>
+		</input>
+		<output>instrumentation/vertical-speed-indicator/serviceable</output>
+	</logic>
+
+	<logic>
+		<name>altimeter - Servicing</name>
+		<input>
+			<property>instrumentation/altimeter/powered</property>
+		</input>
+		<input>
+			<value type="bool">false</value>
+		</input>
+		<output>instrumentation/altimeter/serviceable</output>
+	</logic>
+
+	<logic>
+		<name>comm0 - Servicing</name>
+		<input>
+			<property>instrumentation/comm[0]/powered</property>
+		</input>
+		<input>
+			<value type="bool">false</value>
+		</input>
+		<output>instrumentation/comm[0]/serviceable</output>
+	</logic>
+	<logic>
+		<name>comm1 - Servicing</name>
+		<input>
+			<property>instrumentation/comm[1]/powered</property>
+		</input>
+		<input>
+			<value type="bool">false</value>
+		</input>
+		<output>instrumentation/comm[1]/serviceable</output>
+	</logic>
+	<logic>
+		<name>nav0 - Servicing</name>
+		<input>
+			<property>instrumentation/nav[0]/powered</property>
+		</input>
+		<input>
+			<value type="bool">false</value>
+		</input>
+		<output>instrumentation/nav[0]/serviceable</output>
+	</logic>
+	<logic>
+		<name>nav1 - Servicing</name>
+		<input>
+			<property>instrumentation/nav[1]/powered</property>
+		</input>
+		<input>
+			<value type="bool">false</value>
+		</input>
+		<output>instrumentation/nav[1]/serviceable</output>
+	</logic>
+	<logic>
+		<name>dme - Servicing</name>
+		<input>
+			<property>instrumentation/dme/powered</property>
+		</input>
+		<input>
+			<value type="bool">false</value>
+		</input>
+		<output>instrumentation/dme/serviceable</output>
+	</logic>
+	<logic>
+		<name>adf - Servicing</name>
+		<input>
+			<property>instrumentation/adf/powered</property>
+		</input>
+		<input>
+			<value type="bool">false</value>
+		</input>
+		<output>instrumentation/adf/serviceable</output>
+	</logic>
+	<logic>
+		<name>transponder - Servicing</name>
+		<input>
+			<property>instrumentation/transponder/powered</property>
+		</input>
+		<input>
+			<value type="bool">false</value>
+		</input>
+		<output>instrumentation/transponder/serviceable</output>
+	</logic>
+	<logic>
+		<name>marker - Servicing</name>
+		<input>
+			<property>instrumentation/marker-beacon/powered</property>
+		</input>
+		<input>
+			<value type="bool">false</value>
+		</input>
+		<output>instrumentation/marker-beacon/serviceable</output>
+	</logic>
+	
+	<logic>
+		<name>essdc - al300 - Servicing</name>
+		<input>
+			<and>
+				<property>instrumentation/al300/powered</property>
+				<property>instrumentation/afcs[0]/powered</property>
+				<property>instrumentation/afcs[1]/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/al300/serviceable</output>
+	</logic>
+
+</PropertyList>

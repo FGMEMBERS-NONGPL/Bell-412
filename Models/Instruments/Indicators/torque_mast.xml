@@ -1,35 +1,25 @@
 <?xml version="1.0"?>
 
 <PropertyList>
-	<path>torque_mast.ac</path>
-	<offsets>
-		<x-m>-2.81872</x-m>
-		<y-m>0.32816</y-m>
-		<z-m>0.34939</z-m>
-		<pitch-deg>-8.39</pitch-deg>
-	</offsets>
-    <animation>
-        <type>rotate</type>
-        <object-name>5.Cockpit Panel Main Instruments Torque Needle</object-name>
-		<property>/bell412/mechanics/engines/torquepct</property>
-        <axis>
-            <x>-1</x>
-            <y>0</y>
-            <z>0</z>
-		</axis>
-  		<interpolation>
-            <entry><ind>-999</ind><dep>0</dep></entry>
-            <entry><ind>0</ind><dep>0</dep></entry>
-            <entry><ind>10</ind><dep>20</dep></entry>
-            <entry><ind>20</ind><dep>35</dep></entry>
-            <entry><ind>30</ind><dep>50</dep></entry>
-            <entry><ind>50</ind><dep>80</dep></entry>
-            <entry><ind>70</ind><dep>110</dep></entry>
-            <entry><ind>90</ind><dep>138</dep></entry>
-            <entry><ind>100</ind><dep>153</dep></entry>
-            <entry><ind>110</ind><dep>165</dep></entry>
-            <entry><ind>999</ind><dep>170</dep></entry>
-        </interpolation>
-    </animation>
+	<model>
+        <name>5.Cockpit Panel Main Instruments Torque Pilot</name>
+		<path>torque_mast_g.xml</path>
+		<offsets>
+			<x-m>-2.81872</x-m>
+			<y-m>0.32816</y-m>
+			<z-m>0.34939</z-m>
+			<pitch-deg>-8.39</pitch-deg>
+		</offsets>
+	</model>
+	<model>
+        <name>5.Cockpit Panel Main Instruments Torque CoPilot</name>
+		<path>torque_mast_g.xml</path>
+		<offsets>
+			<x-m>-2.81877</x-m>
+			<y-m>-0.22889</y-m>
+			<z-m>0.36629</z-m>
+			<pitch-deg>-8.39</pitch-deg>
+		</offsets>
+	</model>
 </PropertyList>
 

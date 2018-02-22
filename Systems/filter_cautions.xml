@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+# ======================================================================================================
+# Bell412 Instrumentation Logic - Caution annunciators
+# 	(for the Flightgear Flight Simulator)
+# ======================================================================================================
+#
+# AUTHOR
+# 	Valery Seys		valery@vslash.com
+#
+# COPYRIGHT
+# 	Valery Seys, Paris /\
+# 	no distribution allowed
+# 	no commercial use
+# 	please contact the author for any use or question, thank you.
+# 	https://sourceforge.net/projects/bell-412/
+#
+# REFS
+# 	Textron BHT-412 Rotorcraft Flight Manual (rev. 9/2002)
+#	Textron 412-MM-VOL12
+# 	Flightgear Wiki: http://wiki.flightgear.org/
+#
+# CHANGELOG
+# 02/2018	: init
+# ======================================================================================================
+-->
+<PropertyList>
+	<!-- 
+		 ================================================================================
+		 CAUTIONS 
+		 ================================================================================
+	-->
+	<!-- BATBUS -->
+	<logic>
+		<name>Cautions - BATBUS</name>	<!-- TODO rpm audio -->
+		<input>
+			<and>
+				<or>
+					<property>bell412/electrical/suppliers/supplier[0]/inuse</property>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/batbus</output>
+	</logic>
+	<!-- RPM -->
+	<logic>
+		<name>Cautions - RPM</name>	<!-- TODO rpm audio -->
+		<input>
+			<and>
+				<or>
+					<less-than>
+						<property>bell412/mechanics/engines/nr</property>
+						<property>bell412/limits/engine_rpm-pct_min</property>
+					</less-than>
+					<greater-than>
+						<property>bell412/mechanics/engines/nr</property>
+						<property>bell412/limits/engine_rpm-pct_max</property>
+					</greater-than>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/rpm</output>
+	</logic>
+	<!-- OVERTORQUE -->
+	<logic>
+		<name>Cautions - OVERTORQUE</name>
+		<input>
+			<and>
+				<or>
+					<greater-than>
+						<property>bell412/mechanics/engines/torquepct</property>
+						<property>bell412/limits/engine_torque-pct_max</property>
+					</greater-than>
+					<property>controls/consoles/switches/torque-caution</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/overtorque</output>
+	</logic>
+	<!-- FTRIMOFF -->
+	<logic>
+		<name>Cautions - FTRIM OFF</name>
+		<input>
+			<and>
+				<or>
+					<not><property>controls/flight/cyclic/force-trim</property></not>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/ftrimoff</output>
+	</logic>
+
+	<!-- CYC CTR DATA -->
+	<!-- Yasim phi0 @0 + CCW 
+		 Blade0 => E = 0
+		 Blade1 => N = 90
+		 ...
+	-->
+	<filter>
+		<name>PITCH DEG</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<and>
+					<less-than>
+						<property>rotors/main/blade[1]/position-deg</property>
+						<value>98</value>
+					</less-than>
+					<greater-than>
+						<property>rotors/main/blade[1]/position-deg</property>
+						<value>82</value>
+					</greater-than>
+				</and>
+			</condition>
+			<property>rotors/main/blade[1]/incidence-deg</property>
+		</input>
+		<input>rotors/main/ideg_p</input>
+		<output>rotors/main/ideg_p</output>
+	</filter>
+	<filter>
+		<name>ROLL DEG</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<and>
+					<less-than>
+						<property>rotors/main/blade[2]/position-deg</property>
+						<value>188</value>
+					</less-than>
+					<greater-than>
+						<property>rotors/main/blade[2]/position-deg</property>
+						<value>172</value>
+					</greater-than>
+				</and>
+			</condition>
+			<property>rotors/main/blade[2]/incidence-deg</property>
+		</input>
+		<input>rotors/main/ideg_r</input>
+		<output>rotors/main/ideg_r</output>
+	</filter>
+	<!-- CYCCTR -->
+	<logic>
+		<name>Cautions - CYCCTR</name>
+		<input>
+			<and>
+				<or>
+					<less-than>
+						<property>rotors/main/ideg_p</property>
+						<value type="float">-0.5</value>
+					</less-than>
+					<greater-than>
+						<property>rotors/main/ideg_p</property>
+						<value type="float">0.5</value>
+					</greater-than>
+					<less-than>
+						<property>rotors/main/ideg_r</property>
+						<value type="float">-1.5</value>
+					</less-than>
+					<greater-than>
+						<property>rotors/main/ideg_r</property>
+						<value type="float">-0.5</value>
+					</greater-than>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+				<less-than>
+					<property>bell412/mechanics/engines/nr</property>
+					<value>97</value>
+				</less-than>
+			</and>
+		</input>
+		<output>instrumentation/cautions/cycctr</output>
+	</logic>
+
+	<!-- FIRE 1 -->
+	<logic>
+		<name>Cautions - FIRE 1</name>
+		<input>
+			<and>
+				<or>
+					<property>bell412/mechanics/engines/engine[0]/fire</property>
+					<property>controls/cautions/switches/firetest</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/fire[0]</output>
+	</logic>
+	<!-- FIRE 2 -->
+	<logic>
+		<name>Cautions - FIRE 2</name>
+		<input>
+			<and>
+				<or>
+					<property>bell412/mechanics/engines/engine[1]/fire</property>
+					<property>controls/cautions/switches/firetest</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/fire[1]</output>
+	</logic>
+
+	<!-- BATTERY -->
+	<logic>
+		<name>Cautions - BATTERY</name>
+		<input>
+			<or>
+				<and>
+					<property>bell412/electrical/suppliers/supplier[0]/state</property>
+					<property>controls/power/switches/bus1</property>
+					<property>controls/power/switches/bus2</property>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/battery</output>
+	</logic>
+	<!-- BRAKE -->
+	<logic>
+		<name>Cautions - BRAKE</name>
+		<input>
+			<and>
+				<or>
+					<property>controls/engines/brake</property>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/rotorbrake</output>
+	</logic>
+	<!-- DOORS LOCK -->
+	<logic>
+		<name>Cautions - DOORLOCK</name>
+		<input>
+			<and>
+				<or>
+					<property>controls/doors/front/left</property>
+					<property>controls/doors/front/right</property>
+					<property>controls/doors/middle/left</property>
+					<property>controls/doors/middle/right</property>
+					<property>controls/doors/back/left</property>
+					<property>controls/doors/back/right</property>
+					<property>controls/doors/nose</property>
+					<property>controls/doors/tail</property>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/doorlock</output>
+	</logic>
+	<!-- EXTERNAL POWER -->
+	<logic>
+		<name>Cautions - EXTERNAL POWER</name>
+		<input>
+			<and>
+				<or>
+					<property>controls/doors/extpower</property>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/externalpower</output>
+	</logic>
+	<!-- FUEL LOW -->
+	<logic>
+		<name>Cautions - FUEL LOW</name>
+		<input>
+			<and>
+				<or>
+					<less-than>
+						<property>bell412/fuel/engine[0]/level-lbs</property>
+						<property>bell412/limits/fuel_level-lbs_min</property>
+					</less-than>
+					<less-than>
+						<property>bell412/fuel/engine[1]/level-lbs</property>
+						<property>bell412/limits/fuel_level-lbs_min</property>
+					</less-than>
+					<property>instrumentation/cautions/powered</property>
+				</or>
+				<property>controls/cautions/switches/test</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/fuellow</output>
+	</logic>
+	<!-- GEN1 OVHT -->
+	<logic>
+		<name>Cautions - GEN1 OVHT</name>
+		<input>
+			<and>
+				<or>
+					<greater-than>
+						<property>bell412/electrical/suppliers/supplier[2]/temperature</property>
+						<property>bell412/limits/battery_temp_max</property>
+					</greater-than>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/genovht[0]</output>
+	</logic>
+	<!-- GEN2 OVHT -->
+	<logic>
+		<name>Cautions - GEN2 OVHT</name>
+		<input>
+			<and>
+				<or>
+					<greater-than>
+						<property>bell412/electrical/suppliers/supplier[3]/temperature</property>
+						<property>bell412/limits/battery_temp_max</property>
+					</greater-than>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/genovht[1]</output>
+	</logic>
+	<!-- ENGINE OUT 1 (main board) -->
+	<logic>
+		<name>Cautions - ENGINE 1 OUT</name>
+		<input>
+			<or>
+				<and>
+					<less-than>
+						<property>bell412/mechanics/engines/engine[0]/n1</property>
+						<property>bell412/limits/engine_n1_self-pct</property>
+					</less-than>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/outstate[0]</output>
+	</logic>
+	<!-- ENGINE OUT 2 (main board) -->
+	<logic>
+		<name>Cautions - ENGINE 2 OUT</name>
+		<input>
+			<or>
+				<and>
+					<less-than>
+						<property>bell412/mechanics/engines/engine[1]/n1</property>
+						<property>bell412/limits/engine_n1_self-pct</property>
+					</less-than>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/outstate[1]</output>
+	</logic>
+	<!-- INVERTER 1 -->
+	<logic>
+		<name>Cautions - INVERTER 1</name>
+		<input>
+			<and>
+				<or>
+					<not><property>bell412/electrical/buses/bus[9]/state</property></not>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/inverter[0]</output>
+	</logic>
+	<!-- INVERTER 2 -->
+	<logic>
+		<name>Cautions - INVERTER 2</name>
+		<input>
+			<and>
+				<or>
+					<not><property>bell412/electrical/buses/bus[10]/state</property></not>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/inverter[1]</output>
+	</logic>
+	<!-- DCGENERATOR 1 -->
+	<logic>
+		<name>Cautions - DCGENERATOR 1</name>
+		<input>
+			<and>
+				<or>
+					<not><property>bell412/electrical/buses/bus[3]/state</property></not>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/dcgenerator[0]</output>
+	</logic>
+	<!-- DCGENERATOR 2 -->
+	<logic>
+		<name>Cautions - DCGENERATOR 2</name>
+		<input>
+			<and>
+				<or>
+					<not><property>bell412/electrical/buses/bus[4]/state</property></not>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/dcgenerator[1]</output>
+	</logic>
+	<!-- FUEL INTCON -->
+	<logic>
+		<name>Cautions - FUEL INTCON</name>
+		<input>
+			<and>
+				<or>
+					<not><property>bell412/electrical/output/fuel/intcon</property></not>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/fuelintcon</output>
+	</logic>
+	<!-- FUEL XFEED -->
+	<logic>
+		<name>Cautions - FUEL INTCON</name>
+		<input>
+			<and>
+				<or>
+					<not><property>bell412/electrical/output/fuel/xfeed</property></not>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/fuelxfeed</output>
+	</logic>
+	<!-- E1 CHIP default off -->
+	<logic>
+		<name>Cautions - E1 CHIP</name>
+		<input>
+			<or>
+				<and>
+					<property>controls/fuel/engine[0]/chip</property>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/enginechip[0]</output>
+	</logic>
+	<!-- E2 CHIP default off -->
+	<logic>
+		<name>Cautions - E2 CHIP</name>
+		<input>
+			<or>
+				<and>
+					<property>controls/fuel/engine[1]/chip</property>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/enginechip[1]</output>
+	</logic>
+	<!-- FUEL E1 TRANS -->
+	<logic>
+		<name>Cautions - E1 TRANS</name>
+		<input>
+			<and>
+				<or>
+					<not><property>bell412/electrical/output/fuel/trans[0]</property></not>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/fueltrans[0]</output>
+	</logic>
+	<!-- FUEL E2 TRANS -->
+	<logic>
+		<name>Cautions - E2 TRANS</name>
+		<input>
+			<and>
+				<or>
+					<not><property>bell412/electrical/output/fuel/trans[1]</property></not>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/fueltrans[1]</output>
+	</logic>
+	<!-- FUEL E1 BOOST PUMP -->
+	<logic>
+		<name>Cautions - E1 BOOST PUMP</name>
+		<input>
+			<and>
+				<or>
+					<not><property>bell412/electrical/output/fuel/pump[0]</property></not>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/fuelboost[0]</output>
+	</logic>
+	<!-- FUEL E2 BOOST PUMP -->
+	<logic>
+		<name>Cautions - E2 BOOST PUMP</name>
+		<input>
+			<and>
+				<or>
+					<not><property>bell412/electrical/output/fuel/pump[1]</property></not>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/fuelboost[1]</output>
+	</logic>
+	<!-- FUEL E1 VALVE -->
+	<logic>
+		<name>Cautions - E1 VALVE</name>
+		<input>
+			<and>
+				<or>
+					<not><property>bell412/electrical/output/fuel/valve[0]</property></not>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+				<less-than-equals>
+					<property>bell412/mechanics/engines/engine[0]/fuelpress</property>
+					<property>bell412/limits/fuelpress_min</property>
+				</less-than-equals>
+			</and>
+		</input>
+		<output>instrumentation/cautions/fuelvalve[0]</output>
+	</logic>
+	<!-- FUEL E2 VALVE -->
+	<logic>
+		<name>Cautions - E2 VALVE</name>
+		<input>
+			<and>
+				<or>
+					<not><property>bell412/electrical/output/fuel/valve[1]</property></not>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+				<less-than-equals>
+					<property>bell412/mechanics/engines/engine[1]/fuelpress</property>
+					<property>bell412/limits/fuelpress_min</property>
+				</less-than-equals>
+			</and>
+		</input>
+		<output>instrumentation/cautions/fuelvalve[1]</output>
+	</logic>
+	<!-- E1 GOVERNOR -->
+	<logic>
+		<name>Cautions - E1 GOVERNOR</name>
+		<input>
+			<or>
+				<and>
+					<not><property>controls/engines/engine[0]/gov</property></not>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/govmanual[0]</output>
+	</logic>
+	<!-- E2 GOVERNOR -->
+	<logic>
+		<name>Cautions - E2 GOVERNOR</name>
+		<input>
+			<or>
+				<and>
+					<not><property>controls/engines/engine[1]/gov</property></not>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/govmanual[1]</output>
+	</logic>
+	<!-- E1 PARTSEP -->
+	<logic>
+		<name>Cautions - E1 PARTSEP</name>
+		<input>
+			<and>
+				<or>
+					<and>
+						<property>controls/engines/engine[0]/partsep</property>			<!-- PART SEP NORMAL -->
+						<less-than>
+							<property>bell412/mechanics/engines/engine[0]/n1</property>
+							<property>bell412/limits/engine_partsep_n1-pct</property>
+						</less-than>
+					</and>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/partsepoff[0]</output>
+	</logic>
+	<!-- E2 PARTSEP -->
+	<logic>
+		<name>Cautions - E2 PARTSEP</name>
+		<input>
+			<and>
+				<or>
+					<and>
+						<property>controls/engines/engine[1]/partsep</property>			<!-- PART SEP NORMAL -->
+						<less-than>
+							<property>bell412/mechanics/engines/engine[1]/n1</property>
+							<property>bell412/limits/engine_partsep_n1-pct</property>
+						</less-than>
+					</and>
+					<property>controls/cautions/switches/test</property>
+				</or>
+				<property>instrumentation/cautions/powered</property>
+			</and>
+		</input>
+		<output>instrumentation/cautions/partsepoff[1]</output>
+	</logic>
+	<!-- E1 HYDR -->
+	<logic>
+		<name>Cautions - E1 HYDR</name>
+		<input>
+			<or>
+				<and>
+					<not><property>instrumentation/hydr[0]/powered</property></not>		<!-- TODO : pressure -->
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/hydraulic[0]</output>
+	</logic>
+	<!-- E2 HYDR -->
+	<logic>
+		<name>Cautions - E2 HYDR</name>													<!-- TODO : pressure -->
+		<input>
+			<or>
+				<and>
+					<not><property>instrumentation/hydr[1]/powered</property></not>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/hydraulic[1]</output>
+	</logic>
+	<!-- E1 OILPRESS -->
+	<logic>
+		<name>Cautions - E1 OILPRESS</name>
+		<input>
+			<or>
+				<and>
+					<less-than>
+						<property>bell412/mechanics/engines/engine[0]/oilpress</property>
+						<property>bell412/limits/oilpress_min</property>
+					</less-than>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/oilpressure[0]</output>
+	</logic>
+	<!-- E2 OILPRESS -->
+	<logic>
+		<name>Cautions - E2 OILPRESS</name>
+		<input>
+			<or>
+				<and>
+					<less-than>
+						<property>bell412/mechanics/engines/engine[1]/oilpress</property>
+						<property>bell412/limits/oilpress_min</property>
+					</less-than>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/oilpressure[1]</output>
+	</logic>
+	<!-- CBOXOILPRESSURE TODO -->
+	<logic>
+		<name>Cautions - CBOXOILPRESSURE</name>
+		<input>
+			<or>
+				<and>
+					<less-than>
+						<property>bell412/mechanics/engines/engine[0]/oilpress</property>
+						<property>bell412/limits/cboxoilpress_min</property>
+					</less-than>
+					<less-than>
+						<property>bell412/mechanics/engines/engine[1]/oilpress</property>
+						<property>bell412/limits/cboxoilpress_min</property>
+					</less-than>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/cboxoilpressure</output>
+	</logic>
+	<!-- XMSNOILPRESSURE TODO -->
+	<logic>
+		<name>Cautions - XMSNOILPRESSURE</name>
+		<input>
+			<or>
+				<and>
+					<less-than>
+						<property>bell412/mechanics/engines/engine[0]/oilpress</property>
+						<value>77</value>
+					</less-than>
+					<less-than>
+						<property>bell412/mechanics/engines/engine[1]/oilpress</property>
+						<value>77</value>
+					</less-than>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/xmsnoilpressure</output>
+	</logic>
+	<!-- RADIO ALT DH DESIRED HEIGHT -->
+	<logic>
+		<name>Cautions - RADIO ALT</name>
+		<input>
+			<or>
+				<and>
+					<property>instrumentation/radar-altimeter/caution</property>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/raltdh</output>
+	</logic>
+	<!-- AFCS HP1 -->
+	<logic>
+		<name>Cautions - AP1</name>
+		<input>
+			<or>
+				<and>
+					<not><property>instrumentation/afcs[0]/powered</property></not>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/afcs[0]</output>
+	</logic>
+	<logic>
+		<name>Cautions - HP1 Cleared Reset</name>
+		<enable>
+			<condition>
+				<not><property>instrumentation/cautions/afcs[0]</property></not>
+			</condition>
+		</enable>
+		<inverted>true</inverted>
+		<input type="bool">false</input>
+		<output>instrumentation/cautions/cleared/afcs[0]</output>
+	</logic>
+	<!-- AFCS HP2 -->
+	<logic>
+		<name>Cautions - AP2</name>
+		<input>
+			<or>
+				<and>
+					<not><property>instrumentation/afcs[1]/powered</property></not>
+					<property>instrumentation/cautions/powered</property>
+				</and>
+				<property>controls/cautions/switches/test</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/afcs[1]</output>
+	</logic>
+	<logic>
+		<name>Cautions - HP2 Cleared Reset</name>
+		<enable>
+			<condition>
+				<not><property>instrumentation/cautions/afcs[1]</property></not>
+			</condition>
+		</enable>
+		<inverted>true</inverted>
+		<input type="bool">false</input>
+		<output>instrumentation/cautions/cleared/afcs[1]</output>
+	</logic>
+
+	<logic>
+		<name>Cautions - Master</name>
+		<input>
+			<or>
+				<property>instrumentation/cautions/rpm</property>
+				<property>instrumentation/cautions/overtorque</property>
+				<property>instrumentation/cautions/battery</property>
+				<property>instrumentation/cautions/rotorbrake</property>
+				<property>instrumentation/cautions/doorlock</property>
+				<property>instrumentation/cautions/externalpower</property>
+				<property>instrumentation/cautions/fuellow</property>
+				<property>instrumentation/cautions/genovht[0]</property>
+				<property>instrumentation/cautions/genovht[1]</property>
+				<property>instrumentation/cautions/outstate[0]</property>
+				<property>instrumentation/cautions/outstate[1]</property>
+				<property>instrumentation/cautions/inverter[0]</property>
+				<property>instrumentation/cautions/inverter[1]</property>
+				<property>instrumentation/cautions/dcgenerator[0]</property>
+				<property>instrumentation/cautions/dcgenerator[1]</property>
+				<property>instrumentation/cautions/fuelintcon</property>
+				<property>instrumentation/cautions/fuelxfeed</property>
+				<property>instrumentation/cautions/enginechip[0]</property>
+				<property>instrumentation/cautions/enginechip[1]</property>
+				<property>instrumentation/cautions/fueltrans[0]</property>
+				<property>instrumentation/cautions/fueltrans[1]</property>
+				<property>instrumentation/cautions/fuelboost[0]</property>
+				<property>instrumentation/cautions/fuelboost[1]</property>
+				<property>instrumentation/cautions/fuelvalve[0]</property>
+				<property>instrumentation/cautions/fuelvalve[1]</property>
+				<property>instrumentation/cautions/govmanual[0]</property>
+				<property>instrumentation/cautions/govmanual[1]</property>
+				<property>instrumentation/cautions/partsepoff[0]</property>
+				<property>instrumentation/cautions/partsepoff[1]</property>
+				<property>instrumentation/cautions/hydraulic[0]</property>
+				<property>instrumentation/cautions/hydraulic[1]</property>
+				<property>instrumentation/cautions/oilpressure[0]</property>
+				<property>instrumentation/cautions/oilpressure[1]</property>
+				<property>instrumentation/cautions/cboxoilpressure</property>
+				<property>instrumentation/cautions/xmsnoilpressure</property>
+				<property>instrumentation/cautions/afcs[0]</property>
+				<property>instrumentation/cautions/afcs[1]</property>
+			</or>
+		</input>
+		<output>instrumentation/cautions/master</output>
+	</logic>
+
+</PropertyList>
+

@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+<!-- Time UTC -->
+<!--
+	<label>
+		<name>Time h</name>
+		<x>0</x>
+		<y>0</y>
+		<width>1</width>
+		<height>1</height>
+		<input>
+			<property>/sim/time/utc/hour</property>
+		</input>
+		<format>%9.0f</format>
+		<prefix>Time (UTC)</prefix>
+		<postfix>:</postfix>
+		<halign>left</halign>
+	</label>
+	<label>
+		<condition>
+			<less-than>
+				<property>/sim/time/utc/minute</property>
+				<value>10</value>
+			</less-than>
+		</condition>
+		<name>Time ma</name>
+		<x>63</x>
+		<y>0</y>
+		<width>1</width>
+		<height>1</height>
+		<input>
+			<property>/sim/time/utc/minute</property>
+		</input>
+		<format>%1.0f</format>
+		<prefix>0</prefix>
+		<halign>left</halign>
+	</label>
+	<label>
+		<condition>
+			<greater-than>
+				<property>/sim/time/utc/minute</property>
+				<value>9</value>
+			</greater-than>
+		</condition>
+		<name>Time mb</name>
+		<x>63</x>
+		<y>0</y>
+		<width>1</width>
+		<height>1</height>
+		<input>
+			<property>/sim/time/utc/minute</property>
+		</input>
+		<format>%1.0f</format>
+		<halign>left</halign>
+	</label>
+-->
+
+<!-- Time Local -->
+	<label>
+		<name>clock</name>
+		<x>0</x>
+		<y>0</y>
+		<width>1</width>
+		<height>1</height>
+		<input>
+			<property>/instrumentation/clock/local-short-string</property>
+		</input>
+		<prefix>Time:</prefix>
+		<halign>right</halign>
+		<box>false</box>
+	</label>
+
+</PropertyList>
+

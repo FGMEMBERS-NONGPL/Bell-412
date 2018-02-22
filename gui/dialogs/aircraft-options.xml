@@ -9,13 +9,13 @@
         <layout>hbox</layout>
         <empty><stretch>true</stretch></empty>
         <text>
-            <label>Bell-412 Options</label>
+			<label>Bell-412 Options</label>
         </text>
         <empty><stretch>true</stretch></empty>
         <button>
             <legend/>
             <key>Esc</key>
-            <pref-width>16</pref-width>
+            <pref-width>32</pref-width>
             <pref-height>16</pref-height>
             <binding>
                 <command>dialog-close</command>
@@ -30,13 +30,83 @@
             <layout>vbox</layout>
             <checkbox>
                 <halign>left</halign>
-                <label>Shake me honey</label>
-				<property>controls/options/shake</property>
+                <label>Cockpit Glasses Reflection (internal)</label>
+				<property>controls/options/cockpit-texture-reflection</property>
+                <live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+				<!--
+				<binding>
+					<command>property-assign</command>
+					<property>controls/options/cockpit-texture-reflection</property>
+					<value>0.92</value>
+				</binding>
+				-->
+            </checkbox>
+            <checkbox>
+                <halign>left</halign>
+                <label>Fuselage Texture Reflection</label>
+				<property>controls/options/fuselage-texture-reflection</property>
                 <live>true</live>
                 <binding>
                     <command>dialog-apply</command>
                 </binding>
             </checkbox>
+            <checkbox>
+                <halign>left</halign>
+                <label>Pilot Model (external view)</label>
+				<property>controls/options/pilot-model</property>
+                <live>true</live>
+                <binding>
+                    <command>dialog-apply</command>
+                </binding>
+            </checkbox>
+            <checkbox>
+                <halign>left</halign>
+                <label>Copilot Model (external view)</label>
+				<property>controls/options/copilot-model</property>
+                <live>true</live>
+                <binding>
+                    <command>dialog-apply</command>
+                </binding>
+            </checkbox>
+			<!-- Electrical Power Management -->
+			<group>
+				<layout>hbox</layout>
+				<padding>10</padding>
+				<text>
+					<label>Battery Charge:</label>
+					<halign>left</halign>
+				</text>
+				<slider>
+					<name>bell412-battery-load</name>
+					<min>0.1</min>
+					<max>1.0</max>
+					<live>true</live>
+					<property>bell412/electrical/suppliers/supplier[0]/charge</property>
+					<binding>
+						<command>dialog-apply</command>
+						<name>bell412-battery-load</name>
+					</binding>
+				</slider>
+				<text>
+					<label>123</label>
+					<halign>left</halign>
+					<format>%.2f</format>
+					<live>true</live>
+					<property>bell412/electrical/suppliers/supplier[0]/charge</property>
+				</text>
+			</group>
+			<checkbox>
+				<halign>left</halign>
+				<label>External Power Unit</label>
+				<property>controls/doors/extpower</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</checkbox>
         </group>
         <hrule/>
     </group>

@@ -2,40 +2,47 @@
 
 <PropertyList>
 	<path>lights.ac</path>
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<condition>
+			<property>sim/rendering/rembrandt/enabled</property>
+		</condition>
+		<object-name>7.Lights Gyro Glow Bottom</object-name>
+		<object-name>7.Lights Gyro Glow Top</object-name>
+		<object-name>7.Lights Nav Green Glow</object-name>
+		<object-name>7.Lights Nav Red Glow</object-name>
+		<object-name>7.Lights Nav White Glow</object-name>
+	</effect>
+
 
 	<!-- Beacons -->
 	<animation>
-		<name>beacons</name>
+		<type>select</type>
 		<object-name>7.Light Gyro Bottom On</object-name>
+		<condition>
+			<property>sim/multiplay/generic/int[8]</property>	<!-- beacon state1 alias to /controls/lighting/beacon-bottom/state -->
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
 		<object-name>7.Light Gyro Top On</object-name>
-	</animation>
-
-	<animation>
-		<type>select</type>
-		<object-name>beacons</object-name>
 		<condition>
-			<and>
-				<property>sim/multiplay/generic/int[8]</property>	<!-- beacon state alias to /controls/lighting/beacon-state/state -->
-				<property>sim/multiplay/generic/int[10]</property>	<!-- bat buses state  -->
-			</and>
+			<property>sim/multiplay/generic/int[9]</property>	<!-- beacon state2 alias to /controls/lighting/beacon-top/state -->
 		</condition>
 	</animation>
-
+	<!-- no rembrandt -->
+	<!-- Gyro Bottom -->
 	<animation>
 		<type>select</type>
-		<object-name>7.Lights Gyro Glow</object-name>
+		<object-name>7.Lights Gyro Glow Bottom</object-name>
 		<condition>
-			<and>
-				<not><property>/sim/rendering/rembrandt/enabled</property></not>
-				<property>sim/multiplay/generic/int[8]</property>	<!-- beacon state alias to /controls/lighting/beacon-state/state -->
-				<property>sim/multiplay/generic/int[10]</property>	<!-- bat buses state  -->
-			</and>
+			<!-- <not><property>sim/rendering/rembrandt/enabled</property></not> -->
+			<property>sim/multiplay/generic/int[8]</property>	<!-- beacon state1 alias to /controls/lighting/beacon-bottom/state -->
 		</condition>
 	</animation>
-
 	<animation>
 		<type>material</type>
-		<object-name>beacons</object-name>
+		<object-name>7.Light Gyro Bottom On</object-name>
 		<condition>
 			<property>sim/multiplay/generic/int[8]</property>
 		</condition>
@@ -45,8 +52,205 @@
 			<blue>1.0</blue>
 		</emission>
 	</animation>
+	<!-- Gyro Top -->
+	<animation>
+		<type>select</type>
+		<object-name>7.Lights Gyro Glow Top</object-name>
+		<condition>
+			<!-- <not><property>sim/rendering/rembrandt/enabled</property></not> -->
+			<property>sim/multiplay/generic/int[9]</property>	<!-- beacon state2 alias to /controls/lighting/beacon-top/state -->
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>7.Light Gyro Top On</object-name>
+		<condition>
+			<property>sim/multiplay/generic/int[9]</property>
+		</condition>
+		<emission>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+		</emission>
+	</animation>
 
-	<!-- Nav -->
+
+	<!-- rembrandt -->
+	<animation>
+		<type>select</type>
+		<object-name>7.Light Gyro Bottom PointLight</object-name>
+		<condition>
+			<and>
+				<property>sim/rendering/rembrandt/enabled</property>
+				<property>sim/multiplay/generic/int[8]</property>	<!-- beacon alias to /controls/lighting/beacon-bottom/state -->
+				<not><property>sim/current-view/internal</property></not> <!-- BUG : due to the lack of cast shadow/object, only visible in external view -->
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>7.Light Gyro Top PointLight</object-name>
+		<condition>
+			<and>
+				<property>sim/rendering/rembrandt/enabled</property>
+				<property>sim/multiplay/generic/int[9]</property>	<!-- beacon state alias to /controls/lighting/beacon-top/state -->
+				<not><property>sim/current-view/internal</property></not> <!-- BUG : due to the lack of cast shadow/object, only visible in external view -->
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>light</type>
+		<light-type>point</light-type>
+		<name>GyroLightBottom</name>
+		<object-name>7.Light Gyro Bottom PointLight</object-name>
+		<condition>
+            <and>
+                <property>sim/rendering/rembrandt/enabled</property>
+				<property>sim/multiplay/generic/int[8]</property>	<!-- beacon state alias to /controls/lighting/beacon-state/state -->
+				<not><property>sim/current-view/internal</property></not> <!-- BUG : due to the lack of cast shadow/object, only visible in external view -->
+			</and>
+		</condition>
+		<position>
+			<x>-1.83</x>
+			<y>0.00131</y>
+			<z>-0.9</z>
+		</position>
+		<ambient>
+			<r>0.10</r>
+			<g>0.00</g>
+			<b>0.00</b>
+			<a>1.0</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>0.0</g>
+			<b>0.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>0.0</g>
+			<b>0.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>0.2</c>
+			<l>1.0</l>
+			<q>0.8</q>
+		</attenuation>
+		<near-m>0.50</near-m>
+		<far-m>3.00</far-m>
+	</animation>
+	<animation>
+		<type>light</type>
+		<light-type>point</light-type>
+		<name>GyroLightTop</name>
+		<object-name>7.Light Gyro Top PointLight</object-name>
+		<nopreview/>
+		<condition>
+            <and>
+                <property>sim/rendering/rembrandt/enabled</property>
+				<property>sim/multiplay/generic/int[9]</property>	<!-- beacon state alias to /controls/lighting/beacon-state/state -->
+				<not><property>sim/current-view/internal</property></not> <!-- BUG : due to the lack of cast shadow/object, only visible in external view -->
+			</and>
+		</condition>
+		<position>
+			<x>0.73804</x>
+			<y>0.00131</y>
+			<z>2.14045</z>
+		</position>
+		<ambient>
+			<r>0.10</r>
+			<g>0.00</g>
+			<b>0.00</b>
+			<a>1.0</a>
+		</ambient>
+		<diffuse>
+			<r>1.0</r>
+			<g>0.0</g>
+			<b>0.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>1.0</r>
+			<g>0.0</g>
+			<b>0.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>0.01</c>
+			<l>0.002</l>
+			<q>02</q> <!-- 20 -->
+		</attenuation>
+		<near-m>0.50</near-m>
+		<far-m>3.00</far-m>
+	</animation>
+
+
+	<!-- Dome Aft Light -->
+	<animation>
+		<type>select</type>
+		<object-name>7.Light Dome Aft PointLight</object-name>
+		<condition>
+			<and>
+				<property>bell412/electrical/output/lighting/domlt</property>
+				<property>sim/current-view/internal</property>
+				<property>controls/lighting/switches/domlights</property>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<type>light</type>
+		<light-type>point</light-type>
+		<name>DomeLight</name>
+		<object-name>7.Light Dome Aft PointLight</object-name>
+		<condition>
+            <and>
+                <property>sim/rendering/rembrandt/enabled</property>
+				<property>bell412/electrical/output/lighting/domlt</property>
+				<property>sim/current-view/internal</property>
+				<property>controls/lighting/switches/domlights</property>
+			</and>
+		</condition>
+		<position>
+			<x>-0.78774</x>
+			<y>0.00287</y>
+			<z>0.40</z>
+		</position>
+		<ambient>
+			<r>0.4</r>
+			<g>0.4</g>
+			<b>0.4</b>
+			<a>0.5</a>
+		</ambient>
+		<diffuse>
+			<r>0.0</r>
+			<g>0.0</g>
+			<b>0.0</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>0.0</r>
+			<g>0.0</g>
+			<b>0.0</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>
+			<c>0.01</c>
+			<l>0.002</l>
+			<q>01</q>
+		</attenuation>
+		<near-m>0.01</near-m>
+		<far-m>3.00</far-m>
+		<dim-factor>
+			<property>controls/lighting/switches/domlt</property>
+			<min>0</min>
+			<max>1</max>
+		</dim-factor>
+	</animation>
+
+	<!-- Navigation Lights -->
 	<animation>
 		<name>navlights</name>
 		<object-name>7.Light Nav Middle Left On</object-name>
@@ -62,40 +266,157 @@
 		<object-name>7.Lights Nav Red Glow</object-name>
 		<object-name>7.Lights Nav White Glow</object-name>
 	</animation>
-
 	<animation>
 		<type>select</type>
 		<object-name>navlights</object-name>
 		<condition>
-			<and>
-				<property>sim/multiplay/generic/int[9]</property>	<!-- nav state alias to /controls/lighting/nav -->
-				<property>sim/multiplay/generic/int[10]</property>	<!-- bat buses state  -->
-			</and>
+			<property>sim/multiplay/generic/int[10]</property>
 		</condition>
 	</animation>
-
 	<animation>
 		<type>select</type>
 		<object-name>navglow</object-name>
 		<condition>
-			<and>
-				<not><property>/sim/rendering/rembrandt/enabled</property></not>
-				<property>sim/multiplay/generic/int[9]</property>
-				<property>sim/multiplay/generic/int[10]</property>	<!-- bat buses state  -->
-			</and>
+			<!-- <not><property>/sim/rendering/rembrandt/enabled</property></not> -->
+			<property>sim/multiplay/generic/int[10]</property>	<!-- navlight  -->
 		</condition>
 	</animation>
-
 	<animation>
 		<type>material</type>
 		<object-name>navlights</object-name>
 		<condition>
-			<property>sim/multiplay/generic/int[9]</property>
+			<property>sim/multiplay/generic/int[10]</property>
 		</condition>
 		<emission>
 			<red>1.0</red>
 			<green>1.0</green>
 			<blue>1.0</blue>
 		</emission>
+	</animation>
+
+	<!-- Landing Lights -->	
+	<!-- Framework -->
+	<animation> 
+		<type>rotate</type>
+		<object-name>7.Lights Landing</object-name>
+		<property>controls/lighting/switches/landingre</property>
+        <center>
+            <x-m>-1.50958</x-m>
+            <y-m>-0.11587</y-m>
+            <z-m>-0.6412</z-m>
+		</center>
+		<interpolation> 
+			<entry> 
+				<ind>-999</ind>
+				<dep>0</dep>
+			</entry>
+			<entry> 
+				<ind>0</ind>
+				<dep>0</dep>
+			</entry>
+			<entry> 
+				<ind>1</ind>
+				<dep>-83</dep>
+			</entry>
+			<entry> 
+				<ind>999</ind>
+				<dep>-83</dep>
+			</entry>
+		</interpolation>
+		<axis> 
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<!-- emissive part / child of -->
+    <animation>
+        <type>select</type>
+        <object-name>7.Lights Landing On</object-name>
+        <condition>
+            <and>
+				<property>controls/lighting/switches/landing</property>
+				<property>bell412/electrical/output/lights/landing</property>	<!-- powered -->
+            </and>
+        </condition>
+	</animation>
+    <animation>
+        <type>material</type>
+        <object-name>7.Lights Landing On</object-name>
+        <condition>
+            <and>
+				<property>controls/lighting/switches/landing</property>
+				<property>bell412/electrical/output/lights/landing</property>	<!-- powered -->
+            </and>
+        </condition>
+		<emission>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+		</emission>
+	</animation>
+	<!-- cone part (rembrandt, rendering space) / child of the landing spot -->
+    <animation>
+        <type>select</type>
+        <object-name>7.Lights Landing Cone</object-name>
+        <condition>
+            <and>
+                <property>/sim/rendering/rembrandt/enabled</property>
+				<property>controls/lighting/switches/landing</property>
+				<property>bell412/electrical/output/lights/landing</property>	<!-- powered -->
+            </and>
+        </condition>
+	</animation>
+	<animation>
+		<type>light</type>
+		<light-type>spot</light-type>
+		<name>LandingLight</name>
+		<object-name>7.Lights Landing Cone</object-name>
+		<nopreview/>
+		<condition>
+            <and>
+                <property>/sim/rendering/rembrandt/enabled</property>
+				<property>controls/lighting/switches/landing</property>
+				<property>bell412/electrical/output/lights/landing</property>	<!-- powered -->
+				<!-- <property>bell412/power/output/landing</property> TODO: electrical.nas : setup prpty -->
+            </and>
+		</condition>
+		<position>
+			<x>-1.36805</x>
+			<y>-0.11587</y>
+			<z>-0.67475</z>
+		</position>
+		<direction>
+			<x>-1</x>
+			<y>0</y>
+			<z>-83</z>		<!-- AOA ~[4..5] -->
+		</direction>
+		<ambient>
+			<r>0.5</r>
+			<g>0.5</g>
+			<b>0.55</b>
+			<a>1.0</a>
+		</ambient>
+		<diffuse>
+			<r>0.95</r>
+			<g>0.95</g>
+			<b>0.8</b>
+			<a>1.0</a>
+		</diffuse>
+		<specular>
+			<r>0.95</r>
+			<g>0.95</g>
+			<b>0.8</b>
+			<a>1.0</a>
+		</specular>
+		<attenuation>		<!-- according to far-m in order to get a smooth ending -->
+			<c>0.5</c>
+			<l>0.0</l>
+			<q>0.00005</q>
+		</attenuation>
+		<exponent>20</exponent>
+		<cutoff>300</cutoff>
+		<near-m>1</near-m>
+		<far-m>800</far-m>	<!-- max visible with AOA 4 / at 300 ft. (100m) -->
 	</animation>
 </PropertyList>

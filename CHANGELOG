@@ -77,10 +77,438 @@
 - OVER TORQUE caution indicator
 
 * ANIMATION
-- engine shake animation on ground + option menu to deactivate (don't work well with rembrandt, don't know why)
+- engine shake animation on ground + option menu to activate (don't work well with rembrandt, don't know why)
 
 * SOUNDS
 - better sync with engine shutdown
 
 * MISC
 - splash screen updated
+
+--------------------------------------------------------------------------------
+18/12/16 -- v0.4 (R36)
+* FDM 
+- tankers div in 2 part: font, rear ; location+weight are now Ok
+- new Yasim fuselage + better CoG
+- rotor parms updated
+- translift + ve updated, still to much ground effect
+- cruise/approach speed updated
+- better behaviour at low speed and stationary
+- better behaviour at hi speed
+
+* MODEL
+- main landing spotlight
+- Livery: 
+	updated LA Fire Dept (aka "San Andreas")
+	New livery: Canada Coast Guard
+- new realistic Attitude Instrument Texture
+- new realistic DME Instrument Texture
+
+* CONTROLS
+- new user keys for thrust(r,f) and rudders(d,g)
+- landing light switches (collectiv)
+- landing light retract/extend switch (collectiv)
+- dome light + dimmer (OH)
+- NonESN Power Switch (OH) - non essntial => radios power ...
+
+* ANIMATION
+- main landing spotlight.
+
+* EFFECTS
+- landing light (Rembrandt and ALS)
+- NAV light are now ok with Rembrandt
+- Beacons (top/bottom) like the real Bell (.._ & ._ )
+- Dome light (only rembrandt)
+- Interior shadows for ALS (not complete due to some FG limitations )
+
+* INSTRUMENTS
+- AI Bank indicator issue fixed.
+- HSI with HSET,CSET and Course Dev indicators (only on NAV1 currently)
+- HSI CourseSet and HeadingSet controls.
+- Radio COM1/COM2/NAV1/NAV2/ADF + channel indicator + in-range indicator
+- DME Bendix KDI572
+
+* MISC
+- splash screen v0.4
+- Tools/PT6T: Processing sketch engine "proof of concept"
+- Bel412 Flight Manual.pdf
+
+--------------------------------------------------------------------------------
+12/07/17 -- v0.5 (R44)
+
+* FDM 
+- new FDM :
+	complete re-design from scratch
+	CoG now Ok.
+	Better inertia tensors
+	very nice stability at hover (pretty good w/o any afcs)
+	near real performance/limitation at hi/low speed (eg difficulty to go over 140 Knots)
+	near real performance/limitation at takeoff (real max takeoff = 12000 Lbs)
+	engine vibration (with Yasim feature, no scripting/camera)
+	Bell412 fuel tankers now complete like real ones (331 US Gals) 
+	passengers weight, luggage, load
+	Yasim bug (auto-slice/jitter problem) : solved via nasal !
+
+* UI
+- enhanced keyboard control keys (collective/rudders)
+- Pilot View "through the window" 
+
+* MODEL & TEXTURE
+- fixes some mis-joined object edges on the main board 
+- fixes mis-joined object edges on the fuselage (not complete)
+- better switch texture
+- inner glasses
+- engine fire extg controls
+- Livery:
+	HD Texturing for the Army livery (default) (2048x2048)
+	New livery: NYPD Air Sea Rescue
+- fuel cap
+- tail control window (see boomtail/tail corner)
+- engine + turbine airing & access window
+- external power cap
+- new interior texture with wall acoustic blanket and floor grid/hooks
+- new pilot collectiv texture
+- copilot collectiv added
+
+* SOUND
+- new engine-idle sound design inside the cockpit from a real Bell-412.
+
+* ANIMATION
+- rear door
+- external-power cap open/close (on the nose)
+
+* EFFECTS
+- interior glasses reflection + user option 
+- exterior glasses reflection (ALS + RMB)
+- exterior fuselage reflection + user option
+
+* INSTRUMENTATION
+- FUEL Gauges (Left/Right) in Pounds
+- FUEL Digits (show the total fuel in US Gallons)
+- EXT-POWER Caution Indicator now works with extpower cap. position
+
+* NASAL 
+- realistic fuel consumption:
+	- according to the Bell412 fuel schematic & logic
+	- according to the Bell412 limitations.
+	- sync & balance according to intcon/trans switches position and engine state
+	- fuel press follows torque & air density & temperature
+
+* MISC
+- Documentation updated
+- Licensing : now copyrighted to me until v1.0
+
+* GOOD NEWS
+- I found a Bell412 near Paris (where I'm living), 
+  great hope to go there and get a better look and feel. Perhaps this summer.
+
+
+
+--------------------------------------------------------------------------------
+29/07/17 -- v0.5.1 (R47)
+
+* FDM
+- some changes to match max speed limits
+- fix Yasim rpm overload at idle + wind>10K
+
+* INSTRUMENTATION
+- FUEL-LOW Caution light indicator when fuel < 190 lbs / side
+- FUEL QTY Selector (FWD/MID) now update Digital indicator
+- AFCS AP1 & 2 Selector & Caution lt indicators
+- AFCS SAS/ATT selector
+
+* UI
+- 'c/C': open/close left/right crew doors
+- fix missing views 
+
+* MODEL / TEXTURE
+- pilot/copilot glasses open/close (click on the gutter at the top of the door's glasse)
+- new realistic pedestal texture / instruments plate / screws ...
+- fix bad shinyness on the collectiv/pedestal textures with ALS
+- remove alpha from useless rgba texture
+
+* NASAL
+- weight management : crew doors opened/closed modifies CoG
+- shared instance of aircraft limitations avoiding multiple decl. of same values
+- vibration and speed limitation with opened crew doors
+
+* SOUND
+- external sound inside the cockpit when doors/glasses are opened
+- cleanup unused.
+
+
+--------------------------------------------------------------------------------
+29/10/17 -- v0.6 (R49)
+
+* INSTRUMENTATION
+- COPILOT instruments
+- brg-pointer switch selector (below HSI)
+- Attitude: warning flags (ATT,GS,RT) done.
+- Attitude: glide-slope indicator on nav1/nav2 according to brg-pointer switch
+- HSI warning flags (NAV,GS,OFF)
+- HSI glide-slope indicator
+- HSI ADF/NDB indicator
+- HSI BRG pointer (VOR src.)
+- AHRS - simple MAG/DG mode
+- User : headset control on panel (headphones ambient sound switch on/off)
+
+* MODEL / TEXTURE
+- new HSI texture
+- copilot instruments lightning + lt dimmer
+- redesign/fix needles (better design, Rembrandt smear, ...).
+- simplify/dissolve pedestal & screws (-1.2 Mo) 
+- new screws on main panel.
+- cargo seats (military set) and supply boxes
+- rotor blades (main,tail) new textures + livery support
+- Pilot and Copilot Characters + User Options
+
+* ANIMATION
+- realistic blades spin & blur supporting Rembrandt shadows + transparency
+
+* NASAL
+- Bell412 Electrical Power System entirely modelized. See manual.pdf for schematic and logic.
+- blades spin/blur control
+
+* SYSTEM
+- AI, CDI & HSI instruments via property-rule
+- AHRS system : MAG/DG select HSI heading mode
+- COM/NAV freq. archived, fuel & battery life archived (persistent value between session)
+
+* SOUNDS
+- headset On/Off : sounds with headphones on the head or not (better for MP comm.) ; 
+                   2 modes : w/ or w/o doors opened.
+- gen sound volume lower
+
+* DOCUMENTATION
+- FG checklists (starting)
+- Instruments description & use (some)
+
+
+
+--------------------------------------------------------------------------------
+12/12/17 -- v0.7 (R50)
+
+* FDM
+- rotor pitch, translift, lift, drag, asym airfoil ... update prop for better hover operation 
+- Vmax at sea level: ~130 Knots.
+
+* MP & Dual Control
+- liveries, animations, sounds, lighting and pilot characters updated over MP
+- dual control: partly implemented (basic controls for the copilot)
+
+* MODELS
+- fix a bug that prevent HSI lighting to be displayed
+
+* INSTRUMENTATION
+- HUD : cruise, hover and legacy-default HUD
+- Hover-Flight-Indicator from MI8 replace Bendix KI206 NAV2 (both pilot/cop)
+
+* CONTROLS
+- AFCS : SAS tail rotor adjuster when afcs engaged.
+- no flight controls until servos are powered and enabled
+- trim acts on sticks too (reciprocal)
+
+* NASAL
+- MP + Dual
+- AFCS Servos for dual-control 
+
+
+--------------------------------------------------------------------------------
+02/01/18 -- v0.8.0
+
+* FDM and SYSTEMS
+- Yasim: some update.
+- RPM Governor (C'BOX Accessory)
+- VSpeed descent limit @1000 ft/mn. according to BHT-FM
+- Fix Yaw degps too slow: now up to 30 deg/sec. 
+- ENGINE OUT Annunciator at 52% N1 (self sustained)
+- Particle Sep. door opened at ~60% N1
+- PART SEP OVRD ON functional
+
+* Dual Control over MP
+- Main Switches + Main Instrumentations + Flight Controls + HUD + Lights: done
+  Documentation explains how it works and how to use it.
+  Still Missing some instrumentation but usable.
+
+* CONTROLS
+- New kbd shortcut: 'y' = force trim release (cyclic button)
+- Cyclic: FORCE TRIM electro-magnetic system: more accurate at low speed
+  introducing a non-linear gradient near neutral position.
+  Can be disengaged through pedestal ForceTrim Red Guarded cap or Cyclic FTRIM RELEASE Button
+  Currently effective at neutral pos. only 
+- Dual Control: Master Button (next headset button)
+
+* MODEL
+- Bug Fix (bad normals direction on left engine oil cooler)
+- Engine Air Inlet has its Particle Separator
+- Nose: new door with rivets and nose side hatch
+- Liveries: Textures introducing *-prop for specular and shyniness
+- New livery: Notarzt Intensiv Transport - Germany (to be continued..)
+- New livery: New South Wales Helimed - Australia
+- Updated livery: Canada Coast Guard now in HD
+- Fuselage better construction lines (some)
+
+* DOC and HELP
+- CHECKLIST UPDATED
+- Documentation Updated
+
+
+--------------------------------------------------------------------------------
+12/02/18 -- v0.9.0
+
+* FDM
+- Yasim:
+	Yasim architecture CANNOT reproduces real curves like those we have from airfoils
+	so trying other method to reproduce torque and limits
+	- best parms to match low/hi limits from inboard/outboard airfoil
+	- better behavior (rpm was too hi at some vspeed due to negativ torque),
+	- realistic torque now match B412 data
+	- AUTOROTATION: safe landing now could be done with some practice at low alt.
+- Governor more responsive
+
+* MODEL & DESIGN
+- Re-designed: main board, instrumentations, controls, cautions, ventling oulet ...
+- New textures for the Pedestal Engine/Fuel Plate - 412EP faithful
+- Better lighting effect for annunciators (more readable)
+- New textures for some instruments (NAV/COMM, ALT, VSI, DAFCS, STBY-AI, AI)
+- Empty/Non-use space now have a cap.
+- New 'Radio-Call' plate showing the player's 'CallSign' + control.
+
+* INSTRUMENTATION
+- Fix a bug that prevents AP1/2 to annunciate main caution lights properly
+- Fix a bug that misleads the HSI/BR pointer.
+- New DAVTRON M800 Chronometer with GMT,LT & ET Chrono.
+- Standby Attitude Indicator updated + 'caged' control
+- Attitude Indicator: Ball & Ladders/marks more faithful + Flight Director Steering Bars 
+- DAFCS VG Erect 'ready'.
+- DAFCS: Flight Director MS700 ready (WIP waiting logic)
+- DAFCS: AL300 Air Data Display ready (WIP waiting logic)
+- New Fire Caution Handles + FIRE TEST Switch (no damage management yet)
+- ICS: 412EP faithful + controls ready.
+- AHRS: redesigned + actuator
+
+* CONTROLS
+- 'y' key change: DAFCS YAW (TRA) disable/enable
+- 't' key: FTRIM RELEASE (override default FG key)
+- CYC-CTR now ok: Cyclic Centering Caution below 97% NR with cyclic not centered.
+- FTRIM OFF Annunciator: cyclic FTRIM RELEASE switch or pedestal FTRIM OVRD
+- Rudder now auto-center when in range [-0.1 .. 0.1]
+
+
+--------------------------------------------------------------------------------
+21/02/18 -- v0.9.1
+
+* FDM
+- Some Yasim update, better inertia moments.
+
+* MISC
+- All COPYRIGHT TERM OF USE from 3rd PARTY included
+- All use of 3rd party data clearly detailed.
+
+* MODEL
+- New Pilot Seats + new textures
+- Weapons: WIP
+- 3 textures removed after reclaims from 3rd party Cie.
+- New Front Door + Tex updated.
+- New Back Door + Tex. updated.
+- WIP : some passengers appears when passenger weight > 20lbs.
+
+
+
+
+TODO/COMING NEXT v0.9.1:
+> OTORQUE active MASTER: supprimer la dépendance
+> CAUTION RESET
+> ICS Volumes
+> BATTERY FLAT
+> SOUND ALARM
+> MAIN DIALOG + UPDATE CHECK
+> AFCS Tree/Framework
+> External FDM Study
+> OH Panel: new one
+> XPDR
+> DAVTRON BACKLIGHT
+> Fuel pression use a PID
+> Outside Air Temperature
+> new NAV/COM/ADF/XPDR that features all Bendix functionalities (KFS589A, KFS564A, KFS586A, KFS578A)
+> RPM AUDIO + RPM Annunciator: match real behavior + switch functional.
+* DOC
+> BATBUS
+> CYCCTR
+> FTRIM OFF
+> RPM AUDIO
+> DAFCS
+
+
+The documentation is no more included in the package, you have different ways to get it:
+- paid the 2 dollars
+- get it for free providing feedbacks:
+	- subscribe to my Youtube Channel
+	- writing a review of what you think at sourceforge.net
+	- at LinkedIn by endorsing my skills.
+- it will be always free for poor people or studient/academic.
+- other way you think nice for both of us.
+Thanks to help me making this project alive.
+Have a nice Flightgear.
+
+--------------------------------------------------------------------------------
+* TODO
+> Electrical Power Cons. Accumulator - Add cons from cluster
+	- power cons. from main instrumentation (including igniter ...)
+	- nasal script or filter that decrease AH over time.
+! Fuel Press 0 when bus powered after all switch on
+X CAUTION ENGINE OUT: 52% N1
+> CAUTION BATTERY BOTH ON OR BOTH OFF
+- CAUTION RPM Alarm has no sound
+- CAUTION clearance/state system.
+- Damage: introducing
+> Better contruction lines that were missing on side and engines cowl
+! Instrumentation : N1 or N2 tacho not powered (freq.) ; ITT is powered on 26VAC bus
+				Torque Meter powered by on 26VAC, unpowered => needle freeze
+				Torque meter depends upon oil press
+				Torque Engine=CBOX torque
+				Torque Eng(n)=0 until it reach other engine, ie clutch is engaged.
+				GEN1 switch => power loss for a short time
+				Ext. Power discon. => power loss + GEN1 => re-powered
+				ref.: PTM07A 212
+- POWERPLANT: PARTSEP Logic (random particle simulation + weather (snow,...))
+- Doc 
+	Update 2018 1st page
+	Top view dimension
+	side view pitot and sensors
+> ALS external shadow
+? ALS cockpit board now casts shadow
+> better Caution Indicators (RPM,OTORQUE,MASTER) + pick to clear
+> Power emergency
+> better cockpit textures
+> Dirty Windows Glasses
+X Dual Control - Copilot enabled
+X Dual Control information
+> Bell412 PT6T Engine Full Modelization
+> CoG Canvas (/fdm/yasim/*)
+> AOM Markers Beacons (Airways/Outer/Middle)
+X pdf doc link on help / about dial.
+> afcs.nas : designed from the work of Tatsuhiro Nishioka
+> 	AFCS (SAS/CAS) with auto-hover + auto-rotate
+> Cyclic : trim button and user shortkey (t)
+> AFCS : ATT mode + cyclic force trim switch button & user shortkey (T) 
+> Attitude : pitch trim indicator or FD ?
+> complete redesign of the fuselage construction lines from very nice videos/pictures I found on the net
+  and my own pictures if I catch a real Bell412
+> normals mapping inside and outside
+> Engine models + access
+> Rotors mechanics complete animation
+> Hitch/Tow/Winch + load leverage
+> AI Scenario
+> Engine Fire, smoke exhaust.
+X headset
+> NAV2 VOR, XPDR Selector
+> CBOX Pressure & Temp
+> XMSN Pressure & Temp
+> HYDR Press & TEmp
+> (70% done, TODO) new engines design (air density, fuel, n1/n2/cbox/xmsn)
+> CYC-CTR Monitor + Caution Lighting
+> Electrical System modelized with Power consumption
+> cabin configuration (void,full passenger, operating crew ...)
+> search light
+> New Rembrandt console lighting

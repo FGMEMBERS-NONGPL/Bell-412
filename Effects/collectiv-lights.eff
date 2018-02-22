@@ -8,7 +8,7 @@
 			<image>../Models/Controls/6.Framework-5-lights.png</image>
 		</texture>
 		<lightmap-factor type="float" n="0">
-			<use>/bell412/power/output/consoles/pedlt</use>
+			<use>bell412/electrical/output/lights/pedlt</use>
 		</lightmap-factor>
 		<lightmap-color type="vec3d" n="0"> 1.0 1.0 1.0 </lightmap-color>
 		<!-- alpha channel -->

@@ -11,8 +11,7 @@
     <animation>
         <type>rotate</type>
         <object-name>5.Cockpit Panel Main Instruments RadioAlt Needle</object-name>
-		<!-- <property>/bell412/instruments/indicators/radioalt</property> -->	<!-- TODO agl - 4.06 -->
-		<property>/position/gear-agl-ft</property>
+		<property>instrumentation/radar-altimeter/gear-agl-ft</property>
         <axis>
             <x>-1</x>
             <y>0</y>

@@ -4,6 +4,7 @@
 	<model><path>Aircraft/Bell-412/Models/Controls/cyclic.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Controls/cyclic-cop.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Controls/collectiv.xml</path></model>
+	<model><path>Aircraft/Bell-412/Models/Controls/collectiv-cop.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Controls/rudders.xml</path></model>
 	<model><path>Aircraft/Bell-412/Models/Controls/brake.xml</path></model>
 </PropertyList>

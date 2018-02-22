@@ -1,6 +1,6 @@
 AC3Db
 MATERIAL "DefaultWhite" rgb 1.0000 1.0000 1.0000  amb 0.2000 0.2000 0.2000  emis 0.0000 0.0000 0.0000  spec 0.5000 0.5000 0.5000  shi 10 trans 0.0000
-MATERIAL "6.Framework-5" rgb 0.8000 0.8000 0.8000  amb 1.0000 1.0000 1.0000  emis 0.0000 0.0000 0.0000  spec 0.5000 0.5000 0.5000  shi 35 trans 0.0000
+MATERIAL "5.Cockpit Controls-CollCyc" rgb 0.8000 0.8000 0.8000  amb 1.0000 1.0000 1.0000  emis 0.0000 0.0000 0.0000  spec 0.1064 0.1064 0.1064  shi 7 trans 0.0000
 OBJECT world
 name "Blender_export__cyclic-cop.ac"
 kids 1
@@ -8,7 +8,7 @@ OBJECT poly
 name "5.Cockpit Control Cyclic Copilot"
 loc -2.6999714 -0.1712475 0.5725222
 crease 35.0
-texture "6.Framework-5.png"
+texture "5.Cockpit-controls-collcyc.png"
 texrep 1 1
 numvert 471
 0.1510330 0.5082117 0.0128557

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PropertyList>
+	<name>interior-shadow</name>
+	<inherits-from>Effects/model-interior</inherits-from>
+	<parameters>
+		<texture n="4">
+			<type>cubemap</type>
+			<images>
+				<positive-x>Aircraft/Bell-412/Models/untitled4.png</positive-x>	<!-- px (tail) rotate 90 deg from N or S to W -->
+				<negative-x>Aircraft/Bell-412/Models/untitled2.png</negative-x>	<!-- nx (nose) rotate 90 deg from N or S to E -->
+				<positive-y>Aircraft/Bell-412/Models/untitled1.png</positive-y>	<!-- py (starboard/right) from N do not rotate -->
+				<negative-y>Aircraft/Bell-412/Models/untitled3.png</negative-y>	<!-- ny (port/left) from N rotate 180 deg to S -->
+				<positive-z>Aircraft/Bell-412/Models/untitled6.png</positive-z>	<!-- pz (top) rotate 90 deg from N or S to W -->
+				<negative-z>Aircraft/Bell-412/Models/untitled5.png</negative-z>	<!-- nz (bottom) rotate 90 deg from N or S to W -->
+			</images>
+		</texture>	<!-- the cube center must be the same as the camera x,y,z in blend -->
+		<opacity-cube-center type="vec3d" n="0"> -1.82422 0.0 0.37789</opacity-cube-center>
+		<opacity-cube-scale type="vec3d" n="0"> 1.5 0.5 0.7</opacity-cube-scale>
+		<opacity-cube-angle type="float">0.0</opacity-cube-angle>
+	</parameters>
+</PropertyList>

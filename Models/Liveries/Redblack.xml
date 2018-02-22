@@ -3,9 +3,15 @@
 <sim>
   <model>
     <livery>
-      <name type="string">Redblack</name>
+      <name type="string">Bell412 EP (US)</name>
 	  <texture-fuselage>Liveries/Redblack-1.Fuselage.png</texture-fuselage>
 	  <texture-queue>Liveries/Redblack-1.FuselageQueue.png</texture-queue>
+	  <texture-blades>Liveries/SanAndreas-Blades.png</texture-blades>
+	  <texture-blades-x>Liveries/SanAndreas-Blades_x.png</texture-blades-x>
+	  <texture-blades-blur>Liveries/SanAndreas-rotors_main_blur.png</texture-blades-blur>
+	  <texture-tail-blur>Liveries/SanAndreas-rotors_tail_blur.png</texture-tail-blur>
+	  <shine>43</shine>
+	  <spec>0.8</spec>
 	  <!-- <texture-doorsinside>2.Doors Inside.png</texture-doorsinside> -->
     </livery>
   </model>

@@ -19,6 +19,8 @@ var BIG_DOOR_DURATION_TIME = 3;						# sound 2 duration
 var sound_door_reset = func {
 	setprop("/controls/doors/soundopen",0);	
 	setprop("/controls/doors/soundclose",0);	
+	setprop("/controls/doors/back/soundopen",0);
+	setprop("/controls/doors/back/soundclose",0);
 }
 
 var sound_door_open = func(node) {
@@ -31,4 +33,13 @@ var sound_door_close= func(node) {
 	interpolate(node,0,SIMPLE_DOOR_DURATION_TIME);			# animat
 	interpolate("/controls/doors/soundclose",1,SIMPLE_DOOR_DURATION_TIME);	# sound trigger
 	settimer(sound_door_reset,SIMPLE_DOOR_DURATION_TIME);	# wait for the sound to be played, then reset triggers
+}
+
+var sound_door_crew_open = func(node) {
+	setprop("/controls/doors/back/soundopen",1);
+	sound_door_open(node);
+}
+var sound_door_crew_close = func(node) {
+	setprop("/controls/doors/back/soundclose",1);
+	sound_door_close(node);
 }

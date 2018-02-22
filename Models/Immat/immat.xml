@@ -4,7 +4,18 @@
 
 <PropertyList>
 
-  <path>immat.ac</path>
+	<path>immat.ac</path>
+
+	<model>
+		<name>Immat Cockpit</name>
+		<path>immat_cockpit.xml</path>
+		<offsets>
+			<x-m>-2.8360</x-m>
+			<y-m>0.18349</y-m>
+			<z-m>0.53452</z-m>
+			<pitch-deg>-8.34</pitch-deg>
+		</offsets>
+	</model>
 
   <animation>
 	<!-- Immatriculations -->

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<PropertyList>
+<fx>
+	<!-- ********************************************* 
+		 outside 
+		 *********************************************	-->
+	<!-- rotor -->
+	<!-- float[10] = rotor/main/rpm -->
+	<rotor-outside>
+		<name>rotoroutside</name>
+		<mode>looped</mode>
+		<path>Aircraft/Bell-412/Sounds/engine_outside.wav</path>
+		<condition>
+				<greater-than>
+					<property>sim/multiplay/generic/float[10]</property>
+					<value>50</value>
+				</greater-than>
+		</condition>
+		<volume>
+			<factor>0.0032</factor>
+			<property>sim/multiplay/generic/float[10]</property>
+		</volume>
+		<pitch>
+			<property>sim/multiplay/generic/float[10]</property>
+			<factor>0.003125</factor>
+			<offset>-0.0</offset>
+			<max>2.5</max>
+		</pitch>
+		<position>
+			<x> -0.0 </x>
+			<y> -0.0 </y>
+			<z>  1.0 </z>
+		</position>
+		<reference-dist>25</reference-dist>
+		<max-dist>3000</max-dist>
+	</rotor-outside>
+</fx>
+</PropertyList>

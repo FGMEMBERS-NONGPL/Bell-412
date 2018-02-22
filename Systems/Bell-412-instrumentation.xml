@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+# ======================================================================================================
+# Bell412 Instrumentation System 
+# 	(for the Flightgear Flight Simulator)
+# ======================================================================================================
+#
+# AUTHOR
+# 	Valery Seys		valery@vslash.com
+#
+# COPYRIGHT
+# 	Valery Seys, Paris /\
+# 	no distribution allowed
+# 	no commercial use
+# 	please contact the author for any use or question, thank you.
+# 	https://sourceforge.net/projects/bell-412/
+#
+# REFS
+# 	Textron BHT-412 Rotorcraft Flight Manual (rev. 9/2002)
+#	Textron 412-MM-VOL12
+# 	Flightgear Wiki: http://wiki.flightgear.org/
+#
+# CHANGELOG
+# 07/2017	: init
+# ======================================================================================================
+-->
+<PropertyList>
+	<!-- FG default base ref. to new B412 instruments / vacuum spin default to 1 --> 
+	<attitude-indicator>
+		<indicated-pitch-deg type="float">21.0</indicated-pitch-deg>
+		<indicated-roll-deg type="float">42.0</indicated-roll-deg>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">true</serviceable>
+	</attitude-indicator>
+	<heading-indicator>
+		<indicated-heading-deg type="float">0.0</indicated-heading-deg>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">true</serviceable>
+	</heading-indicator>
+	<slip-skid-ball>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">true</serviceable>
+	</slip-skid-ball>
+	<turn-indicator>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">true</serviceable>
+	</turn-indicator>
+	<airspeed-indicator>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">true</serviceable>
+	</airspeed-indicator>
+	<altimeter>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">false</serviceable>
+	</altimeter>
+	<radar-altimeter>
+		<gear-agl-ft alias="/position/gear-agl-ft"/>
+		<dh type="float">0.0</dh>
+		<flag-off type="bool">true</flag-off>
+		<caution type="bool">false</caution>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">true</serviceable>
+	</radar-altimeter>
+	<vertical-speed-indicator>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">false</serviceable>
+	</vertical-speed-indicator>
+	<ahrs>
+		<magdg-switch type="bool">true</magdg-switch>				<!-- not(magdg-switch) = dg -->
+		<dg-variation-switch type="float">0</dg-variation-switch>		
+		<dg-variation-deg type="float">0</dg-variation-deg>
+		<heading-magnetic-deg alias="/orientation/heading-magnetic-deg"/>
+		<heading-dg-deg alias="/orientation/heading-deg"/>
+		<heading-deg type="float">0.0</heading-deg>
+		<variation-deg type="float">0.0</variation-deg> <!-- from mag var or dg var  -->
+		<powered type="bool">false</powered>
+		<serviceable type="bool">true</serviceable>
+	</ahrs>
+	<ai>
+		<indicated-pitch-deg alias="/instrumentation/attitude-indicator/indicated-pitch-deg"/>
+		<indicated-roll-deg  alias="/instrumentation/attitude-indicator/indicated-roll-deg"/>
+		<indicated-slip-skid alias="/instrumentation/slip-skid-ball/indicated-slip-skid"/>
+		<indicated-turn-rate alias="/instrumentation/turn-indicator/indicated-turn-rate"/>
+		<indicated-bank-deg  alias="/orientation/roll-deg"/>
+		<offset-pitch-deg    alias="/instrumentation/attitude-indicator/internal-pitch-deg"/>
+		<offset-roll-deg     alias="/instrumentation/attitude-indicator/internal-roll-deg"/>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">true</serviceable>
+		<flags>
+			<att type="bool">true</att>
+			<gs type="bool">true</gs>
+			<fd type="bool">true</fd>
+		</flags>
+	</ai>
+	<!--
+	orientation/model/heading-deg, roll-deg, pitch-deg
+	orientation/heading-deg
+		heading-magnetic-deg
+		pitch-deg
+		roll-deg
+		side-slip-deg
+		p,q,r-body
+	-->
+	<ai-stby>
+		<indicated-pitch-deg type="float">-20.0</indicated-pitch-deg>
+		<indicated-roll-deg  type="float">8.0</indicated-roll-deg>
+		<indicated-bank-deg  type="float">8.0</indicated-bank-deg>
+		<offset-pitch-deg    type="float">0.0</offset-pitch-deg>
+		<offset-roll-deg     type="float">0.0</offset-roll-deg>
+		<caged 				type="bool">true</caged>
+		<powerbat 			type="bool">false</powerbat>
+		<powered 			type="bool">false</powered>
+		<serviceable 		type="bool">true</serviceable>
+	</ai-stby>
+	<hsi>	<!-- TODO pilot / copilot -->
+		<indicated-heading-deg type="float">0.0</indicated-heading-deg>
+		<heading-diff type="float">0.0</heading-diff>
+		<heading-bug-deg type="float">0</heading-bug-deg>
+		<bearing-switch type="bool">false</bearing-switch>	<!-- TODO 29/08/17 21:25 -->
+		<bearing-pointer type="float">0.0</bearing-pointer>	<!-- VOR location pointer -->
+		<adf-pointer type="float">0.0</adf-pointer>
+		<nav-pointer type="float">0.0</nav-pointer>		<!-- nav radial -->
+		<gs-pointer type="float">0.0</gs-pointer>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">true</serviceable>
+		<flags>
+			<off type="bool">true</off>
+			<gs type="bool">true</gs>
+			<nav type="bool">true</nav>
+		</flags>
+		<data>
+			<cutoff-freq type="float">2</cutoff-freq>
+			<adf-filtered type="float">0.0</adf-filtered>
+			<brg-filtered type="float">0.0</brg-filtered>
+		</data>
+	</hsi>
+	<cdi>	<!-- TODO pilot/copilot CDI -->
+		<powered type="bool">false</powered>
+		<serviceable type="bool">true</serviceable>
+		<heading-needle-deflection type="float">0</heading-needle-deflection>						<!-- point to current nav cdi -->
+	</cdi>
+	<thermometer>
+		<external-deg alias="/environment/temperature-degc"/>
+	</thermometer>
+	<magnetic-compass>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">true</serviceable>
+	</magnetic-compass>
+	<clock>
+		<serviceable type="bool">true</serviceable>
+		<powered type="bool">true</powered>
+		<selector type="float">1</selector>			<!-- 0:gmt, 		1:lt, 			2:et 	-->
+		<control type="float">0</control>			<!-- 0:unchanged, 	1:stop/start, 	2:reset -->
+		<etstate type="bool">false</etstate>		<!-- 0:stop/freeze, 1:run 					-->
+		<digit n="0" type="float">8</digit>
+		<digit n="1" type="float">8</digit>
+		<digit n="2" type="float">8</digit>
+		<digit n="3" type="float">8</digit>
+		<colon type="bool">true</colon>
+	</clock>
+	
+	<!-- comm/ils/navaid -->
+	<comm n="0">
+		<powered type="bool">false</powered>
+		<serviceable type="bool">false</serviceable>
+	</comm>
+	<comm n="1">
+		<powered type="bool">false</powered>
+		<serviceable type="bool">false</serviceable>
+	</comm>
+	<nav n="0">
+		<powered type="bool">false</powered>
+		<serviceable type="bool">false</serviceable>
+	</nav>
+	<nav n="1">
+		<powered type="bool">false</powered>
+		<serviceable type="bool">false</serviceable>
+	</nav>
+	<adf>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">false</serviceable>
+	</adf>
+	<tacan>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">false</serviceable>
+	</tacan>
+	<transponder>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">false</serviceable>
+	</transponder>
+	<dme>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">false</serviceable>
+		<switch-position type="int">0</switch-position>
+	</dme>
+	<marker-beacon>
+		<powered type="bool">false</powered>
+		<serviceable type="bool">false</serviceable>
+	</marker-beacon>
+
+	<!-- BELL412 Featured instruments -->
+	<engine n="0">
+		<powered type="bool">false</powered>
+		<serviceable 	type="bool">false</serviceable>
+		<n1 			alias="bell412/mechanics/engines/engine[0]/n1"/>
+		<n2 			alias="bell412/mechanics/engines/engine[0]/n2"/>
+		<itt 			alias="bell412/mechanics/engines/engine[0]/itt"/>
+		<oil-press 		alias="bell412/mechanics/engines/engine[0]/oil-press"/>
+		<oil-temp 		alias="bell412/mechanics/engines/engine[0]/oil-temp"/>
+		<fuel-press 	alias="bell412/mechanics/engines/engine[0]/fuel-press"/>
+	</engine>
+	<engine n="1">
+		<powered type="bool">false</powered>
+		<serviceable 	type="bool">false</serviceable>
+		<n1 			alias="bell412/mechanics/engines/engine[1]/n1"/>
+		<n2 			alias="bell412/mechanics/engines/engine[1]/n2"/>
+		<itt 			alias="bell412/mechanics/engines/engine[1]/itt"/>
+		<oil-press 		alias="bell412/mechanics/engines/engine[1]/oil-press"/>
+		<oil-temp 		alias="bell412/mechanics/engines/engine[1]/oil-temp"/>
+		<fuel-press 	alias="bell412/mechanics/engines/engine[1]/fuel-press"/>
+	</engine>
+	<rotorgear>
+		<powered 		type="bool">false</powered>
+		<serviceable 	type="bool">false</serviceable>
+		<xmsn-press 	type="float">0.0</xmsn-press>
+		<xmsn-temp 		type="float">0.0</xmsn-temp>
+		<cbox-press 	type="float">0.0</cbox-press>
+		<cbox-temp 		type="float">0.0</cbox-temp>
+		<rpm-pct 		type="float">0.0</rpm-pct>
+		<torque-pct 	type="float">0.0</torque-pct>
+		<torque-mast-pct type="float">0</torque-mast-pct>
+	</rotorgear>
+	<hydr n="0">
+		<powered 		type="bool">false</powered>
+		<temp 			type="float">0</temp>
+		<press 			type="float">0</press>
+	</hydr>
+	<hydr n="1">
+		<powered 		type="bool">false</powered>
+		<temp 			type="float">0</temp>
+		<press 			type="float">0</press>
+	</hydr>
+	<afcs n="0">
+		<powered 		type="bool">false</powered>
+		<serviceable 	type="bool">false</serviceable>
+		<api-yaw 		type="float">0</api-yaw>
+		<api-roll 		type="float">0</api-roll>
+		<api-pitch	 	type="float">0</api-pitch>
+	</afcs>
+	<afcs n="1">
+		<powered 		type="bool">false</powered>
+		<serviceable 	type="bool">false</serviceable>
+	</afcs>
+	<al300>
+		<powered 		type="bool">false</powered>
+		<serviceable 	type="bool">false</serviceable>
+		<set 			type="float">0</set>
+		<digit n="0" type="float">27</digit>
+		<digit n="1" type="float">27</digit>
+		<digit n="2" type="float">27</digit>
+		<digit n="3" type="float">27</digit>
+		<digit n="4" type="float">27</digit>
+	</al300>
+	<fuelgauge>
+		<powered 		type="bool">false</powered>
+	</fuelgauge>
+	<cautions>
+		<powered 			type="bool">false</powered>	<!-- main panel -->
+		<!-- Console -->	
+		<batbus			 	type="bool">false</batbus>
+		<stbyatt		 	type="bool">false</stbyatt>
+		<master 			type="bool">false</master>
+		<cycctr 			type="bool">false</cycctr>
+		<rpm 				type="bool">false</rpm>
+		<overtorque 		type="bool">false</overtorque>
+		<ftrimoff		 	type="bool">false</ftrimoff>
+		<traoff	 			type="bool">false</traoff>
+		<engine 			type="bool">false</engine>
+		<engine 			type="bool">false</engine>
+		<fire 				type="bool">false</fire>
+		<fire 				type="bool">false</fire>
+		<firebaggage	 	type="bool">false</firebaggage>
+		<!-- Panel -->
+		<!-- both side -->
+		<afcs 				type="bool">false</afcs>
+		<afcs 				type="bool">false</afcs>
+		<dcgenerator 		type="bool">false</dcgenerator>
+		<dcgenerator 		type="bool">false</dcgenerator>
+		<enginechip 		type="bool">false</enginechip>
+		<enginechip 		type="bool">false</enginechip>
+		<fuelboost 			type="bool">false</fuelboost>
+		<fuelboost 			type="bool">false</fuelboost>
+		<fueltrans 			type="bool">false</fueltrans>
+		<fueltrans 			type="bool">false</fueltrans>
+		<fuelvalve 			type="bool">false</fuelvalve>
+		<fuelvalve 			type="bool">false</fuelvalve>
+		<genovht 			type="bool">false</genovht>
+		<genovht 			type="bool">false</genovht>
+		<govmanual 			type="bool">false</govmanual>
+		<govmanual 			type="bool">false</govmanual>
+		<hydraulic 			type="bool">false</hydraulic>
+		<hydraulic 			type="bool">false</hydraulic>
+		<inverter 			type="bool">false</inverter>
+		<inverter 			type="bool">false</inverter>
+		<oilpressure 		type="bool">false</oilpressure>
+		<oilpressure 		type="bool">false</oilpressure>
+		<partsepoff 		type="bool">false</partsepoff>
+		<partsepoff 		type="bool">false</partsepoff>
+		<outstate 			type="bool">false</outstate>
+		<outstate 			type="bool">false</outstate>
+		<!-- single -->
+		<battery 			type="bool">false</battery>
+		<cboxoilpressure 	type="bool">false</cboxoilpressure>
+		<xmsnoilpressure 	type="bool">false</xmsnoilpressure>
+		<doorlock 			type="bool">false</doorlock>
+		<externalpower 		type="bool">false</externalpower>
+		<fuelintcon 		type="bool">false</fuelintcon>
+		<fuelxfeed 			type="bool">false</fuelxfeed>
+		<rotorbrake 		type="bool">false</rotorbrake>
+		<raltdh 			type="bool">false</raltdh>
+		<fuellow 			type="bool">false</fuellow>
+		<cleared>
+			<!-- Console -->	
+			<master 			type="bool">false</master>
+			<!-- Panel -->
+			<!-- both side -->
+			<afcs 				type="bool">false</afcs>
+			<afcs 				type="bool">false</afcs>
+			<dcgenerator 		type="bool">false</dcgenerator>
+			<dcgenerator 		type="bool">false</dcgenerator>
+			<enginechip 		type="bool">false</enginechip>
+			<enginechip 		type="bool">false</enginechip>
+			<fuelboost 			type="bool">false</fuelboost>
+			<fuelboost 			type="bool">false</fuelboost>
+			<fueltrans 			type="bool">false</fueltrans>
+			<fueltrans 			type="bool">false</fueltrans>
+			<fuelvalve 			type="bool">false</fuelvalve>
+			<fuelvalve 			type="bool">false</fuelvalve>
+			<genovht 			type="bool">false</genovht>
+			<genovht 			type="bool">false</genovht>
+			<govmanual 			type="bool">false</govmanual>
+			<govmanual 			type="bool">false</govmanual>
+			<hydraulic 			type="bool">false</hydraulic>
+			<hydraulic 			type="bool">false</hydraulic>
+			<inverter 			type="bool">false</inverter>
+			<inverter 			type="bool">false</inverter>
+			<oilpressure 		type="bool">false</oilpressure>
+			<oilpressure 		type="bool">false</oilpressure>
+			<partsepoff 		type="bool">false</partsepoff>
+			<partsepoff 		type="bool">false</partsepoff>
+			<outstate 			type="bool">false</outstate>
+			<outstate 			type="bool">false</outstate>
+			<!-- single -->
+			<battery 			type="bool">false</battery>
+			<cboxoilpressure 	type="bool">false</cboxoilpressure>
+			<xmsnoilpressure 	type="bool">false</xmsnoilpressure>
+			<doorlock 			type="bool">false</doorlock>
+			<externalpower 		type="bool">false</externalpower>
+			<fuelintcon 		type="bool">false</fuelintcon>
+			<fuelxfeed 			type="bool">false</fuelxfeed>
+			<rotorbrake 		type="bool">false</rotorbrake>
+			<raltdh 			type="bool">false</raltdh>
+			<fuellow 			type="bool">false</fuellow>
+		</cleared>
+	</cautions>
+</PropertyList>

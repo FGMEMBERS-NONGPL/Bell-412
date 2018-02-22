@@ -1,62 +1,23 @@
 <?xml version="1.0"?>
-
 <PropertyList>
-	<path>ai_ball.ac</path>
-	<name>5.Cockpit Panel Main Instruments AI Ball</name>
-
-	<animation>
-		<type>rotate</type>
-		<object-name>5.Cockpit Panel Main Instruments AI Ball</object-name>
-		<property>/orientation/roll-deg</property>
-		<factor>1</factor>
-		<axis>
-			<x> 1 </x>
-			<y> 0 </y>
-			<z> 0 </z>
-		</axis>
-		<center>
-			<x-m>  2.89490 </x-m>
-			<y-m>  0.44069 </y-m>
-			<z-m>  0.42101 </z-m>
-		</center>
-	</animation>  
-	
-	<animation>
-		<type>rotate</type>
-		<object-name>5.Cockpit Panel Main Instruments AI Ball</object-name>
-		<property>/orientation/pitch-deg</property>
-		<factor>1</factor>
-  		<interpolation>
-            <entry><ind>-999</ind><dep>-75</dep></entry>
-            <entry><ind>-180</ind><dep>-65</dep></entry>
-            <entry><ind>-40</ind><dep>-44</dep></entry>
-            <entry><ind>-35</ind><dep>-34</dep></entry>
-            <entry><ind>-30</ind><dep>-24.5</dep></entry>
-            <entry><ind>-20</ind><dep>-18</dep></entry>
-            <entry><ind>-10</ind><dep>-12.5</dep></entry>
-            <entry><ind>0</ind><dep>1</dep></entry>
-            <entry><ind>10</ind><dep>14.0</dep></entry>
-            <entry><ind>20</ind><dep>19</dep></entry>
-            <entry><ind>30</ind><dep>26</dep></entry>
-            <entry><ind>40</ind><dep>45</dep></entry>
-            <entry><ind>180</ind><dep>65</dep></entry>
-            <entry><ind>999</ind><dep>75</dep></entry>
-        </interpolation>
-		<axis>
-			<x> 0 </x>
-			<y> 1 </y>
-			<z> 0 </z>
-		</axis>
-		<center>
-			<x-m>  -2.89490 </x-m>
-			<y-m>  0.44069 </y-m>
-			<z-m>  0.42101 </z-m>
-		</center>
-	</animation>  
-
-	<effect>
-		<inherits-from>Effects/instruments-2-lights</inherits-from>
-		<object-name>5.Cockpit Panel Main Instruments AI Ball</object-name>
-	</effect>
-
+	<model>
+		<name>5.Cockpit Panel Main Instruments AI Ball Pilot</name>
+		<path>ai_ball_p.xml</path>
+		<offsets>
+			<x-m>-2.81371</x-m>
+			<y-m>0.44067</y-m>
+			<z-m>0.42673</z-m>
+			<pitch-deg>-8.39</pitch-deg>
+		</offsets>
+	</model>
+	<model>
+		<name>5.Cockpit Panel Main Instruments AI Ball CoPilot</name>
+		<path>ai_ball_c.xml</path>
+		<offsets>
+			<x-m>-2.81371</x-m>
+			<y-m>-0.43554</y-m>
+			<z-m>0.42673</z-m>
+			<pitch-deg>-8.39</pitch-deg>
+		</offsets>
+	</model>
 </PropertyList>

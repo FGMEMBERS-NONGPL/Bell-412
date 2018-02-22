@@ -1,0 +1,1299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+# ======================================================================================================
+# Bell412 Electrical Power System Logic
+# 	(for the Flightgear Flight Simulator)
+# ======================================================================================================
+#
+# AUTHOR
+# 	Valery Seys		valery@vslash.com
+#
+# COPYRIGHT
+# 	Valery Seys, Paris /\
+# 	no distribution allowed
+# 	no commercial use
+# 	please contact the author for any use or question, thank you.
+# 	https://sourceforge.net/projects/bell-412/
+#
+# REFS
+# 	Textron BHT-412 Rotorcraft Flight Manual (rev. 9/2002)
+#	Textron 412-MM-VOL12
+# 	Flightgear Wiki: http://wiki.flightgear.org/
+#
+# CHANGELOG
+# 07/2017	: init
+# ======================================================================================================
+-->
+
+<!-- TODO: 
+	FORCE TRIM 28VDC
+	VA CONS
+	bind to limitations.nas
+	N1/N2: frequencies, not powered
+	TORQUE: DC + oil pressure	
+-->
+<!--
+	 * Bell-412-set.xml: 
+	 supplier[0] 	: Battery
+	 supplier[1] 	: External
+	 supplier[2] 	: GEN1
+	 supplier[3] 	: GEN2
+	 bus[0]			: BATBUS
+
+	 bus[0]			: BATBUS
+	 bus[1]			: NONESS
+	 bus[2]			: EMERGENCY
+	 bus[3]			: GEN1RLY
+	 bus[4]			: GEN2RLY
+	 bus[5]			: MAINRLY1
+	 bus[6]			: MAINRLY2
+	 bus[7]			: DCBUS1
+	 bus[8]			: DCBUS2
+	 bus[9]			: ACBUS1
+	 
+	 Rules xx
+	nonesntl automatically powered when both gen activ
+	DC Voltmeter : essentl bus voltage
+	...
+
+ From BHT412-MM Schematics:
+	ESSENTIAL BUS:
+		From B412-FM:
+			Essential engine instruments
+				ENG 1 RPM
+				ITT COMP
+				HYDR 1 TEMP
+				HYDR 1 SYS
+				OIL TEMP
+				FUEL VALVE
+				FUEL BOOST
+				FUEL CONT HTR
+				FUEL CONT
+				ENG 1 FUEL XFEED
+				IDLE STOP
+			Essential navigation instruments
+				HSI,AI-STBY,ALT,AIRSPEED,VSPEED,RADIOALT
+				VHF COM 1
+				AFCS 1
+				CARGO HOOK REL
+				MASTER CAUTION
+				ENG1 FIRE DET
+				MAIN FIRE EXT
+				BAG COMPT FIRE
+				ICS LIGHT (Intercomm System)
+
+ 	NONESNTL BUS :
+ 		WSHLD HEAT LH and RH
+ 		COPLT INSTR LIGHT
+ 		PASSENGER WARNING LIGHT
+ 		PEDESTAL LIGHT
+ 		SECONDARY INSTR LIGHT
+ 		RAD ALTM
+ 		NAV2
+ 		COM2
+ 		LT DOM
+ 		MRKER BEACON
+ 		VENT BLO
+ 		HOIST PWR + CONT
+ 		ANTI COLL
+ 		BAG COMPT
+ 		DME
+ 		WX RDR
+		LDG LT POWER + RETR
+		MAP LT COPLT
+		INST LT SEC
+		PED LT
+		CSL LT
+		POSN LT
+
+	VDC EMERGENCY BUS 1:
+		CARGO HOOK REL
+		MASTER CAUTION
+		ENG1 FIRE DET
+		MAIN FIRE EXT
+		BAG COMPT FIRE
+		ENG 1 RPM
+		HYDR 1 TEMP
+		HYDR 1 SYS
+		IDLE STOP
+		OIL TEMP
+		FUEL VALVE
+		ITT COMP
+		FUEL BOOST
+		FUEL CONT HTR
+		FUEL CONT
+		ENG 1 FUEL XFEED
+	ESSENTIAL INSTRUMENTS:
+		From B412-FM:
+			VHF COM 1
+			AFCS 1
+			ICS LIGHT (Intercomm System)
+			Essential engine instruments
+			Essential navigation instruments
+
+	VDC ESNTL BUS 1
+		ENG 1 RPM
+		HYDR 1 TEMP
+		HYDR 1 SYS
+		FUEL BOOST
+		FUEL CONT HTR
+		ENG 1 XFEED
+		PITOT HTR CPLT
+		ICS CPLT
+		GEN 1 RESET
+		PART SEP
+		ENG 1 START RLY
+		ENG 1 IGN
+
+	VAC BUS 2 115V
+		PILOT HSI
+		PILOT GYRO
+		AFCS 115V 1
+		FLT DIR (FD)
+		PILOT ATTD SYS
+
+	VAC BUS 1 115V 
+		CPLT 115V BUS FEEDER
+		CPLT HSI
+		BUS 1 VM
+
+	VAC BUS 2 26V
+		HYDR PRESS 2
+		ENG 2 FUEL PRESS
+		CBOX OIL PRESS
+		PILOT HSI
+		ENG 2 TORQUE METER
+		ENG 2 OIL PRESS
+		PILOT 26V BUS FEEDER
+
+	VAC BUS 1 26V
+		ENG 1 OIL PRESS
+		ENG 1 TORQUE METER
+		CPLT 26V BUS FEEDER
+		CPLT HSI
+		ENG 1 FUEL PRESS
+		HYDR 1 PRESS
+
+	
+ START PROCEDURE
+ 	BATTERY
+ 		START ENG X
+ 		GEN X ON
+ 		START ENG Y
+ 		GEN Y ON
+ 		BAT BUS 1 SWITCH OFF AUTOMATICALLY, KEEP BUS1 ON, BUS2 OFF
+
+ 	EXTPOWER
+ 		START ENG X
+ 		GEN X,Y : REMAIN OFF
+ 		START ENG Y
+ 		DISCONNECT EXT POWER
+ 		GEN X ON
+ 		GEN Y ON
+ 		BAT BUS 1 SWITCH OFF AUTOMATICALLY
+ 		KEEP BUS1, BUS2 OFFbus[10]		: ACBUS2
+-->
+
+
+<PropertyList>
+	<filter>
+		<name>Battery Voltage</name>
+		<!-- voltage depends on charge, life-factor is computed by Nasal  -->
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<difference>
+					<product>
+						<property>bell412/limits/power_dc_load_nom</property>
+						<property>bell412/electrical/suppliers/supplier[0]/life-factor</property>
+					</product>
+					<property>bell412/electrical/suppliers/supplier[0]/overload</property>
+				</difference>
+			</expression>
+		</input>
+		<output>
+			<property>bell412/electrical/suppliers/supplier[0]/voltage</property>
+		</output>
+	</filter>
+
+	<logic>
+		<name>Battery State</name>
+		<input>
+			<and>
+				<less-than>
+					<property>bell412/electrical/suppliers/supplier[0]/temperature</property>
+					<property>bell412/limits/battery_temp_max</property>
+				</less-than>
+				<greater-than>
+					<property>bell412/electrical/suppliers/supplier[0]/temperature</property>
+					<property>bell412/limits/battery_temp_min</property>
+				</greater-than>
+				<not><property>controls/doors/extpower</property></not>
+				<or>
+					<property>controls/power/switches/bus1</property>
+					<property>controls/power/switches/bus2</property>
+				</or>
+				<!-- <property>controls/consoles/switches/bat1</property> -->
+			</and>
+		</input>
+		<output>
+			<property>bell412/electrical/suppliers/supplier[0]/state</property>
+		</output>
+	</logic>
+
+	<logic>
+		<name>Battery Use</name>
+		<input>
+			<and>
+				<not><property>bell412/electrical/buses/bus[3]/state</property></not>
+				<not><property>bell412/electrical/buses/bus[4]/state</property></not>
+				<or>
+					<property>controls/power/switches/bus1</property>
+					<property>controls/power/switches/bus2</property>
+				</or>
+				<not><property>bell412/electrical/suppliers/supplier[1]/state</property></not>
+			</and>
+		</input>
+		<input type="bool">false</input>
+		<output>
+			<property>bell412/electrical/suppliers/supplier[0]/inuse</property>
+		</output>
+	</logic>
+	
+	<filter>
+		<name>Battery Reload</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<not><property>bell412/electrical/suppliers/supplier[0]/inuse</property></not>
+			</condition>
+			<expression>
+				<max>
+					<property>bell412/electrical/suppliers/supplier[2]/spin-factor</property>
+					<property>bell412/electrical/suppliers/supplier[3]/spin-factor</property>
+				</max>
+			</expression>
+		</input>
+		<input type="float">0.0</input>
+		<output>
+			<property>bell412/electrical/suppliers/supplier[0]/spin-factor</property>
+		</output>
+	</filter>
+
+	<filter>
+		<name>Battery Feedback VA Load</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<!-- 1st emergency load, then fallback to cluster VA -->
+		<input>
+			<condition>
+				<property>bell412/electrical/buses/bus[2]/state</property>
+			</condition>
+			<value type="float">600</value>
+		</input>
+		<input>
+			<condition>
+				<not><property>bell412/electrical/buses/bus[2]/state</property></not>
+			</condition>
+			<expression>
+				<sum>
+					<value type="float">15.0</value> <!-- default load BATBUS -->
+					<product>
+						<property>bell412/electrical/output/cluster[0]/powered</property>
+						<property>bell412/electrical/output/cluster[0]/va</property>
+					</product>
+					<product>
+						<property>bell412/electrical/output/cluster[1]/powered</property>
+						<property>bell412/electrical/output/cluster[1]/va</property>
+					</product>
+					<product>
+						<property>bell412/electrical/output/cluster[2]/powered</property>
+						<property>bell412/electrical/output/cluster[2]/va</property>
+					</product>
+					<product>
+						<property>bell412/electrical/output/cluster[3]/powered</property>
+						<property>bell412/electrical/output/cluster[3]/va</property>
+					</product>
+				</sum>
+			</expression>
+		</input>
+		<output><property>bell412/electrical/suppliers/supplier[0]/load_va</property></output>
+	</filter>
+
+	<logic>
+		<name>External Power State</name>
+		<input>
+			<and>
+				<greater-than>
+					<property>controls/doors/extpower</property>
+					<value>0.1</value>
+				</greater-than>
+				<property>controls/power/switches/bus2</property>
+			</and>
+		</input>
+		<output><property>bell412/electrical/suppliers/supplier[1]/state</property></output>
+	</logic>
+
+	<!-- BATBUS -->
+	<filter>
+		<name>BATBUS Voltage and State</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<!-- 1st is external then fallback to internal -->
+		<input>
+			<condition>
+				<property>bell412/electrical/suppliers/supplier[1]/state</property>
+			</condition>
+			<property>bell412/electrical/suppliers/supplier[1]/voltage</property>
+		</input>
+		<input>
+			<condition>
+				<property>bell412/electrical/suppliers/supplier[0]/state</property>
+			</condition>
+			<property>bell412/electrical/suppliers/supplier[0]/voltage</property>
+		</input>
+		<input><value type="float">0.0</value></input>
+		<output>
+			<property>bell412/electrical/buses/bus[0]/voltage</property>
+			<property>bell412/electrical/buses/bus[0]/state</property>
+		</output>
+	</filter>
+	<!-- EMERGENCY BUS -->
+	<filter>
+		<name>EMERGENCY Voltage and State</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<!-- 1st is external then fallback to internal -->
+		<input>
+			<condition>
+				<and>
+					<property>bell412/electrical/suppliers/supplier[1]/state</property>
+					<property>controls/power/switches/bus2</property>
+					<property>controls/power/switches/emergency</property> <!-- EMERGENCY TO EMER LOAD -->
+				</and>
+			</condition>
+			<property>bell412/electrical/suppliers/supplier[1]/voltage</property>
+		</input>
+		<input>
+			<condition>
+				<and>
+					<property>bell412/electrical/suppliers/supplier[0]/state</property>
+					<property>controls/power/switches/bus1</property>
+					<property>controls/power/switches/emergency</property> <!-- EMERGENCY TO EMER LOAD -->
+				</and>
+			</condition>
+			<property>bell412/electrical/suppliers/supplier[0]/voltage</property>
+		</input>
+		<input><value type="float">0.0</value></input>
+		<output>
+			<property>bell412/electrical/buses/bus[2]/voltage</property>
+			<property>bell412/electrical/buses/bus[2]/state</property>
+		</output>
+	</filter>
+
+	<!-- GENerators -->
+	<!-- GEN1 rpm -->
+	<filter>
+		<name>GEN1</name>
+		<type>gain</type>
+		<gain>
+			<expression>
+				<div>
+					<value type="float">1.0</value>
+					<property>bell412/limits/engine_rpm_n2_max</property>
+				</div>
+			</expression>
+		</gain>
+		<input>bell412/mechanics/engines/engine[0]/rpm</input>
+		<output>bell412/electrical/suppliers/supplier[2]/spin-factor</output>
+	</filter>
+	<!-- GEN1 Voltage -->
+	<filter>
+		<name>GEN1 Voltage</name>
+		<type>gain</type>
+		<gain>bell412/limits/power_dc_load_nom</gain>
+		<input>bell412/electrical/suppliers/supplier[2]/spin-factor</input>
+		<output>bell412/electrical/suppliers/supplier[2]/voltage</output>
+		<output>bell412/electrical/buses/bus[3]/voltage</output>
+	</filter>
+	<!-- GEN1 Amp -->
+	<filter>
+		<name>GEN1 Amp</name>
+		<type>gain</type>
+		<gain>bell412/limits/power_am_load_nom</gain>
+		<input>bell412/electrical/suppliers/supplier[2]/spin-factor</input>
+		<output>bell412/electrical/suppliers/supplier[2]/amp</output>
+	</filter>
+	<!-- GEN1 State -->
+	<logic>
+		<name>GEN1 State</name>
+		<input>
+			<and>
+				<greater-than>
+					<property>bell412/electrical/suppliers/supplier[2]/voltage</property>
+					<property>bell412/limits/power_dc_load_min</property>
+				</greater-than>
+			</and>
+		</input>
+		<output><property>bell412/electrical/suppliers/supplier[2]/state</property></output>
+	</logic>
+	<!-- GEN1RLY State -->
+	<logic>
+		<name>GEN1 RLY State</name>
+		<input>
+			<and>
+				<greater-than>
+					<property>bell412/electrical/buses/bus[3]/voltage</property>
+					<value type="float">1.0</value>
+				</greater-than>
+				<property>controls/power/switches/gen1</property>
+			</and>
+		</input>
+		<output>
+			<property>bell412/electrical/buses/bus[3]/state</property>
+		</output>
+	</logic>
+	<!-- GEN1RLY Amp -->
+	<filter>
+		<name>GEN1 RLY Amp</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<and>
+					<property>bell412/electrical/buses/bus[3]/state</property>
+					<property>controls/power/switches/gen1</property>
+				</and>
+			</condition>
+			<property>bell412/electrical/suppliers/supplier[2]/amp</property>
+		</input>
+		<input><value type="float">0.0</value></input>
+		<output>bell412/electrical/buses/bus[3]/amp</output>
+	</filter>
+	<!-- GEN2 rpm -->
+	<filter>
+		<name>GEN2</name>
+		<type>gain</type>
+		<gain>
+			<expression>
+				<div>
+					<value type="float">1.0</value>
+					<property>bell412/limits/engine_rpm_n2_max</property>
+				</div>
+			</expression>
+		</gain>
+		<input>bell412/mechanics/engines/engine[1]/rpm</input>
+		<output>bell412/electrical/suppliers/supplier[3]/spin-factor</output>
+	</filter>
+	<!-- GEN2 / GEN2RLY Voltage -->
+	<filter>
+		<name>GEN2 Voltage</name>
+		<type>gain</type>
+		<gain>bell412/limits/power_dc_load_nom</gain>
+		<input>bell412/electrical/suppliers/supplier[3]/spin-factor</input>
+		<output>bell412/electrical/suppliers/supplier[3]/voltage</output>
+		<output>bell412/electrical/buses/bus[4]/voltage</output>
+	</filter>
+	<!-- GEN2 Amp -->
+	<filter>
+		<name>GEN2 Amp</name>
+		<type>gain</type>
+		<gain>bell412/limits/power_am_load_nom</gain>
+		<input>bell412/electrical/suppliers/supplier[3]/spin-factor</input>
+		<output>bell412/electrical/suppliers/supplier[3]/amp</output>
+	</filter>
+	<!-- GEN2 State -->
+	<logic>
+		<name>GEN2 State</name>
+		<input>
+			<and>
+				<greater-than>
+					<property>bell412/electrical/suppliers/supplier[3]/voltage</property>
+					<property>bell412/limits/power_dc_load_min</property>
+				</greater-than>
+			</and>
+		</input>
+		<output><property>bell412/electrical/suppliers/supplier[3]/state</property></output>
+	</logic>
+	<!-- GEN2RLY State -->
+	<logic>
+		<name>GEN2 RLY State</name>
+		<input>
+			<and>
+				<greater-than>
+					<property>bell412/electrical/buses/bus[4]/voltage</property>
+					<value type="float">1.0</value>
+				</greater-than>
+				<property>controls/power/switches/gen2</property>
+			</and>
+		</input>
+		<output>
+			<property>bell412/electrical/buses/bus[4]/state</property>
+		</output>
+	</logic>
+	<!-- GEN2RLY Amp -->
+	<filter>
+		<name>GEN2 RLY Amp</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<and>
+					<property>bell412/electrical/buses/bus[4]/state</property>
+					<property>controls/power/switches/gen2</property>
+				</and>
+			</condition>
+			<property>bell412/electrical/suppliers/supplier[3]/amp</property>
+		</input>
+		<input><value type="float">0.0</value></input>
+		<output>bell412/electrical/buses/bus[4]/amp</output>
+	</filter>
+
+	<!-- NONESS BUS -->
+	<filter>
+		<name>NONESS Voltage and State</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<!-- 1st is generator, then external, then fallback to internal -->
+		<input>
+			<condition>
+				<and>
+					<property>controls/power/switches/busne</property> <!-- busne to NORMAL -->
+					<property>bell412/electrical/buses/bus[3]/state</property>
+					<property>bell412/electrical/buses/bus[4]/state</property>
+				</and>
+			</condition>
+			<property>bell412/electrical/buses/bus[3]/voltage</property>
+		</input>
+		<input>
+			<condition>
+				<and>
+					<not><property>controls/power/switches/busne</property></not> <!-- busne to MANUAL -->
+					<property>bell412/electrical/suppliers/supplier[1]/state</property>
+				</and>
+			</condition>
+			<property>bell412/electrical/suppliers/supplier[1]/voltage</property>
+		</input>
+		<input>
+			<condition>
+				<and>
+					<not><property>controls/power/switches/busne</property></not> <!-- busne to MANUAL -->
+					<property>bell412/electrical/suppliers/supplier[0]/state</property>
+				</and>
+			</condition>
+			<property>bell412/electrical/suppliers/supplier[0]/voltage</property>
+		</input>
+		<input><value type="float">0.0</value></input>
+		<output>
+			<property>bell412/electrical/buses/bus[1]/voltage</property>
+			<property>bell412/electrical/buses/bus[1]/state</property>
+		</output>
+	</filter>
+
+	<!-- MAIN RELAY BUSES -->
+	<!-- MAINRLY1 -->
+	<filter>
+		<name>MAINRLY1 Voltage and State</name>
+		<type>noise-spike</type>
+		<max-rate-of-change>10.0</max-rate-of-change>
+		<input> <!-- 1st GENRLY, then fallback to BUSRLY  -->
+			<condition>
+				<property>bell412/electrical/buses/bus[3]/state</property> <!-- GEN RLY Ok -->
+			</condition>
+			<property>bell412/electrical/buses/bus[3]/voltage</property>
+		</input>
+		<input>
+			<condition>
+				<and>
+					<property>controls/power/switches/bus1</property>
+					<property>bell412/electrical/buses/bus[0]/state</property>
+				</and>
+			</condition>
+			<property>bell412/electrical/buses/bus[0]/voltage</property>
+		</input>
+		<input><value type="float">0.0</value></input>
+		<output>
+			<property>bell412/electrical/buses/bus[5]/voltage</property>
+			<property>bell412/electrical/buses/bus[5]/state</property>
+		</output>
+	</filter>
+	<!--
+	<logic>
+		<name>MAINRLY1 State</name>
+		<input>
+			<greater-than>
+				<property>bell412/electrical/buses/bus[5]/voltage</property>
+				<property>bell412/limits/power_dc_load_min</property>
+			</greater-than>
+		</input>
+		<output>
+			<property>bell412/electrical/buses/bus[5]/state</property>
+		</output>
+	</logic>
+	-->
+	<!-- MAINRLY2 -->
+	<filter>
+		<name>MAINRLY2 Voltage and State</name>
+		<type>noise-spike</type>
+		<max-rate-of-change>10.0</max-rate-of-change>
+		<input> <!-- 1st GENRLY, then fallback to BUSRLY  -->
+			<condition>
+				<property>bell412/electrical/buses/bus[4]/state</property> <!-- GEN RLY Ok -->
+			</condition>
+			<property>bell412/electrical/buses/bus[4]/voltage</property>
+		</input>
+		<input>
+			<condition>
+				<and>
+					<property>controls/power/switches/bus2</property>
+					<property>bell412/electrical/buses/bus[0]/state</property>
+				</and>
+			</condition>
+			<property>bell412/electrical/buses/bus[0]/voltage</property>
+		</input>
+		<input><value type="float">0.0</value></input>
+		<output>
+			<property>bell412/electrical/buses/bus[6]/voltage</property>
+			<property>bell412/electrical/buses/bus[6]/state</property>
+		</output>
+	</filter>
+
+	<!-- DC BUSES -->
+	<!-- DCBUS1 -->
+	<filter>
+		<name>DCBUS1 Voltage and State</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input> <!-- 1st EMERGENCY, then fallback to MAINRLY1  -->
+			<condition>
+				<property>bell412/electrical/buses/bus[2]/state</property> <!-- EMERGENCY TO EMER LOAD -->
+			</condition>
+			<property>bell412/electrical/buses/bus[2]/voltage</property>
+		</input>
+		<input>
+			<condition>
+				<property>bell412/electrical/buses/bus[5]/state</property>
+			</condition>
+			<property>bell412/electrical/buses/bus[5]/voltage</property>
+		</input>
+		<input><value type="float">0.0</value></input>
+		<output>
+			<property>bell412/electrical/buses/bus[7]/voltage</property>
+			<property>bell412/electrical/buses/bus[7]/state</property>
+		</output>
+	</filter>
+	<!-- DCBUS2 -->
+	<filter>
+		<name>DCBUS2 Voltage</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input> <!-- 1st EMERGENCY, then fallback to MAINRLY1  -->
+			<condition>
+				<property>bell412/electrical/buses/bus[2]/state</property> <!-- EMERGENCY TO EMER LOAD -->
+			</condition>
+			<property>bell412/electrical/buses/bus[2]/voltage</property>
+		</input>
+		<input>
+			<condition>
+				<property>bell412/electrical/buses/bus[6]/state</property>
+			</condition>
+			<property>bell412/electrical/buses/bus[6]/voltage</property>
+		</input>
+		<input><value type="float">0.0</value></input>
+		<output>
+			<property>bell412/electrical/buses/bus[8]/voltage</property>
+			<property>bell412/electrical/buses/bus[8]/state</property>
+		</output>
+	</filter>
+
+	<!-- AC BUSES -->
+	<!-- ACBUS1 -->
+	<!-- NOTE :
+		 factor = ACNOMINAL / DCNOMINAL
+		 AC = (1/DC_NOMINAL * DCVOLTAGE) * factor
+	-->
+	<filter>
+		<name>ACBUS1 Voltage and State</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<and>
+					<property>bell412/electrical/buses/bus[7]/state</property>
+					<property>controls/power/switches/inv1</property>
+				</and>
+			</condition>
+			<expression>
+				<product>
+					<sqrt>
+						<div>
+							<property>bell412/electrical/buses/bus[7]/voltage</property>
+							<property>bell412/limits/power_dc_load_nom</property>
+						</div>
+					</sqrt>
+					<property>bell412/limits/power_ac_load_nom</property>
+				</product>
+			</expression>
+			<!--
+			<expression>
+				<product>
+					<property>bell412/limits/power_dc_load_nom</property>
+					<value type="float">1.0</value>
+				</product>
+			</expression>
+			-->
+		</input>
+		<input><value type="float">0.0</value></input>
+		<output>
+			<property>bell412/electrical/buses/bus[9]/voltage</property>
+			<property>bell412/electrical/buses/bus[9]/state</property>
+		</output>
+	</filter>
+	<filter>
+		<name>ACBUS2 Voltage and State</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<and>
+					<property>bell412/electrical/buses/bus[8]/state</property>
+					<property>controls/power/switches/inv2</property>
+				</and>
+			</condition>
+			<expression>
+				<product>
+					<sqrt>
+						<div>
+							<property>bell412/electrical/buses/bus[8]/voltage</property>
+							<property>bell412/limits/power_dc_load_nom</property>
+						</div>
+					</sqrt>
+					<property>bell412/limits/power_ac_load_nom</property>
+				</product>
+			</expression>
+		</input>
+		<input><value type="float">0.0</value></input>
+		<output>
+			<property>bell412/electrical/buses/bus[10]/voltage</property>
+			<property>bell412/electrical/buses/bus[10]/state</property>
+		</output>
+	</filter>
+
+	<!-- 
+		 ====================================================================== 
+		 Clusters
+		 ====================================================================== 
+	-->
+	<!-- essdc - both dcbus1 + dcbus2 -->
+	<logic>
+		<name>essdc</name>
+		<input>
+			<and>
+				<or>
+					<property>bell412/electrical/buses/bus[7]/state</property>
+					<property>bell412/electrical/buses/bus[8]/state</property>
+				</or>
+			</and>
+		</input>
+		<output>bell412/electrical/output/cluster[0]/powered</output>
+		<output>instrumentation/ahrs/powered</output>
+		<output>instrumentation/ai-stby/powered</output>
+		<output>instrumentation/magnetic-compass/powered</output>
+		<output>instrumentation/comm[0]/powered</output>
+		<output>instrumentation/nav[0]/powered</output>
+		<output>instrumentation/engine[0]/powered</output>
+		<output>instrumentation/engine[1]/powered</output>
+		<output>instrumentation/rotorgear/powered</output>
+		<output>instrumentation/cautions/powered</output>
+		<output>instrumentation/fuelgauge/powered</output>
+		<output>bell412/electrical/output/engines/igniter[0]</output>
+		<output>bell412/electrical/output/engines/igniter[1]</output>
+	</logic>
+	<!-- hydr -->
+	<logic>
+		<name>essdc - hydr[0]</name>
+		<input>
+			<and>
+				<or>
+					<property>bell412/electrical/output/cluster[0]/powered</property>	<!-- DCESS -->
+					<property>bell412/electrical/output/cluster[3]/powered</property>	<!-- EMERGENCY -->
+				</or>
+				<property>controls/engines/engine[0]/hydr</property>
+			</and>
+		</input>
+		<output>instrumentation/hydr[0]/powered</output>
+	</logic>
+	<logic>
+		<name>essdc - hydr[1]</name>		<!-- TODO hydr[1] is not powered with DCESS -->
+		<input>
+			<and>
+				<property>bell412/electrical/output/cluster[0]/powered</property>
+				<property>controls/engines/engine[1]/hydr</property>
+			</and>
+		</input>
+		<output>instrumentation/hydr[1]/powered</output>
+	</logic>
+	<!-- afcs -->
+	<logic>
+		<name>essdc - afcs[0]</name>
+		<input>
+			<and>
+				<or>
+					<property>bell412/electrical/output/cluster[0]/powered</property>	<!-- DCESS -->
+					<property>bell412/electrical/output/cluster[3]/powered</property>	<!-- EMERGENCY -->
+				</or>
+				<property>controls/flight/afcs/ap1</property>
+			</and>
+		</input>
+		<output>instrumentation/afcs[0]/powered</output>
+	</logic>
+	<logic>
+		<name>essdc - afcs[1]</name>		<!-- TODO AFCS 1 is not powered with DCESS -->
+		<input>
+			<and>
+				<property>bell412/electrical/output/cluster[0]/powered</property>
+				<property>controls/flight/afcs/ap2</property>
+			</and>
+		</input>
+		<output>instrumentation/afcs[1]/powered</output>
+	</logic>
+	<logic>
+		<name>essdc - al300</name>
+		<input>
+			<and>
+				<property>bell412/electrical/output/cluster[0]/powered</property>	<!-- DCESS -->
+				<property>bell412/electrical/output/cluster[3]/powered</property>	<!-- EMERGENCY -->
+			</and>
+		</input>
+		<output>instrumentation/al300/powered</output>
+	</logic>
+	
+	<!-- fuel -->
+	<logic>
+		<name>essdc - fuel trans0</name>
+		<input>
+			<and>
+				<property>bell412/electrical/output/cluster[0]/powered</property>
+				<property>controls/fuel/engine[0]/trans</property>
+			</and>
+		</input>
+		<output>bell412/electrical/output/fuel/trans[0]</output>
+	</logic>
+	<logic>
+		<name>essdc - fuel trans1</name>
+		<input>
+			<and>
+				<property>bell412/electrical/output/cluster[0]/powered</property>
+				<property>controls/fuel/engine[1]/trans</property>
+			</and>
+		</input>
+		<output>bell412/electrical/output/fuel/trans[1]</output>
+	</logic>
+	<logic>
+		<name>essdc - fuel pump0</name>
+		<input>
+			<and>
+				<property>bell412/electrical/output/cluster[0]/powered</property>
+				<property>controls/fuel/engine[0]/pump</property>
+			</and>
+		</input>
+		<output>bell412/electrical/output/fuel/pump[0]</output>
+	</logic>
+	<logic>
+		<name>essdc - fuel pump1</name>
+		<input>
+			<and>
+				<property>bell412/electrical/output/cluster[0]/powered</property>
+				<property>controls/fuel/engine[1]/pump</property>
+			</and>
+		</input>
+		<output>bell412/electrical/output/fuel/pump[1]</output>
+	</logic>
+	<logic>
+		<name>essdc - fuel valve0</name>
+		<input>
+			<and>
+				<property>bell412/electrical/output/cluster[0]/powered</property>
+				<property>controls/fuel/engine[0]/valve</property>
+			</and>
+		</input>
+		<output>bell412/electrical/output/fuel/valve[0]</output>
+	</logic>
+	<logic>
+		<name>essdc - fuel valve1</name>
+		<input>
+			<and>
+				<property>bell412/electrical/output/cluster[0]/powered</property>
+				<property>controls/fuel/engine[1]/valve</property>
+			</and>
+		</input>
+		<output>bell412/electrical/output/fuel/valve[1]</output>
+	</logic>
+	<logic>
+		<name>essdc - fuel intcon</name>
+		<input>
+			<and>
+				<property>bell412/electrical/output/cluster[0]/powered</property>
+				<property>controls/fuel/intcon</property>
+			</and>
+		</input>
+		<output>bell412/electrical/output/fuel/intcon</output>
+	</logic>
+	<logic>
+		<name>essdc - fuel xfeed</name>
+		<input>
+			<and>
+				<property>bell412/electrical/output/cluster[0]/powered</property>
+				<property>controls/fuel/xfeed</property>
+			</and>
+		</input>
+		<output>bell412/electrical/output/fuel/xfeed</output>
+	</logic>
+	<!-- essdc ease --> 
+	<filter>
+		<name>essdc-ease</name>
+		<type>noise-spike</type>
+		<max-rate-of-change>0.5</max-rate-of-change>
+		<input>
+			<condition>
+				<property>bell412/electrical/output/cluster[0]/powered</property>
+			</condition>
+			<value type="float">1.0</value>
+		</input>
+		<input>
+			<value type="float">0.0</value>
+		</input>
+		<u_min>0.0</u_min>
+		<u_max>1.0</u_max>
+		<output>bell412/electrical/output/cluster[0]/ease</output>
+		<output>bell412/electrical/output/lights/cautionlt</output>
+	</filter>
+
+	<filter>
+		<name>essdc-ease pilotlt</name>
+		<type>gain</type>
+		<gain>controls/lighting/switches/pilotlt</gain>
+		<input>
+			<property>bell412/electrical/output/cluster[0]/ease</property>
+		</input>
+		<output>bell412/electrical/output/lights/pilotlt</output>
+	</filter>
+
+	<filter>
+		<name>essdc-ease pedlt</name>
+		<type>gain</type>
+		<gain>controls/lighting/switches/pedlt</gain>
+		<input>
+			<property>bell412/electrical/output/cluster[0]/ease</property>
+		</input>
+		<output>bell412/electrical/output/lights/pedlt</output>
+	</filter>
+
+	<!--
+	<filter>
+		<name>essdc-ease conslt</name>
+		<type>gain</type>
+		<gain><property>controls/lighting/switches/conslt</property></gain>
+		<input>
+			<property>bell412/electrical/output/cluster[0]/ease</property>
+		</input>
+		<output>bell412/electrical/output/lights/conslt</output>
+	</filter>
+	-->
+
+
+	<!-- essac -->
+	<logic>
+		<name>essac</name>
+		<input>
+			<or>
+				<property>bell412/electrical/buses/bus[9]/state</property>
+				<property>bell412/electrical/buses/bus[10]/state</property>
+			</or>
+		</input>
+		<output>bell412/electrical/output/cluster[1]/powered</output>
+		<output>instrumentation/attitude-indicator/powered</output>		
+		<output>instrumentation/heading-indicator/powered</output>		
+		<output>instrumentation/slip-skid-ball/powered</output>			
+		<output>instrumentation/turn-indicator/powered</output>							
+		<output>instrumentation/airspeed-indicator/powered</output>		
+		<output>instrumentation/altimeter/powered</output>				
+		<output>instrumentation/radar-altimeter/powered</output>		
+		<output>instrumentation/vertical-speed-indicator/powered</output>
+		<output>instrumentation/ai/powered</output>
+		<output>instrumentation/hsi/powered</output>
+		<output>instrumentation/cdi/powered</output>
+		<output>instrumentation/transponder/powered</output>
+		<output>instrumentation/dme/powered</output>
+		<output>instrumentation/marker-beacon/powered</output>
+	</logic>
+	<filter>
+		<name>essac-ease</name>
+		<type>noise-spike</type>
+		<max-rate-of-change>0.4</max-rate-of-change>
+		<input>
+			<condition>
+				<property>bell412/electrical/output/cluster[1]/powered</property>
+			</condition>
+			<value type="float">1.0</value>
+		</input>
+		<input>
+			<value type="float">0.0</value>
+		</input>
+		<u_min>0.0</u_min>
+		<u_max>1.0</u_max>
+		<output>bell412/electrical/output/cluster[1]/ease</output>
+		<output>bell412/electrical/output/lights/landing</output>
+	</filter>
+	<logic>
+		<name>essac - beacon</name>
+		<input>
+			<property>/controls/lighting/switches/beacon</property>
+			<property>bell412/electrical/output/cluster[1]/powered</property>
+		</input>
+		<output>bell412/electrical/output/lights/beacon</output>
+	</logic>
+
+	<!-- noness -->
+	<logic>
+		<name>noness</name>
+		<input>
+			<property>bell412/electrical/buses/bus[1]/state</property>
+		</input>
+		<output>bell412/electrical/output/cluster[2]/powered</output>
+		<output>instrumentation/comm[1]/powered</output>
+		<output>instrumentation/nav[1]/powered</output>
+		<output>instrumentation/adf/powered</output>
+		<output>instrumentation/tacan/powered</output>
+		<output>instrumentation/dme/powered</output>
+		<output>instrumentation/marker-beacon/powered</output>
+	</logic>
+	<filter>
+		<name>noness-ease</name>
+		<type>noise-spike</type>
+		<max-rate-of-change>0.5</max-rate-of-change>
+		<input>
+			<condition>
+				<property>bell412/electrical/output/cluster[2]/powered</property>
+			</condition>
+			<value type="float">1.0</value>
+		</input>
+		<input>
+			<value type="float">0.0</value>
+		</input>
+		<u_min>0.0</u_min>
+		<u_max>1.0</u_max>
+		<output>bell412/electrical/output/cluster[2]/ease</output>
+		<output>bell412/electrical/output/lights/utilitylt</output>
+	</filter>
+	<filter>
+		<name>noness-ease conslt</name>
+		<type>gain</type>
+		<gain>controls/lighting/switches/conslt</gain>
+		<input>
+			<property>bell412/electrical/output/cluster[2]/ease</property>
+		</input>
+		<output>bell412/electrical/output/lights/conslt</output>
+	</filter>
+	<filter>
+		<name>noness-ease copilotlt</name>
+		<type>gain</type>
+		<gain>controls/lighting/switches/copilotlt</gain>
+		<input>
+			<property>bell412/electrical/output/cluster[2]/ease</property>
+		</input>
+		<output>bell412/electrical/output/lights/copilotlt</output>
+	</filter>
+	<filter>
+		<name>noness-ease domlt</name>
+		<type>gain</type>
+		<gain>controls/lighting/switches/domlt</gain>
+		<input>
+			<property>bell412/electrical/output/cluster[2]/ease</property>
+		</input>
+		<output>bell412/electrical/output/lights/domlt</output>
+	</filter>
+	<logic>
+		<name>noness - navlight</name>
+		<input>
+			<property>controls/lighting/switches/navlights</property>
+			<property>bell412/electrical/output/cluster[2]/powered</property>
+		</input>
+		<output>bell412/electrical/output/lights/nav</output>
+	</logic>
+	
+	<!-- essac or emergency -->
+	<logic>
+		<name>emergency</name>
+		<input>
+			<or>
+				<property>bell412/electrical/buses/bus[7]/state</property>
+				<property>bell412/electrical/buses/bus[8]/state</property>
+				<property>bell412/electrical/buses/bus[2]/state</property>
+			</or>
+		</input>
+		<output>bell412/electrical/output/cluster[3]/powered</output>
+		<output>instrumentation/magnetic-compass/powered</output>
+		<output>instrumentation/comm[0]/powered</output>
+		<output>instrumentation/nav[0]/powered</output>
+		<output>instrumentation/engine[0]/powered</output>
+		<output>instrumentation/engine[1]/powered</output>
+		<output>instrumentation/rotorgear/powered</output>
+		<!--
+		<output>instrumentation/hydr[0]/powered</output>
+		<output>instrumentation/hydr[1]/powered</output>
+		<output>instrumentation/afcs[0]/powered</output>
+		-->
+		<output>instrumentation/cautions/powered</output>
+		<output>instrumentation/fuelgauge/powered</output>
+		<output>bell412/electrical/output/engines/igniter[0]</output>
+		<output>bell412/electrical/output/engines/igniter[1]</output>
+		<!-- TODO
+		<output>bell412/electrical/output/fuel/pump[0]</output>
+		<output>bell412/electrical/output/fuel/pump[1]</output>
+		<output>bell412/electrical/output/fuel/intcon</output>
+		<output>bell412/electrical/output/fuel/xfeed</output>
+		-->
+		<output>instrumentation/ai/powered</output>
+		<output>instrumentation/hsi/powered</output>
+		<output>instrumentation/transponder/powered</output>
+	</logic>
+	<filter>	<!-- TODO -->
+		<name>emergency-ease</name>
+		<type>noise-spike</type>
+		<max-rate-of-change>0.5</max-rate-of-change>
+		<input>
+			<condition>
+				<property>bell412/electrical/output/cluster[3]/powered</property>
+			</condition>
+			<value type="float">1.0</value>
+		</input>
+		<input>
+			<value type="float">0.0</value>
+		</input>
+		<u_min>0.0</u_min>
+		<u_max>1.0</u_max>
+		<output>bell412/electrical/output/cluster[3]/ease</output>
+		<output>bell412/electrical/output/lights/landing</output>
+		<!-- TODO: conditionnal ease ; currently already monitored by essdc-ease -->
+		<!-- <output>bell412/electrical/output/lights/pilotlt</output> -->
+		<!-- <output>bell412/electrical/output/lights/cautionlt</output> -->
+	</filter>
+
+	<!-- Legacy Electrical Instrumentation (hard coded) -->
+	<filter>
+		<name>essential_legacy</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<property>bell412/electrical/output/cluster[0]/powered</property>
+			</condition>
+			<property>bell412/limits/power_dc_load_nom</property>
+		</input>
+		<output>/systems/electrical/outputs/hsi</output>
+		<output>/systems/electrical/outputs/turn-coordinator</output>
+		<output>/systems/electrical/outputs/nav[0]</output>
+		<output>/systems/electrical/outputs/nav[1]</output>
+		<output>/systems/electrical/outputs/dme</output>
+		<output>/systems/electrical/outputs/transponder</output>
+		<output>/systems/electrical/outputs/gps-mfd</output>
+		<output>/systems/electrical/outputs/gps</output>
+		<output>/systems/electrical/outputs/adf</output>
+		<output>/systems/electrical/outputs/mk-viii</output>
+		<output>/systems/electrical/outputs/tacan</output>
+	</filter>
+</PropertyList>
+
+
+
+	<!-- DATA
+	1. instrumentation													OK	ESS	NONESS		DC/	AC		EMERGENCY
+	<output>instrumentation/attitude-indicator/powered</output>			x	X	-			-	X
+	<output>instrumentation/heading-indicator/powered</output>			x	X	-			-	X
+	<output>instrumentation/slip-skid-ball/powered</output>				x	X	-			-	X
+	<output>instrumentation/turn-indicator/powered</output>				x	X	-			-	X				
+	<output>instrumentation/airspeed-indicator/powered</output>			x	X	-			-	X
+	<output>instrumentation/altimeter/powered</output>					x	X	-			-	X
+	<output>instrumentation/radar-altimeter/powered</output>			x	X	-			-	X
+	<output>instrumentation/vertical-speed-indicator/powered</output>	x	X	-			-	X
+	<output>instrumentation/ahrs/powered</output>						x	X	-			X	-		X
+	<output>instrumentation/ai/powered</output>							x	X	-			-	X		X
+	<output>instrumentation/ai-stby/powered</output>					x	X	-			X	-		X
+	<output>instrumentation/hsi/powered</output>						x	X	-			-	X		X
+	<output>instrumentation/cdi/powered</output>						x	X	-			-	X
+	<output>instrumentation/magnetic-compass/powered</output>			x	X	-			X	-
+	<output>instrumentation/comm[0]/powered</output>					x	X	-			X	-		X
+	<output>instrumentation/comm[1]/powered</output>					x	-	X			-	X		
+	<output>instrumentation/nav[0]/powered</output>						x	X	-			X	-		X
+	<output>instrumentation/nav[1]/powered</output>						x	-	X			-	X
+	<output>instrumentation/adf/powered</output>						x	-	X			-	X		
+	<output>instrumentation/tacan/powered</output>						x	-	X			-	X
+	<output>instrumentation/transponder/powered</output>				x	X	-			-	X		X
+	<output>instrumentation/dme/powered</output>						x	-	X			-	X
+	<output>instrumentation/marker-beacon/powered</output>				x	-	X			-	X
+	<output>instrumentation/engine[0]/powered</output>					x	X	-			X	-		X
+	<output>instrumentation/engine[1]/powered</output>					x	X	-			X	-		X
+	<output>instrumentation/rotorgear/powered</output>					x	X	-			X	-		X
+	<output>instrumentation/hydr[0]/powered</output>					x	X	-			X	-		X
+	<output>instrumentation/hydr[1]/powered</output>					x	X	-			X	-		X
+	<output>instrumentation/afcs[0]/powered</output>					x	X	-			X	-		X
+	<output>instrumentation/afcs[1]/powered</output>					x	X	-			X	-		-
+	<output>instrumentation/cautions/powered</output>					x	X	-			X	-		X
+	<output>instrumentation/fuelgauge/powered</output>					x	X	-			X	-		X
+	2. Mechanics
+	<output>bell412/electrical/output/engines/igniter[0]</output>		x	X	-			X	-		X
+	<output>bell412/electrical/output/engines/igniter[1]</output>		x	X	-			X	-		X
+	<output>bell412/electrical/output/fuel/trans[0]</output>			x	X	-			X	-		X
+	<output>bell412/electrical/output/fuel/trans[1]</output>			x	X	-			X	-		X
+	<output>bell412/electrical/output/fuel/pump[0]</output>				x	X	-			X	-		X
+	<output>bell412/electrical/output/fuel/pump[1]</output>				x	X	-			X	-		X
+	<output>bell412/electrical/output/fuel/valve[0]</output>			x	X	-			X	-		X
+	<output>bell412/electrical/output/fuel/valve[1]</output>			x	X	-			X	-		X
+	<output>bell412/electrical/output/fuel/intcon</output>				x	X	-			X	-		X
+	<output>bell412/electrical/output/fuel/xfeed</output>				x	X	-			X	-		X
+	3. Lights
+	<output>bell412/electrical/output/lights/beacon</output>			x	-	X			-	X		?
+	<output>bell412/electrical/output/lights/nav</output>				x	-	X			-	X		?
+	<output>bell412/electrical/output/lights/landing</output>			x	X	-			-	X		X
+	<output>bell412/electrical/output/lights/conslt</output>			x	-	X			X	-		X
+	<output>bell412/electrical/output/lights/pilotlt</output>			x	X	-			X	-		X
+	<output>bell412/electrical/output/lights/copilotlt</output>			x	-	X			X	-
+	<output>bell412/electrical/output/lights/pedlt</output>				x	X	-			X	-		X
+	<output>bell412/electrical/output/lights/domlt</output>				x	-	X
+	<output>bell412/electrical/output/lights/utilitylt</output>			x	-	X
+	<output>bell412/electrical/output/lights/cautionlt</output>			x	X	-			X	-		X
+	4. Misc
+
+	5. legacy instrumentation coming from Generic/electrical.xml 
+		Some instrumentation needs this (embedded into codes) 
+	<output>/systems/electrical/outputs/avionics-fan</output>			-
+	<output>/systems/electrical/outputs/gps-mfd</output>				-
+	<output>/systems/electrical/outputs/gps</output>					-
+	<output>/systems/electrical/outputs/hsi</output>					-
+	<output>/systems/electrical/outputs/nav[0]</output>					-
+	<output>/systems/electrical/outputs/dme</output>					-
+	<output>/systems/electrical/outputs/audio-panel[0]</output>			-
+	<output>/systems/electrical/outputs/nav[1]</output>					-
+	<output>/systems/electrical/outputs/audio-panel[1]</output>			-
+	<output>/systems/electrical/outputs/transponder</output>			-
+	<output>/systems/electrical/outputs/autopilot</output>				-
+	<output>/systems/electrical/outputs/adf</output>					-
+	<output>/systems/electrical/outputs/mk-viii</output>				-
+	<output>/systems/electrical/outputs/tacan</output>					-
+	<output>/systems/electrical/outputs/starter[0]</output>				-
+	<output>/systems/electrical/outputs/cabin-lights</output>			-
+	<output>/systems/electrical/outputs/instr-ignition-switch</output>	-
+	<output>/systems/electrical/outputs/fuel-pump</output>				-
+	<output>/systems/electrical/outputs/landing-light</output>			-
+	<output>/systems/electrical/outputs/beacon</output>					-
+	<output>/systems/electrical/outputs/flaps</output>					-
+	<output>/systems/electrical/outputs/turn-coordinator</output>		-
+	<output>/systems/electrical/outputs/map-lights</output>				-
+	<output>/systems/electrical/outputs/instrument-lights</output>		-
+	<output>/systems/electrical/outputs/strobe-lights</output>			-
+	<output>/systems/electrical/outputs/taxi-lights</output>			-
+	<output>/systems/electrical/outputs/pitot-heat</output>				-
+	-->

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+# ======================================================================================================
+# Bell412 Hydraulics and AFCS Logic
+# 	(for the Flightgear Flight Simulator)
+# ======================================================================================================
+#
+# AUTHOR
+# 	Valery Seys		valery@vslash.com
+#
+# COPYRIGHT
+# 	Valery Seys, Paris /\
+# 	no distribution allowed
+# 	no commercial use
+# 	please contact the author for any use or question, thank you.
+# 	https://sourceforge.net/projects/bell-412/
+#
+# REFS
+# 	Textron BHT-412 Rotorcraft Flight Manual (rev. 9/2002)
+#	Campbell Heli 212-PTM12 (2013)
+# 	Flightgear Wiki: http://wiki.flightgear.org/
+#	Textron PTM-212 (Campbel 2013)
+#
+# CHANGELOG
+# 10/2017	: init
+# 12/2017	: hydraulics logic
+# 01/2018	: Force trim logic
+# ======================================================================================================
+-->
+
+<PropertyList>
+	<!-- Hydraulics -->
+
+	<!-- Yaw Damper -->
+	<!--
+		11/12/17 16:06 From Slack @itOuchpods (Joshua):
+		I suggest strongly AGAINST adjusting alpha beta gamma, they are not useful in
+		most situations.
+		I find there default values to be sufficient
+		Ts, is the sampling rate of the controller
+		I don't use it, I usually let me controllers sample at FDM rate. (I remove <Ts> completely, and it stays default to FDM rate)
+		The easiest way to tune is start with Kp 0.0, Ti 1000000000, and Td 0.0
+		Then increase Kp until it's stable, but quick enough, there will be steady state error - never mind it
+		Then I decrease Ti, I usually end of using values around 1-15
+		then Td increase a bit to make the reaction less oscilation.
+		but beware - if you overtune any of these three, it will be uncorrectably unstable, and you have to turn down some values.
+		remember that unlike normal PIDs used in most other programs, FG's velocity style PID uses Ti and Td variables, so it's TIME, not a gain, like Kp is.
+		less Ti is more I action
+		more Td is more D action
+
+		Data
+		@100 Kn
+		roll-deg  	yaw-rate	R/Y		comment.
+		2.70		0.72		3.75
+		6.70		1.54		4.35
+		6.73		1.37		4.91
+		15.41		2.93		5.25
+		26.80		5.2			5.15
+		50.53		13.32		3.79	(stall effect)
+
+		Kp		Td		Ti
+		0.14	0.04	3.4
+	-->
+	<filter>
+		<name>Yaw Tgt</name>
+		<type>gain</type>
+		<gain>bell412/afcs/gains/tra/limit-deg</gain>
+		<input>controls/flight/rudder</input>
+		<output>bell412/afcs/gains/tra/target-deg</output>
+	</filter>
+	<filter>
+		<name>Yaw Rate Degps Lowpass</name>
+		<type>exponential</type>
+		<filter-time>0.20</filter-time>
+		<input>orientation/yaw-rate-degps</input>
+		<output>bell412/afcs/gains/tra/yaw-rate-degps-filtered</output>
+	</filter>
+	<pid-controller>
+		<name>Yaw Damper</name>
+		<debug>false</debug>
+		<enable>
+			<condition>
+				<and>
+					<or>
+						<property>instrumentation/afcs[0]/powered</property>
+						<property>instrumentation/afcs[1]/powered</property>
+					</or>
+					<property>controls/flight/afcs/tra</property>
+				</and>
+			</condition>
+		</enable>
+		<input>
+			<property>bell412/afcs/gains/tra/yaw-rate-degps-filtered</property>
+		</input>
+		<reference>
+			<property>bell412/afcs/gains/tra/target-deg</property>
+		</reference>
+		<output>
+			<property>controls/flight/rudder-trim</property>
+			<property>bell412/afcs/output/tra/yaw-trim</property>
+		</output>
+		<config>
+			<Kp>bell412/afcs/gains/tra/kp</Kp>
+			<Ti>bell412/afcs/gains/tra/ti</Ti>
+			<Td>bell412/afcs/gains/tra/td</Td>
+      		<u_min>-1.0</u_min>
+			<u_max>1.0</u_max>
+		</config>
+	</pid-controller>
+	
+	<!-- Governor -->
+	<filter>
+		<name>RPM Gain</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<sum>
+					<property>controls/engines/rpm-gain</property>
+					<property>bell412/limits/rotor_rpm_max</property>
+				</sum>
+			</expression>
+		</input>
+		<output>bell412/mechanics/engines/governor/rpm-target</output>
+	</filter>
+	<filter>
+		<name>RPM Delta</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<difference>
+					<property>rotors/main/rpm</property>
+					<property>bell412/mechanics/engines/governor/rpm-target</property>
+				</difference>
+			</expression>
+		</input>
+		<output>bell412/mechanics/engines/governor/rpm-delta</output>
+	</filter>
+
+	<pid-controller>
+		<name>Governor</name>
+		<debug>false</debug>
+		<enable>
+			<condition>
+				<or>
+					<and>
+						<property>controls/engines/engine[0]/gov</property>
+						<equals>
+							<property>bell412/mechanics/engines/engine[0]/state</property>
+							<value>5</value>
+						</equals>
+					</and>
+					<and>
+						<property>controls/engines/engine[1]/gov</property>
+						<equals>
+							<property>bell412/mechanics/engines/engine[1]/state</property>
+							<value>5</value>
+						</equals>
+					</and>
+				</or>
+			</condition>
+		</enable>
+		<input>
+			<property>bell412/mechanics/engines/governor/rpm-delta</property>
+		</input>
+		<reference>
+			<property>controls/engines/rpm-gain</property>
+		</reference>
+		<output>
+			<property>controls/rotorgear/reltarget-gov</property>
+			<property>bell412/mechanics/engines/governor/gain</property>
+		</output>
+		<config>
+			<Kp>bell412/mechanics/engines/governor/kp</Kp>
+			<Ti>bell412/mechanics/engines/governor/ti</Ti>
+			<Td>bell412/mechanics/engines/governor/td</Td>
+      		<u_min>bell412/mechanics/engines/governor/lo-lim</u_min>
+			<u_max>bell412/mechanics/engines/governor/hi-lim</u_max>
+		</config>
+	</pid-controller>
+	<!--
+		 16/12/17 18:12		TODO : to slow w/ low collectiv + rpm limit due to autorotation
+		 Kp: 0.005
+		 Td: 0.1
+		 Ti: 2.3
+	-->
+
+	<!-- FORCE TRIM -->
+	<logic>
+		<name>FORCE TRIM</name>
+		<input>
+			<and>
+				<property>controls/flight/cyclic/force-trim-cap</property>	<!-- locked -->
+				<not><property>controls/flight/cyclic/force-trim-release</property></not>	<!-- force trim off -->
+			</and>
+		</input>
+		<output>controls/flight/cyclic/force-trim</output>
+	</logic>
+
+	<filter>
+		<name>Rudder Center</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<enable>
+			<condition>
+				<and>
+					<greater-than>
+						<property>controls/flight/rudder</property>
+						<value type="float">-0.01</value>
+					</greater-than>
+					<less-than>
+						<property>controls/flight/rudder</property>
+						<value type="float">0.01</value>
+					</less-than>
+				</and>
+			</condition>
+		</enable>
+		<input>0.0</input>
+		<output>controls/flight/rudder</output>
+	</filter>
+
+</PropertyList>

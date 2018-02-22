@@ -8,7 +8,7 @@
 			<image>../Models/Instruments/instruments-1-lights.png</image>
 		</texture>
 		<lightmap-factor type="float" n="0">
-			<use>/bell412/power/output/consoles/pilotlt</use>
+			<use>bell412/electrical/output/lights/pilotlt</use>
 		</lightmap-factor>
 		<lightmap-color type="vec3d" n="0"> 0.9 1.0 0.8 </lightmap-color>
 		<!-- alpha channel -->

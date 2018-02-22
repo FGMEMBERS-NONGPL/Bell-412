@@ -6,191 +6,204 @@
 # AUTHOR
 # 	Valery Seys		vslash.com
 #
+# COPYRIGHT
+# 	Valery Seys, Paris /\
+# 	no distribution allowed
+# 	no commercial use
+# 	please contact the author for any use or question, thank you.
+# 	https://sourceforge.net/projects/bell-412/
+#
 # REFS
 # 	Textron BHT-412 Rotorcraft Flight Manual (rev. 9/2002)
+# 	Textron Bell 412 Maintenance Manual Vol12 Chapter98
 # 	Flightgear Nasal Wiki: http://wiki.flightgear.org/Category:Nasal
+#	http://www.concordebattery.com/flyerprint.php?id=2
 #
+# NOTE
+# 	The B412 features one amongst 3 different schematics ; 
+# 	the following model rely upon S/N 33001 through 33107
+#	nonesntl automatically powered when both gen activ
+# 	DC Voltmeter : essentl bus voltage
+#
+# DATA
+#	RG-380E/44 Platinum Series Aircraft Battery Specifications:
+#	Primary Aircraft Purpose 	Turbine Starting Aircraft Battery
+#	Voltage 	24v
+#	Rated Capacity C1 = 1 hr. rate in Ampere Hour
+#	rate in ampere hours 	42.00
+#	Max Weight 	86.00 lb / 39.0 kg
+#	Total Capacity in A: 1008 A
+#
+#	IPP	IPR 	IPP	IPR 	IPP	IPR
+#	23°C (74°F) -18°C (0°F) -30°C (-22°F)
+#	A 	 A 		A 	A 		A 	A
+#	1350 1000 	875	750 	750	600
+#
+#	IPP : 	IEC aircraft battery rating (0.3/15s power discharge)
+#	IPR : 	Aircraft battery rating according to IEC (15s power discharge)
+# 
+#	B412 MM VA vs W
+#	P = UI
+#	I(A) = S(VA) / V(V)
+#
+#	BAT LIFE : =[ 1-ABS(LOG(bell412/electrical/suppliers/supplier[x]/charge))^2 ] by +/- temperature_factor
+#
+#	B412 FM : pp86 : 	A fully charged battery provideselectrical power for approximately 30 mn. under normal 
+#						conditions. With EMERG LOAD switch in EMERG LOAD position, provides battery the 90 minutes of
+#						approximately electrical power => ie less instrumentation powered.
+#
+#* Capa @24V
+#1008*24= 24192 W
+#
+#450VA/27V = 16.66 A
+#
+#
+#capacity (in Ah) / load (in A) = battery life (in h)
+#
+#1008 / 17 = 59.9
+#
+#250+120+15 = 385
+#
+#real power P = apparent power S * power factor PF
+#			 = apparent power S * cos(thetA)
+#with PF : [0..1]
+#
+#P(W) 	= S(VA) * PF
+#		= S(VA) * cos theta
+#
+#S(VA) 	= P(W) / PF
+#
+#PF 		= P(W) / |S(VA)|
 # CHANGELOG
 # 06/2016	: init
 # 11/2016	: complete redesign using Nasal OO: event driven, avoid 'if then', remove timer() thread
+# 07/2017	: design according to the real B412 S/N 33001 Busing Schematic
+# 10/2017	: v0.6: new via property rules and nasal
 # ======================================================================================================
-
 # ------------------------------------------------------------------------------------------------------
 # Const
 # TODO: ext temp and OAT battery limits (see 412 manual)
 # ------------------------------------------------------------------------------------------------------
-var DCLOAD_NOMINAL = 27;	# 27V +/- 1 DC BUS
-var ACLOAD_NOMINAL = 115;	# 115V AC BUS
-var ACLOAD_MINIMUM = 104;
-var ACLOAD_MAXIMUM = 122;
-var AMPLOAD_NOMINAL = 60;	# 60A GEN
-var AMPLOAD_MINIMUM = 0;	#
-var AMPLOAD_MAXIMUM = 75;	# 75 to 150 ==> CAUTION
 
+# Capacity vs Ambient Temperature
+var POWER_DATA_TEMP2AMP = [
+			   			[ -30, 0750 ],
+						[ -18, 0875 ],
+						[ 23, 1350 ],
+			    		[ 50, 1380 ],
+];
+var BATTERY_CAPA_AH = props.globals.getNode("/bell412/limits/battery_capa_ah").getValue();
+var DCLOAD_NOMINAL = props.globals.getNode("/bell412/limits/power_dc_load_nom").getValue();
+var ELECTRICAL_SYNC_DT = 2;
 
 # ------------------------------------------------------------------------------------------------------
-# Class
+# Classes
 # ------------------------------------------------------------------------------------------------------
-var Bus = {
-    new: func(busnr) {
-		var m = { parents:[Bus] };
-		var swnr = busnr + 1;
-		# pilot switches ------------------------------------------------------------------------
-		m.sw_power 	= props.globals.getNode("/controls/power/switches/bus"~swnr);
-		m.sw_inverter = props.globals.getNode("/controls/power/switches/inv"~swnr);
-		m.sw_generator= props.globals.getNode("/controls/power/switches/gen"~swnr);
-		# properties ----------------------------------------------------------------------------
-		m.id 		= busnr;
-		m.state  	= props.globals.getNode("/bell412/power/buses/bus["~busnr~"]/state");
-		m.dcload	= props.globals.getNode("/bell412/power/buses/bus["~busnr~"]/dcload");
-		m.acload	= props.globals.getNode("/bell412/power/buses/bus["~busnr~"]/acload");
-		m.ampload	= props.globals.getNode("/bell412/power/buses/bus["~busnr~"]/ampload");
-		
-		print("[Bell-412] + Bus["~busnr~"]: initialized.");
-        return m;
-    },
-	set_load: func(node,v,t) {
-		interpolate(node,v,t);		# t sec to value
-	},
-	
-	check: func() {
-		# bus On/Off
-		print("[Bell-412] > Bus["~me.id~"]: checking.");
-		if ( me.sw_power.getBoolValue() ) {
-			me.state.setBoolValue(1);
-			me.set_load(me.dcload,DCLOAD_NOMINAL,1,1);
-			if ( me.sw_inverter.getBoolValue() )
-				me.set_load(me.acload,ACLOAD_NOMINAL,1);
-			else
-				me.set_load(me.acload, 0,1);
-		} else {
-			me.set_load(me.dcload,0,0.3);
-			me.set_load(me.acload,0,0.3);
-			me.set_load(me.state,0,0.3);
-		}
-	}
-};
-
-# buses instances
-#var Bus0 = Bus.new(0);
-#var Bus1 = Bus.new(1);
 #
-#var Buses = [];
-#append(Buses,Bus0);
-#append(Buses,Bus1);
-#var buses_state = props.globals.getNode("/bell412/power/buses/state");
-
-var PowerSystem = {
+# Electrical System v0.6
+var ElectricalSystem = { 
     new: func() {
-		var m = { parents:[PowerSystem] };
-		m.Buses = [];
-		m.bus0 = Bus.new(0);
-		m.bus1 = Bus.new(1);
-		append(m.Buses,m.bus0);
-		append(m.Buses,m.bus1);
+		var m = { parents:[ElectricalSystem] };
 		
-		# Controls
-		#  lights dimmer
-		m.dimmer_conslt = props.globals.getNode("/controls/lighting/switches/conslt");
-		m.dimmer_pilotlt = props.globals.getNode("/controls/lighting/switches/pilotlt");
-		m.dimmer_pedlt = props.globals.getNode("/controls/lighting/switches/pedlt");
-		#  switches
-		m.sw_console = props.globals.getNode("/controls/consoles/switches/bat1");
-		m.sw_beaconlt= props.globals.getNode("/controls/lighting/switches/beacon");
-		# other
-		m.console_state = props.globals.getNode("/bell412/power/output/consoles/state");
+		# Main Battery
+		m.batinuse = props.globals.getNode("/bell412/electrical/suppliers/supplier[0]/inuse");
+		m.batload = props.globals.getNode("/bell412/electrical/suppliers/supplier[0]/charge");
+		m.batlife = props.globals.getNode("/bell412/electrical/suppliers/supplier[0]/life-factor");
+		m.batspin = props.globals.getNode("/bell412/electrical/suppliers/supplier[0]/spin-factor");
+		m.capa_ah = props.globals.getNode("/bell412/electrical/suppliers/supplier[0]/capacity_ah");
 
-		# Properties
-		m.state		= props.globals.getNode("/bell412/power/buses/state");						# power system state
-		m.charge	= props.globals.getNode("/bell412/power/buses/charge");
-		m.soundstate= props.globals.getNode("/bell412/power/buses/soundstate");
-
-		print("[Bell-412] + PowerSystem: initialized.");
+		#TimerPowerCheck[0].start();
+		print("[Bell-412] + Electrical System: initialized.");
 		return m;
 	},
 
 	printout: func(msg) {
-		print("[Bell-412] > PowerSystem: "~msg);
+		print("[Bell-412] > Electrical System: "~msg);
 	},
 	
 	set_load: func(node,v,t) {
 		interpolate(node,v,t);		# t sec to value
 	},
 
-	buses_check: func(n) {
-		me.Buses[n].check();
-		#settimer(func { buses_update(n) }, 0.5);	# wait Buses[n].state to be set, then update/notify
-		var timer = maketimer(0.5, bell412.Power, func() {
-			me.buses_update(n);
-		});
-		timer.singleShot = 1;
-		timer.start();
-	},
-	
-	buses_update: func(n) {
-		me.state.setBoolValue( me.Buses[0].state.getBoolValue() or me.Buses[1].state.getBoolValue() );
-		var bstate = me.state.getValue();
-		var estate = (bstate and me.Buses[n].sw_inverter.getBoolValue());		# engine AC powered
-		# (un)release power output
-		interpolate(me.soundstate,bstate,(1+bstate));
-		setprop("/bell412/power/output/engines/engine[0]/state",estate);	# engine (un)powered with one inverter ON (VAC)
-		setprop("/bell412/power/output/engines/engine[1]/state",estate);	# engine (un)powered with one inverter ON (VAC)
-		setprop("/bell412/power/output/engines/state",bstate);				# TODO old value
-		setprop("/bell412/power/output/cautions/state",bstate);				# cautions light (un)powered
-		setprop("/bell412/power/output/cautions/test_mode",bstate);			# TODO old value
-		setprop("/bell412/power/output/consoles/state",bstate);				# console instrument (un)powered
-		me.console_check();													# notify
-		iBell412.engines_check();											# notify (Nasal/bell412.nas)
-	},
-	
-	console_check: func() {
-		var cstate = me.console_state.getBoolValue() and me.sw_console.getBoolValue();
-		setprop("/bell412/power/output/consoles/instruments",cstate);
-		setprop("/bell412/power/output/consoles/conslt",cstate * me.dimmer_conslt.getValue());
-		setprop("/bell412/power/output/consoles/pilotlt",cstate * me.dimmer_pilotlt.getValue());
-		setprop("/bell412/power/output/consoles/pedlt",cstate * me.dimmer_pedlt.getValue());
-	},
 
-	# TODO : power management update_charge(), currently only animate during the 1st 3 starting stages
+	#	BAT LIFE : =[ 1-ABS(LOG(bell412/electrical/suppliers/supplier[x]/charge))^2 ] +/- temperature_factor
+	#	Total discharge after 30mn. w/ essential instr. (B412 FM)
+	#	30*60sec = 1800 sec / 5sec = 360.00 ; 1/360 = 0.002777 )
+	#	TODO battery temperature, external temperature discharge factor
+	update_batteryLife: func() {
+		var dt = ELECTRICAL_SYNC_DT - 0.5;
+		var batinuse = me.batinuse.getBoolValue();
+		var currentBatload = me.batload.getValue();
+		#me.printout("DEBUG: currentBatLoad: "~currentBatload);
+		if ( batinuse and currentBatload > 0.1 ) {
+			me.set_load(me.batload, currentBatload - 0.002777, dt);
+			#me.batload.setValue( currentBatload - 0.002777 );								# discharge
+		} else {
+			if ( currentBatload < 1.0 )
+				me.set_load(me.batload, currentBatload + 4*( 0.002777 * me.batspin.getValue() ), dt);
+				#me.batload.setValue( currentBatload + 4*( 0.002777 * me.batspin.getValue() )); 	# charge x4
+		}
+		if ( currentBatload < 0.1 )
+			currentBatload = 0.1;
+		var logBatload = math.log10(math.abs(currentBatload));
+		#me.batlife.setValue(1-math.abs(logBatload*logBatload));
+		me.set_load(me.batlife, 1-math.abs(logBatload*logBatload), dt);
+		#me.capa_ah.setValue(BATTERY_CAPA_AH * me.batlife.getValue());
+		me.set_load(me.capa_ah, BATTERY_CAPA_AH * me.batlife.getValue(), dt);
+	},
+	
+	# TODO : lazy way / power management update_charge(), currently only animate during the 1st 3 starting stages
 	get_startingPower: func() {
 		# if !enoughCharge then return 0
 		# else updateCharge(), animate.
-		interpolate(me.Buses[0].dcload,17,1,22,5.5,DCLOAD_NOMINAL,8);
-		interpolate(me.Buses[1].dcload,17,1,22,5.5,DCLOAD_NOMINAL,8);
-		interpolate(me.Buses[1].acload,120,1,116,5.5,ACLOAD_NOMINAL,8);
+		interpolate("bell412/electrical/suppliers/supplier[0]/overload",4,2,2,5.5,0,8);
+		return 1;
 	},
 	
+	# TODO : old stuff
 	set_allNominal: func(dt) {
-		me.set_load(me.Buses[0].dcload,DCLOAD_NOMINAL,dt);
-		me.set_load(me.Buses[1].dcload,DCLOAD_NOMINAL,dt);
-		me.set_load(me.Buses[0].acload,ACLOAD_NOMINAL,dt);
-		me.set_load(me.Buses[1].acload,ACLOAD_NOMINAL,dt);
+		#me.set_load(me.Buses[0].dcload,DCLOAD_NOMINAL,dt);
+		#me.set_load(me.Buses[1].dcload,DCLOAD_NOMINAL,dt);
+		#me.set_load(me.Buses[0].acload,ACLOAD_NOMINAL,dt);
+		#me.set_load(me.Buses[1].acload,ACLOAD_NOMINAL,dt);
 	}
 };
 
-var Power = PowerSystem.new();
-
-# ------------------------------------------------------------------------------------------------------
-# Globals
-# ------------------------------------------------------------------------------------------------------
-var sw_beaconlt= props.globals.initNode("/controls/lighting/switches/beacon");
-aircraft.light.new("/controls/lighting/beacon-state",[0.10, 1.2], sw_beaconlt);	# beacon flash light
+var Electrical = ElectricalSystem.new();
 
 # ------------------------------------------------------------------------------------------------------
 # Functions or Entry Points
 # ------------------------------------------------------------------------------------------------------
 var buses_check = func(n) {
-	Power.buses_check(n);
+	#Power.buses_check(n);
 }
 
 var buses_update = func(n) {
-	Power.buses_update(n);
+	#Power.buses_update(n);
 }
 
 var console_check = func() {
-	Power.console_check();
+	#Power.console_check();
 }
 
+# ------------------------------------------------------------------------------------------------------
+# timers thread tweaks
+# ------------------------------------------------------------------------------------------------------
+
+
+var electricalUpdateTimer = maketimer(ELECTRICAL_SYNC_DT, bell412, func () {
+	Electrical.update_batteryLife();
+});
+
+var electricalTimers = [];			# started/stoped by the Engines themselves
+append(electricalTimers,electricalUpdateTimer);
+
+
+#setlistener("/bell412/electrical/suppliers/supplier[0]/inuse", func {
+#	print("[Bell-412] ! Electrical System: BAT INUSE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+#});
+
 setlistener("/sim/signals/fdm-initialized", func {
+	electricalTimers[0].start();
 	print("[Bell-412] * Electrical System: ready.");
 });

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<PropertyList>
+	<path>afcs.ac</path>
+	
+	<!-- AP 1 -->
+	<animation>
+		<type>translate</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap1</object-name>
+		<property>controls/flight/afcs/ap1</property>
+		<factor>0.0015</factor>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>-1</z>
+		</axis>
+		<center>
+			<x-m>-2.72499</x-m>
+			<y-m>0.03434</y-m>
+			<z-m>0.1561</z-m>
+		</center>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap1</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/flight/afcs/ap1</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/button</property>
+			</binding>
+			<!--
+			<binding>
+				<command>nasal</command>
+				<script>bell412.console_check();</script>
+			</binding>
+			-->
+		</action>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap1.ON</object-name>
+		<condition>
+			<property>instrumentation/afcs[0]/powered</property>
+		</condition>
+	</animation>
+	
+	<!-- AP 2 -->
+	<animation>
+		<type>translate</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap2</object-name>
+		<property>controls/flight/afcs/ap2</property>
+		<factor>0.0015</factor>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>-1</z>
+		</axis>
+		<center>
+			<x-m>-2.72505</x-m>
+			<y-m>0.05479</y-m>
+			<z-m>0.15612</z-m>
+		</center>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/flight/afcs/ap2</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/button</property>
+			</binding>
+			<!--
+			<binding>
+				<command>nasal</command>
+				<script>bell412.console_check();</script>
+			</binding>
+			-->
+		</action>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap2.ON</object-name>
+		<condition>
+			<property>instrumentation/afcs[1]/powered</property>
+		</condition>
+	</animation>
+	
+	<!-- SAS/ATT Mode Selector -->	
+	<animation>
+		<type>translate</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap SASATT</object-name>
+		<property>controls/flight/afcs/sasatt</property>
+		<factor>0.0015</factor>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>-1</z>
+		</axis>
+		<center>
+			<x-m>-2.70493</x-m>
+			<y-m>0.03449</y-m>
+			<z-m>0.14937</z-m>
+		</center>
+		<interpolation> 
+			<entry>
+				<ind>1</ind>
+				<dep>0.0015</dep>	<!-- sas -->
+			</entry>
+			<entry>
+				<ind>2</ind>
+				<dep>0.0015</dep>	<!-- att -->
+			</entry>		
+		</interpolation>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap SASATT</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/flight/afcs/sasatt</property>
+				<value>1</value>
+				<value>2</value>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/button</property>
+			</binding>
+			<binding>	<!-- fcs/sas -->
+				<command>property-toggle</command>
+				<property>controls/flight/fcs/switches/sas</property>
+				<condition>
+					<equals>
+						<property>controls/flight/afcs/sasatt</property>
+						<value>1</value>
+					</equals>
+				</condition>
+			</binding>
+			<binding>	<!-- fcs/attitude -->
+				<command>property-toggle</command>
+				<property>controls/flight/fcs/switches/attitude-control</property>
+				<condition>
+					<equals>
+						<property>controls/flight/afcs/sasatt</property>
+						<value>2</value>
+					</equals>
+				</condition>
+			</binding>
+			<binding>	<!-- unset attitude -->
+				<command>property-assign</command>
+				<property>controls/flight/fcs/switches/attitude-control</property>
+				<value>0</value>
+				<condition>
+					<or>
+						<equals>
+							<property>controls/flight/afcs/sasatt</property>
+							<value>0</value>
+						</equals>
+						<equals>
+							<property>controls/flight/afcs/sasatt</property>
+							<value>1</value>
+						</equals>
+					</or>
+				</condition>
+			</binding>
+			<binding>	<!-- unset sas -->
+				<command>property-assign</command>
+				<property>controls/flight/fcs/switches/sas</property>
+				<value>0</value>
+				<condition>
+					<or>
+						<equals>
+							<property>controls/flight/afcs/sasatt</property>
+							<value>0</value>
+						</equals>
+						<equals>
+							<property>controls/flight/afcs/sasatt</property>
+							<value>2</value>
+						</equals>
+					</or>
+				</condition>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap SAS.ON</object-name>
+		<condition>
+			<and>
+				<or>
+					<property>instrumentation/afcs[0]/powered</property>
+					<property>instrumentation/afcs[1]/powered</property>
+				</or>
+				<equals>
+					<property>controls/flight/afcs/sasatt</property>
+					<value>1</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap ATT.ON</object-name>
+		<condition>
+			<and>
+				<or>
+					<property>instrumentation/afcs[0]/powered</property>
+					<property>instrumentation/afcs[1]/powered</property>
+				</or>
+				<equals>
+					<property>controls/flight/afcs/sasatt</property>
+					<value>2</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	<!-- YAW TRA -->
+	<animation>
+		<type>translate</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap YAW</object-name>
+		<property>controls/flight/afcs/tra</property>
+		<factor>0.0015</factor>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>-1</z>
+		</axis>
+		<center>
+			<x-m>-2.70456</x-m>
+			<y-m>0.09733</y-m>
+			<z-m>0.14913</z-m>
+		</center>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap YAW</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/flight/afcs/tra</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/button</property>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap YAW.ON</object-name>
+		<condition>
+			<and>
+				<or>
+					<property>instrumentation/afcs[0]/powered</property>
+					<property>instrumentation/afcs[1]/powered</property>
+				</or>
+				<property>controls/flight/afcs/tra</property>
+			</and>
+		</condition>
+	</animation>
+
+	<!-- Rembrandt Transparency -->
+	<effect>
+    	<condition>
+      		<property>sim/rendering/rembrandt/enabled</property>
+    	</condition>
+    	<inherits-from>Effects/model-transparent</inherits-from>
+		<object-name>5.Cockpit Panel Pedestal Control Ap1.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap2.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap SAS.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap ATT.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap YAW.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control TEST.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap CPL.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap HOV.ON</object-name>
+	</effect>
+	
+	<animation>
+		<type>noshadow</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap1.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap2.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap SAS.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap ATT.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap YAW.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control TEST.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap CPL.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap HOV.ON</object-name>
+	</animation>
+
+	<!-- Lighting -->
+	<animation>
+		<type>material</type>
+		<object-name>5.Cockpit Panel Pedestal Control Ap1.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap2.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap SAS.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap ATT.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap YAW.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control TEST.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap CPL.ON</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Ap HOV.ON</object-name>
+		<condition>
+			<or>
+				<property>instrumentation/afcs[0]/powered</property>
+				<property>instrumentation/afcs[1]/powered</property>
+			</or>
+    	</condition>
+		<ambient>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</ambient>
+		<diffuse>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</diffuse>
+		<emission>
+			<red>0.8</red>
+			<green>1.0</green>
+			<blue>0.8</blue>
+		</emission>
+	</animation>
+</PropertyList>

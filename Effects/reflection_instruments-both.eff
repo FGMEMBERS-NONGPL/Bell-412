@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PropertyList>
+	<name>reflection_instruments-both</name>
+	<inherits-from>Effects/model-combined-transparent</inherits-from>
+	<parameters>
+		<reflection-enabled type="int">1</reflection-enabled>
+		<reflection-dynamic type="int">0</reflection-dynamic>
+		<reflect-map-enabled type="int">0</reflect-map-enabled>
+		<reflection-correction type="float">1.00</reflection-correction>
+    	<reflection-fresnel type="float">0.0</reflection-fresnel>
+    	<reflection-rainbow type="float">0.3</reflection-rainbow>
+    	<reflection-noise type="float">0.0</reflection-noise>
+		<texture n="5">
+			<type>cubemap</type>
+			<images>
+				<positive-x>Aircraft/Bell-412/Models/mapblack.png</positive-x>
+				<negative-x>Aircraft/Bell-412/Models/Instruments/Glasses/reflection-instruments-nx.png</negative-x>
+				<positive-y>Aircraft/Bell-412/Models/mapwhite.png</positive-y>
+				<negative-y>Aircraft/Bell-412/Models/mapblack.png</negative-y>
+				<positive-z>Aircraft/Bell-412/Models/mapwhite.png</positive-z>
+				<negative-z>Aircraft/Bell-412/Models/mapblack.png</negative-z>
+			</images>
+		</texture>
+    	<rendering-hint>transparent</rendering-hint>
+		<transparent>true</transparent>
+		<render-bin>
+			<bin-number>11</bin-number>
+			<bin-name>DepthSortedBin</bin-name>
+		</render-bin>
+		<ambient_correction>1.0</ambient_correction>
+	</parameters>
+</PropertyList>

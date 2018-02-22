@@ -1,7 +1,34 @@
 <PropertyList>
+	
+	<!-- 08/09/17 23:37
+		 Shadow on Rembrandt + transparency :
+		 - Main rotor : 2 objects group : one for shadowing, one for transparency
+		 - they use 2 different textures, one w/o alpha, other with alpha
+		 - select group 1 below rpm = X
+		 - select group 2 above rpm = X
+		 - apply transparency on group 2
+	-->
 
 	<path>412-rotors.ac</path>
-	
+	<!-- MP tweaks -->
+	<!--
+	<nasal>
+		<load>
+			##############################################################################
+			# The on-load Nasal is not executed when this file is loaded as the user
+			# aircraft.
+			##############################################################################
+			var rplayer = cmdarg();
+			# Set up property aliases for animations.
+			print("[Bell-412] ! aliasing animation: rotors");
+			rplayer.getNode("rotors/main/rpm", 1).alias(rplayer.getNode("sim/multiplay/generic/float[10]"));
+			rplayer.getNode("rotors/tail/rpm", 1).alias(rplayer.getNode("sim/multiplay/generic/float[11]"));
+			rplayer.getNode("controls/effects/rotor-spin", 1).alias(rplayer.getNode("sim/multiplay/generic/float[12]"));
+			##############################################################################
+		</load>
+	</nasal>
+	-->
+
 	<!-- main rotor -->
 	<animation>
 		<name>blades</name>
@@ -10,7 +37,13 @@
 		<object-name>4.Mechanic Rotor Blade.002</object-name>
 		<object-name>4.Mechanic Rotor Blade.003</object-name>
 	</animation>
-	
+	<animation>
+		<name>blades_x</name>
+		<object-name>4.Mechanic Rotor Blade.005</object-name>
+		<object-name>4.Mechanic Rotor Blade.006</object-name>
+		<object-name>4.Mechanic Rotor Blade.007</object-name>
+		<object-name>4.Mechanic Rotor Blade.008</object-name>
+	</animation>
 	<animation>
 		<name>bladesblur</name>
 		<object-name>4.Mechanic Rotor Blur.000</object-name>
@@ -18,107 +51,76 @@
 		<object-name>4.Mechanic Rotor Blur.002</object-name>
 		<object-name>4.Mechanic Rotor Blur.003</object-name>
 	</animation>
-
 	<!-- tail rotor -->
 	<animation>
 		<name>bladestail</name>
 		<object-name>4.Mechanic Rotor Tail Blade.000</object-name>
 		<object-name>4.Mechanic Rotor Tail Blade.001</object-name>
 	</animation>
-
-	<animation>
-		<name>bladestailblur</name>
-		<object-name>4.Mechanic Rotor Tail Blur</object-name>
-	</animation>
-
-	<animation>
-		<type>noshadow</type>
-		<object-name>bladesblur</object-name>
-		<object-name>bladestailblur</object-name>
-	</animation>
-
+	
 	<!-- Transparency for Rembrandt -->
 	<effect>
 		<inherits-from>Effects/model-transparent</inherits-from>
 		<condition>
 			<property>sim/rendering/rembrandt/enabled</property>
 		</condition>
+		<object-name>4.Mechanic Rotor Blade.005</object-name>
+		<object-name>4.Mechanic Rotor Blade.006</object-name>
+		<object-name>4.Mechanic Rotor Blade.007</object-name>
+		<object-name>4.Mechanic Rotor Blade.008</object-name>
 		<object-name>4.Mechanic Rotor Blur.000</object-name>
-	</effect>
-	<effect>
-		<inherits-from>Effects/model-transparent</inherits-from>
-		<condition>
-			<property>sim/rendering/rembrandt/enabled</property>
-		</condition>
 		<object-name>4.Mechanic Rotor Blur.001</object-name>
-	</effect>
-	<effect>
-		<inherits-from>Effects/model-transparent</inherits-from>
-		<condition>
-			<property>sim/rendering/rembrandt/enabled</property>
-		</condition>
 		<object-name>4.Mechanic Rotor Blur.002</object-name>
-	</effect>
-	<effect>
-		<inherits-from>Effects/model-transparent</inherits-from>
-		<condition>
-			<property>sim/rendering/rembrandt/enabled</property>
-		</condition>
 		<object-name>4.Mechanic Rotor Blur.003</object-name>
-	</effect>
-	<effect>
-		<inherits-from>Effects/model-transparent</inherits-from>
-		<condition>
-			<property>sim/rendering/rembrandt/enabled</property>
-		</condition>
 		<object-name>4.Mechanic Rotor Tail Blur</object-name>
 	</effect>
 
-	<!-- Appearance selection -->
+	<!-- Appearance -->
 	<!-- main rotor -->
 	<animation>
 		<type>select</type>
 		<object-name>blades</object-name>
 		<condition>
 			<less-than>
-				<property>/rotors/main/rpm</property>
-				<value>150</value>
+				<property>sim/multiplay/generic/float[10]</property>
+				<value>55</value>
 			</less-than>
 		</condition>
 	</animation>
-
 	<animation>
 		<type>select</type>
+		<object-name>blades_x</object-name>
 		<object-name>bladesblur</object-name>
 		<condition>
-			<greater-than>
-				<property>/rotors/main/rpm</property>
-				<value>150.01</value>
-			</greater-than>
+			<greater-than-equals>
+				<property>sim/multiplay/generic/float[10]</property>
+				<value>55</value>
+			</greater-than-equals>
 		</condition>
 	</animation>
-
-	<!-- tail rotor -->
 	<animation>
-		<type>select</type>
-		<object-name>bladestail</object-name>
-		<condition>
-			<less-than>
-				<property>/rotors/tail/rpm</property>
-				<value>150</value>
-			</less-than>
-		</condition>
+		<type>material</type> 
+		<object-name>4.Mechanic Rotor Blade.005</object-name>
+		<object-name>4.Mechanic Rotor Blade.006</object-name>
+		<object-name>4.Mechanic Rotor Blade.007</object-name>
+		<object-name>4.Mechanic Rotor Blade.008</object-name>
+		<transparency>
+			<alpha-prop>sim/multiplay/generic/float[10]</alpha-prop>
+			<factor>-0.0050</factor> <!-- 200 rpm = alpha off -->
+			<offset>1.1</offset>
+		</transparency>
 	</animation>
-
 	<animation>
-		<type>select</type>
-		<object-name>bladestailblur</object-name>
-		<condition>
-			<greater-than>
-				<property>/rotors/tail/rpm</property>
-				<value>150.01</value>
-			</greater-than>
-		</condition>
+		<type>material</type> 
+		<object-name>4.Mechanic Rotor Blur.000</object-name>
+		<object-name>4.Mechanic Rotor Blur.001</object-name>
+		<object-name>4.Mechanic Rotor Blur.002</object-name>
+		<object-name>4.Mechanic Rotor Blur.003</object-name>
+		<transparency>
+			<alpha-prop>sim/multiplay/generic/float[10]</alpha-prop>
+			<factor>0.0045</factor>
+			<offset>-0.2</offset>
+		</transparency>
 	</animation>
 
 	<!-- spin animat  -->
@@ -126,22 +128,9 @@
 	<animation>
 		<type>spin</type>
 		<object-name>blades</object-name>
-		<property>/rotors/main/rpm</property>
-		<center>
-			<x-m> 0.08209 </x-m>
-			<y-m> 0.00179 </y-m>
-			<z-m> 0.000 </z-m>
-		</center>
-		<axis>
-			<x> 0 </x>
-			<y> 0 </y>
-			<z> 1 </z>
-		</axis>
-	</animation>
-	<animation>
-		<type>spin</type>
+		<object-name>blades_x</object-name>
 		<object-name>4.Mechanic Rotor Spider</object-name>
-		<property>/rotors/main/rpm</property>
+		<property>sim/multiplay/generic/float[10]</property>
 		<center>
 			<x-m> 0.08209 </x-m>
 			<y-m> 0.00179 </y-m>
@@ -152,12 +141,23 @@
 			<y> 0 </y>
 			<z> 1 </z>
 		</axis>
+		<interpolation> 
+			<entry><ind>0</ind><dep>0</dep></entry>		
+			<entry><ind>50</ind><dep>50</dep></entry>		
+			<entry><ind>75</ind><dep>75</dep></entry>		
+			<entry><ind>100</ind><dep>100</dep></entry>		
+			<entry><ind>125</ind><dep>110</dep></entry>		
+			<entry><ind>150</ind><dep>120</dep></entry>		
+			<entry><ind>200</ind><dep>140</dep></entry>		
+			<entry><ind>250</ind><dep>160</dep></entry>		
+			<entry><ind>300</ind><dep>180</dep></entry>		
+			<entry><ind>324</ind><dep>200</dep></entry>		
+		</interpolation>
 	</animation>
-
 	<animation>
 		<type>spin</type>
 		<object-name>bladesblur</object-name>
-		<property>/rotors/main/rpm</property>
+		<property>sim/multiplay/generic/float[12]</property>
 		<center>
 			<x-m> 0.08209 </x-m>
 			<y-m> 0.00179 </y-m>
@@ -169,27 +169,36 @@
 			<z> 1 </z>
 		</axis>
 	</animation>
-
+	
 	<!-- tail rotor -->
+	<animation>
+		<type>select</type>
+		<object-name>bladestail</object-name>
+		<condition>
+			<less-than>
+				<property>sim/multiplay/generic/float[11]</property>
+				<value>900</value>
+			</less-than>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>4.Mechanic Rotor Tail Blur</object-name>
+		<condition>
+			<greater-than>
+				<property>sim/multiplay/generic/float[11]</property>
+				<value>500</value>
+			</greater-than>
+		</condition>
+	</animation>
+	
 	<animation>
 		<type>spin</type>
 		<object-name>bladestail</object-name>
-		<property>/rotors/tail/rpm</property>
-		<center>
-			<x-m> 8.84416 </x-m>
-			<y-m> 0.4561 </y-m>
-			<z-m> 1.93039 </z-m>
-		</center>
-		<axis>
-			<x> 0 </x>
-			<y> 1 </y>
-			<z> 0 </z>
-		</axis>
-	</animation>
-	<animation>
-		<type>spin</type>
 		<object-name>4.Mechanic Rotor Tail Spider</object-name>
-		<property>/rotors/tail/rpm</property>
+		<property>sim/multiplay/generic/float[11]</property>
+		<factor>0.5</factor>
 		<center>
 			<x-m> 8.84416 </x-m>
 			<y-m> 0.4561 </y-m>
@@ -201,11 +210,17 @@
 			<z> 0 </z>
 		</axis>
 	</animation>
-
 	<animation>
 		<type>spin</type>
-		<object-name>bladestailblur</object-name>
-		<property>/rotors/tail/rpm</property>
+		<object-name>4.Mechanic Rotor Tail Blur</object-name>
+		<property>sim/multiplay/generic/float[11]</property>
+		<factor>0.5</factor>
+		<condition>
+			<less-than>
+				<property>sim/multiplay/generic/float[11]</property>
+				<value>1000</value>
+			</less-than>
+		</condition>
 		<center>
 			<x-m> 8.84416 </x-m>
 			<y-m> 0.4561 </y-m>
@@ -217,7 +232,26 @@
 			<z> 0 </z>
 		</axis>
 	</animation>
-
-	
+	<animation>
+		<type>spin</type>
+		<object-name>4.Mechanic Rotor Tail Blur</object-name>
+		<property>sim/multiplay/generic/float[11]</property>
+		<factor>0.03</factor>
+		<condition>
+			<greater-than-equals>
+				<property>sim/multiplay/generic/float[11]</property>
+				<value>1000</value>
+			</greater-than-equals>
+		</condition>
+		<center>
+			<x-m> 8.84416 </x-m>
+			<y-m> 0.4561 </y-m>
+			<z-m> 1.93039 </z-m>
+		</center>
+		<axis>
+			<x> 0 </x>
+			<y> 1 </y>
+			<z> 0 </z>
+		</axis>
+	</animation>
 </PropertyList>
-

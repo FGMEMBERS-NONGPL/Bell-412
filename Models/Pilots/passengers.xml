@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<PropertyList> 
+	<model>
+		<path>passenger1.xml</path>
+		<name>passenger1</name>
+		<offsets>
+			<x-m>-1.40</x-m>
+			<y-m>+0.40</y-m>
+			<z-m>-0.10</z-m>
+			<heading-deg> 180 </heading-deg>
+		</offsets>
+	</model>
+	<model>
+		<path>passenger1.xml</path>
+		<name>passenger2</name>
+		<offsets>
+			<x-m>-1.40</x-m>
+			<y-m>-0.40</y-m>
+			<z-m>-0.10</z-m>
+			<heading-deg> 180 </heading-deg>
+		</offsets>
+	</model>
+
+	<model>
+		<path>passenger1.xml</path>
+		<name>passenger3</name>
+		<offsets>
+			<x-m>-0.35</x-m>
+			<y-m>+0.93</y-m>
+			<z-m>-0.14</z-m>
+		</offsets>
+	</model>
+	<model>
+		<path>passenger1.xml</path>
+		<name>passenger4</name>
+		<offsets>
+			<x-m>-0.35</x-m>
+			<y-m>-0.93</y-m>
+			<z-m>-0.14</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<path>passenger1.xml</path>
+		<name>passenger5</name>
+		<offsets>
+			<x-m>-0.35</x-m>
+			<y-m>+0.48</y-m>
+			<z-m>-0.14</z-m>
+		</offsets>
+	</model>
+	<model>
+		<path>passenger1.xml</path>
+		<name>passenger6</name>
+		<offsets>
+			<x-m>-0.35</x-m>
+			<y-m>-0.48</y-m>
+			<z-m>-0.14</z-m>
+		</offsets>
+	</model>
+	<model>
+		<path>passenger1.xml</path>
+		<name>passenger7</name>
+		<offsets>
+			<x-m>-0.35</x-m>
+			<y-m>-0.00</y-m>
+			<z-m>-0.14</z-m>
+		</offsets>
+	</model>
+
+	<model> <!-- left back -->
+		<path>passenger2.xml</path>
+		<name>passenger8</name>
+		<offsets>
+			<x-m>+0.21</x-m>
+			<y-m>-0.45</y-m>
+			<z-m>-0.22</z-m>
+			<heading-deg> +90 </heading-deg>
+		</offsets>
+	</model>
+	<model> <!-- right back -->
+		<path>passenger2.xml</path>
+		<name>passenger9</name>
+		<offsets>
+			<x-m>+0.21</x-m>
+			<y-m>+0.45</y-m>
+			<z-m>-0.22</z-m>
+			<heading-deg> -90 </heading-deg>
+		</offsets>
+	</model>
+
+
+
+	<animation> 
+		<type>select</type>
+		<object-name>passenger1</object-name>
+		<condition>
+			<greater-than>
+				<property>sim/weight[2]/weight-lb</property>
+				<value type="float">20</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation> 
+		<type>select</type>
+		<object-name>passenger2</object-name>
+		<condition>
+			<greater-than>
+				<property>sim/weight[3]/weight-lb</property>
+				<value type="float">20</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation> 
+		<type>select</type>
+		<object-name>passenger3</object-name>
+		<condition>
+			<greater-than>
+				<property>sim/weight[6]/weight-lb</property>
+				<value type="float">20</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation> 
+		<type>select</type>
+		<object-name>passenger4</object-name>
+		<condition>
+			<greater-than>
+				<property>sim/weight[7]/weight-lb</property>
+				<value type="float">20</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation> 
+		<type>select</type>
+		<object-name>passenger5</object-name>
+		<condition>
+			<greater-than>
+				<property>sim/weight[8]/weight-lb</property>
+				<value type="float">20</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation> 
+		<type>select</type>
+		<object-name>passenger6</object-name>
+		<condition>
+			<greater-than>
+				<property>sim/weight[9]/weight-lb</property>
+				<value type="float">20</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation> 
+		<type>select</type>
+		<object-name>passenger7</object-name>
+		<condition>
+			<greater-than>
+				<property>sim/weight[10]/weight-lb</property>
+				<value type="float">20</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation> 
+		<type>select</type>
+		<object-name>passenger8</object-name>
+		<condition>
+			<greater-than>
+				<property>sim/weight[11]/weight-lb</property>
+				<value type="float">20</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation> 
+		<type>select</type>
+		<object-name>passenger9</object-name>
+		<condition>
+			<greater-than>
+				<property>sim/weight[12]/weight-lb</property>
+				<value type="float">20</value>
+			</greater-than>
+		</condition>
+	</animation>
+</PropertyList>

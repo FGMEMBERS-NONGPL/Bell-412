@@ -14,17 +14,17 @@
 		</texture>
 
 		<lightmap-factor type="float" n="0">
-			<use>/bell412/power/output/consoles/conslt</use>
+			<use>bell412/electrical/output/lights/conslt</use>
 		</lightmap-factor>
 		<lightmap-color type="vec3d" n="0"> 1.0 0.0 0.0 </lightmap-color>
 
 		<lightmap-factor type="float" n="1">
-			<use>/bell412/power/output/consoles/conslt</use>
+			<use>bell412/electrical/output/lights/conslt</use>
 		</lightmap-factor>
 		<lightmap-color type="vec3d" n="1"> 0.0 1.0 0.0 </lightmap-color>
 		
 		<lightmap-factor type="float" n="2">
-			<use>/bell412/power/output/consoles/conslt</use>
+			<use>bell412/electrical/output/lights/conslt</use>
 		</lightmap-factor>
 		<lightmap-color type="vec3d" n="2"> 0.0 0.0 1.00 </lightmap-color>
 

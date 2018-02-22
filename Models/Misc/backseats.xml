@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<PropertyList> 
+	<path>backseats.ac</path>
+
+<!-- ALS Shadow -->
+	<effect>
+		<inherits-from>Aircraft/Bell-412/Effects/interior-shadow</inherits-from>
+		<object-name>6.Cargo Framework</object-name>
+		<object-name>6.Cargo Seats Back</object-name>
+		<object-name>6.Cargo Seats Back.001</object-name>
+		<object-name>6.Cargo Seats Middle</object-name>
+		<object-name>6.Cargo Seats Middle.001</object-name>
+		<object-name>6.Cargo Seats Front</object-name>
+		<object-name>6.Cargo Seats Supply.000</object-name>
+		<object-name>6.Cargo Seats Supply.001</object-name>
+		<object-name>6.Cargo Seats Supply.002</object-name>
+	</effect>
+
+</PropertyList> 
+

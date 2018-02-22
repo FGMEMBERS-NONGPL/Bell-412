@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<model>
+		<path>Aircraft/Bell-412/Models/Instruments/Indicators/eng_fuel1.xml</path>
+		<name>5.Cockpit Panel Main Instruments FUELQTY Needle 1</name>
+		<offsets>
+			<x-m>-2.81825</x-m>
+			<y-m>0.02655</y-m>
+			<z-m>0.40251</z-m>
+			<pitch-deg>-8.39</pitch-deg>
+		</offsets>
+	</model>
+	<model>
+		<path>Aircraft/Bell-412/Models/Instruments/Indicators/eng_fuel2.xml</path>
+		<name>5.Cockpit Panel Main Instruments FUELQTY Needle 2</name>
+		<offsets>
+			<x-m>-2.81825</x-m>
+			<y-m>0.038540</y-m>
+			<z-m>0.40251</z-m>
+			<pitch-deg>-8.39</pitch-deg>
+		</offsets>
+	</model>
+	<model>
+		<name>5.Cockpit Panel Pedestal Instruments DME</name>
+		<path>Aircraft/Bell-412/Models/Instruments/Controls/fuel_leds.xml</path>
+		<offsets>
+			<x-m>-2.818</x-m>
+			<y-m>0.0432</y-m>
+			<z-m>0.3764</z-m>
+			<pitch-deg>-8.34</pitch-deg>
+		</offsets>
+	</model>
+</PropertyList>

@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<PropertyList> 
+	<path>collectiv-cop.ac</path>
+	<object-name>5.Cockpit Control Collective Copilot</object-name>
+	<object-name>5.Cockpit Control Collective Copilot Throttle1</object-name>
+	<object-name>5.Cockpit Control Collective Copilot Throttle2</object-name>
+	<offsets>
+		<x-m>-2.16877</x-m>
+		<y-m>-0.86757</y-m>
+		<z-m>-0.23747</z-m>
+		<pitch-deg>-47.086</pitch-deg>
+	</offsets>
+	<!-- collectiv -->
+	<animation> 
+		<type>rotate</type>
+		<object-name>5.Cockpit Control Collective Copilot</object-name>
+		<property>controls/engines/engine/throttle</property>
+		<interpolation> 
+			<entry> 
+				<ind>0.0</ind>
+				<dep>-3</dep>
+			</entry>
+			<entry> 
+				<ind>1.0</ind>
+				<dep>14</dep>
+			</entry>
+		</interpolation>
+		<axis> 
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<!-- engine1 throttles -->
+	<animation> 
+		<type>knob</type>
+		<object-name>5.Cockpit Control Collective Copilot Throttle1</object-name>
+		<property>controls/engines/engine[0]/thrust</property>
+        <center>
+            <x-m>0.05438</x-m>
+            <y-m>0.00012</y-m>
+            <z-m>0.4668</z-m>
+		</center>
+		<axis> 
+			<x>0</x>
+			<y>0</y>
+			<z>-1</z>
+		</axis>
+		<interpolation> 
+			<entry> 
+				<ind>0</ind>
+				<dep>0</dep>
+			</entry>
+			<entry> 
+				<ind>100</ind>
+				<dep>360</dep>
+			</entry>
+		</interpolation>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/engines/engine[0]/thrust</property>
+				<factor>5</factor>
+				<min>0</min>
+				<max>100</max>                
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>bell412.display_thrust(0);</script>
+			</binding>
+		</action>
+	</animation>
+	<!-- engine2 throttles -->
+	<animation> 
+		<type>knob</type>
+		<object-name>5.Cockpit Control Collective Copilot Throttle2</object-name>
+		<property>controls/engines/engine[1]/thrust</property>
+        <center>
+            <x-m>0.05398</x-m>
+            <y-m>0.0000042</y-m>
+            <z-m>0.36103</z-m>
+		</center>
+		<axis> 
+			<x>0</x>
+			<y>0</y>
+			<z>-1</z>
+		</axis>
+		<interpolation> 
+			<entry> 
+				<ind>0</ind>
+				<dep>0</dep>
+			</entry>
+			<entry> 
+				<ind>100</ind>
+				<dep>360</dep>
+			</entry>
+		</interpolation>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/engines/engine[1]/thrust</property>
+				<factor>5</factor>
+				<min>0</min>
+				<max>100</max>                
+				<wrap>false</wrap>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>bell412.display_thrust(1);</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<!-- 
+		 Effect 
+	-->
+	<!-- collectiv lighting -->
+	<!--
+	<effect>
+		<inherits-from>Effects/collectiv-lights</inherits-from>
+		<object-name>5.Cockpit Control Collective Pilot</object-name>
+	</effect>
+	-->
+	<!-- Button/Knob Lighting whyte - no texture -->
+	<!--
+	<animation>
+		<object-name>5.Cockpit Panel Collectiv Control Starter</object-name>
+		<object-name>5.Cockpit Panel Collectiv Control Stop</object-name>
+		<object-name>5.Cockpit Panel Collectiv Control Landing Light</object-name>
+		<object-name>5.Cockpit Panel Collectiv Control Landing Light RE</object-name>
+		<type>material</type>
+        <ambient>
+            <red>0.8</red>
+            <green>0.8</green>
+            <blue>0.8</blue>
+        </ambient>
+        <diffuse>
+            <red>0.8</red>
+            <green>0.8</green>
+            <blue>0.8</blue>
+        </diffuse>
+        <emission>
+            <red>0.3</red>
+            <green>0.3</green>
+            <blue>0.3</blue>
+			<factor-prop>/bell412/electrical/output/lights/pilotlt</factor-prop>
+        </emission>
+	</animation>
+	-->
+</PropertyList> 
+

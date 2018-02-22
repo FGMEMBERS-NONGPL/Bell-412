@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<PropertyList>
+	<path>alt.ac</path>
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Main Instruments Alt Needle 100</object-name>
+		<property>instrumentation/altimeter/indicated-altitude-ft</property>
+		<factor>0.36</factor>
+		<axis>
+			<x> -1 </x>
+			<y>  0 </y>
+			<z>  0 </z>
+		</axis>
+	</animation>
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Main Instruments Alt Needle 1000</object-name>
+		<property>instrumentation/altimeter/indicated-altitude-ft</property>
+		<factor>0.036</factor>
+		<axis>
+			<x> -1 </x>
+			<y>  0 </y>
+			<z>  0 </z>
+		</axis>
+	</animation>
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Main Instruments Alt Needle 10000</object-name>
+		<property>instrumentation/altimeter/indicated-altitude-ft</property>
+		<factor>0.0036</factor>
+		<axis>
+			<x> -1 </x>
+			<y>  0 </y>
+			<z>  0 </z>
+		</axis>
+	</animation>
+</PropertyList>

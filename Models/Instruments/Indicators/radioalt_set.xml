@@ -12,7 +12,7 @@
     <animation>
         <type>rotate</type>
         <object-name>5.Cockpit Panel Main Instruments RadioAlt Needdle Set</object-name>
-		<property>controls/instruments/radioalt/set</property>
+		<property>instrumentation/radar-altimeter/dh</property>
         <axis>
             <x>-1</x>
             <y>0</y>
@@ -38,10 +38,7 @@
 		<type>select</type>
 		<object-name>5.Cockpit Panel Main Instruments RadioAlt Needdle Off</object-name>
 		<condition>
-			<equals>
-				<property>controls/instruments/radioalt/set</property>
-				<value>0</value>
-			</equals>
+			<property>instrumentation/radar-altimeter/flag-off</property>
     	</condition>
 	</animation>
 </PropertyList>

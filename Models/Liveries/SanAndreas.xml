@@ -3,9 +3,13 @@
 <sim>
   <model>
     <livery>
-      <name type="string">SanAndreas</name>
+      <name type="string">LA SanAndreas (US)</name>
 	  <texture-fuselage>Liveries/SanAndreas-1.Fuselage-SA.png</texture-fuselage>
 	  <texture-queue>Liveries/SanAndreas-1.FuselageQueue-SA.png</texture-queue>
+	  <texture-blades>Liveries/SanAndreas-Blades.png</texture-blades>
+	  <texture-blades-x>Liveries/SanAndreas-Blades_x.png</texture-blades-x>
+	  <texture-blades-blur>Liveries/SanAndreas-rotors_main_blur.png</texture-blades-blur>
+	  <texture-tail-blur>Liveries/SanAndreas-rotors_tail_blur.png</texture-tail-blur>
 	  <!-- <texture-doorsinside>2.Doors Inside.png</texture-doorsinside> -->
     </livery>
   </model>

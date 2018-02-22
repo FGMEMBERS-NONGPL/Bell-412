@@ -3,16 +3,144 @@
 <PropertyList>
 	<path>controls.ac</path>
 	
+	<!-- 
+		 =============================================================
+		 AFCS Selectors
+		 =============================================================
+	-->
+	<model><path>afcs.xml</path></model>
+	<model><path>ap_ms700.xml</path></model>
+	<!-- AL300 LED and Select -->
+	<model>
+		<name>AP AL300</name>
+		<path>ap_al300.xml</path>
+		<offsets>
+			<x-m>-2.81457</x-m>
+			<y-m>0.23799</y-m>
+			<z-m>0.41066</z-m>
+			<pitch-deg>-8.34</pitch-deg>
+		</offsets>
+	</model>
+
+	<!-- 
+		 =============================================================
+		 Models - NAV / COMM / DME
+		 =============================================================
+	-->
+	<model>
+		<name>5.Cockpit Panel Pedestal Instruments r_nav1</name>
+		<path>r_nav1.xml</path>
+		<offsets>
+			<x-m>-2.58292</x-m>
+			<y-m>-0.1073</y-m>
+			<z-m>0.10916</z-m>
+			<pitch-deg>-71.36</pitch-deg>
+		</offsets>
+	</model>
+	<model>
+		<name>5.Cockpit Panel Pedestal Instruments r_nav2</name>
+		<path>r_nav2.xml</path>
+		<offsets>
+			<x-m>-2.58292</x-m>
+			<y-m>-0.04150</y-m>
+			<z-m>0.10916</z-m>
+			<pitch-deg>-71.36</pitch-deg>
+		</offsets>
+	</model>
+	<model>
+		<name>5.Cockpit Panel Pedestal Instruments r_com1</name>
+		<path>r_com1.xml</path>
+		<offsets>
+			<x-m>-2.66044</x-m>
+			<y-m>-0.1073</y-m>
+			<z-m>0.13530</z-m>
+			<pitch-deg>-71.36</pitch-deg>
+		</offsets>
+	</model>
+	<model>
+		<name>5.Cockpit Panel Pedestal Instruments r_com2</name>
+		<path>r_com2.xml</path>
+		<offsets>
+			<x-m>-2.66044</x-m>
+			<y-m>-0.04135</y-m>
+			<z-m>0.13530</z-m>
+			<pitch-deg>-71.36</pitch-deg>
+		</offsets>
+	</model>
+	<model>
+		<name>5.Cockpit Panel Pedestal Instruments r_adf1</name>
+		<path>r_adf1.xml</path>
+		<offsets>
+			<x-m>-2.50928</x-m>
+			<y-m>-0.1073</y-m>
+			<z-m>0.08431</z-m>
+			<pitch-deg>-71.36</pitch-deg>
+		</offsets>
+	</model>
+	<model>
+		<name>5.Cockpit Panel Pedestal Instruments DME</name>
+		<path>dme.xml</path>
+		<offsets>
+			<x-m>-2.80202</x-m>
+			<y-m>0.32533</y-m>
+			<z-m>0.29166</z-m>
+			<pitch-deg>-8.34</pitch-deg>
+		</offsets>
+	</model>
+	<model>
+		<name>5.Cockpit Panel Instruments Clock Pilot</name>
+		<path>clock.xml</path>
+		<offsets>
+			<x-m>-2.81574</x-m>
+			<y-m>0.67023</y-m>
+			<z-m>0.38061</z-m>
+			<pitch-deg>-8.34</pitch-deg>
+		</offsets>
+	</model>
+	<!-- 
+		 =============================================================
+		 Models - Knobs
+		 =============================================================
+	-->
+	<!-- HSI Course Set -->
+	<model>
+		<name>5.Cockpit Panel Main Control HSI CSet</name>
+		<path>hsi_cset.xml</path>
+		<offsets>
+			<x-m>-2.78211</x-m>
+			<y-m>0.48503</y-m>
+			<z-m>0.26473</z-m>
+			<pitch-deg>-8.39</pitch-deg>
+		</offsets>
+	</model>
+	<!-- HSI Heading Set -->
+	<model>
+		<name>5.Cockpit Panel Main Control HSI HSet</name>
+		<path>hsi_hset.xml</path>
+		<offsets>
+			<x-m>-2.78211</x-m>
+			<y-m>0.39671</y-m>
+			<z-m>0.26473</z-m>
+			<pitch-deg>-8.39</pitch-deg>
+		</offsets>
+	</model>
+	<!-- 
+		 =============================================================
+		 Global Settings Lighting
+		 =============================================================
+	-->
 	<!-- Button/Knob Lighting -->
 	<effect>
-		<inherits-from>Effects/controlsbat-lights</inherits-from>
-		<object-name>5.Cockpit Panel Main Control Bat1</object-name>
+		<inherits-from>Aircraft/Bell-412/Effects/controlsbat-lights</inherits-from>
+		<!--<object-name>5.Cockpit Panel Main Control Bat1</object-name> -->
 		<object-name>5.Cockpit Panel Main Control STBATT</object-name>
 	</effect>
 	<effect>
-		<inherits-from>Effects/controls-lights</inherits-from>
+		<inherits-from>Aircraft/Bell-412/Effects/controls-lights</inherits-from>
 		<object-name>5.Cockpit Panel OH Control Light PilotInstr</object-name>
+		<object-name>5.Cockpit Panel OH Control Light CopInstr</object-name>
 		<object-name>5.Cockpit Panel OH Control Light Console</object-name>
+		<object-name>5.Cockpit Panel OH Control Light Dome</object-name>
 		<object-name>5.Cockpit Panel Main Control AI Left</object-name>
 		<object-name>5.Cockpit Panel Main Control AI Pitch</object-name>
 		<object-name>5.Cockpit Panel Main Control Altimeter</object-name>
@@ -21,10 +149,74 @@
 		<object-name>5.Cockpit Panel Main Control HSI HSet</object-name>
 		<object-name>5.Cockpit Panel Main Control HSI CSet</object-name>
 	</effect>
+	<!-- FG Game Control - headset,DCMaster controls (2 lighting factors) -->
+	<animation>
+		<type>material</type>
+		<condition>
+			<and>
+				<property>controls/sound/headset</property>
+				<property>bell412/electrical/buses/bus[0]/state</property>
+			</and>
+		</condition>
+		<object-name>5.Cockpit Panel Main Controls Headset_p</object-name>
+		<object-name>5.Cockpit Panel Main Controls Headset_c</object-name>
+        <ambient>
+            <red>0.8</red>
+            <green>0.8</green>
+            <blue>0.8</blue>
+        </ambient>
+        <diffuse>
+            <red>0.8</red>
+            <green>0.8</green>
+            <blue>0.8</blue>
+        </diffuse>
+        <emission>
+            <red>1.0</red>
+            <green>0.5</green>
+            <blue>0.5</blue>
+			<factor-prop>controls/sound/headset</factor-prop>
+        </emission>
+	</animation>
+	<animation>
+		<type>material</type>
+		<condition>
+			<property>bell412/electrical/buses/bus[0]/state</property>
+		</condition>
+		<object-name>5.Cockpit Panel Main Controls Headset_p</object-name>
+		<object-name>5.Cockpit Panel Main Controls Headset_c</object-name>
+		<object-name>5.Cockpit Panel Main Controls DualMaster</object-name>
+        <ambient>
+            <red>0.8</red>
+            <green>0.8</green>
+            <blue>0.8</blue>
+        </ambient>
+        <diffuse>
+            <red>0.8</red>
+            <green>0.8</green>
+            <blue>0.8</blue>
+        </diffuse>
+        <emission>
+            <red>0.3</red>
+            <green>0.3</green>
+            <blue>0.3</blue>
+			<factor-prop>bell412/electrical/output/lights/pilotlt</factor-prop>
+        </emission>
+	</animation>
 
 	<!-- Button/Knob Lighting whyte - no texture -->
 	<animation>
 		<type>material</type>
+		<object-name>5.Cockpit Panel OH Control Bus1</object-name>
+		<object-name>5.Cockpit Panel OH Control Bus2</object-name>
+		<object-name>5.Cockpit Panel OH Control BusNE</object-name>
+		<object-name>5.Cockpit Panel OH Control Inv1</object-name>
+		<object-name>5.Cockpit Panel OH Control Inv2</object-name>
+		<object-name>5.Cockpit Panel OH Control Gen1</object-name>
+		<object-name>5.Cockpit Panel OH Control Gen2</object-name>
+		<object-name>5.Cockpit Panel OH Control Beacon</object-name>
+		<object-name>5.Cockpit Panel OH Control Nav</object-name>
+		<object-name>5.Cockpit Panel OH Control EFIS</object-name>
+		<object-name>5.Cockpit Panel OH Control Dome</object-name>
 		<object-name>5.Cockpit Panel Main Cautions Control Test</object-name>
 		<object-name>5.Cockpit Panel Main Cautions Control Reset</object-name>
 		<object-name>5.Cockpit Panel Main Cautions Control Brt</object-name>
@@ -55,7 +247,7 @@
             <red>0.3</red>
             <green>0.3</green>
             <blue>0.3</blue>
-			<factor-prop>/bell412/power/output/consoles/pilotlt</factor-prop>
+			<factor-prop>bell412/electrical/output/lights/pilotlt</factor-prop>
         </emission>
 	</animation>
 	<!-- Button/Knob Lighting red - no texture -->
@@ -77,10 +269,74 @@
             <red>0.3</red>
             <green>0.0</green>
             <blue>0.0</blue>
-			<factor-prop>/bell412/power/output/consoles/pilotlt</factor-prop>
+			<factor-prop>bell412/electrical/output/lights/pilotlt</factor-prop>
         </emission>
 	</animation>
+	<!-- Button that cast console light -->
+	<animation>
+		<type>material</type>
+		<object-name>5.Cockpit Panel Main Control AP ALT</object-name>
+		<object-name>5.Cockpit Panel Main Control AP BC</object-name>
+		<object-name>5.Cockpit Panel Main Control AP GA</object-name>
+		<object-name>5.Cockpit Panel Main Control AP HDG</object-name>
+		<object-name>5.Cockpit Panel Main Control AP IAS</object-name>
+		<object-name>5.Cockpit Panel Main Control AP ILS</object-name>
+		<object-name>5.Cockpit Panel Main Control AP NAV</object-name>
+		<object-name>5.Cockpit Panel Main Control AP STBY</object-name>
+		<object-name>5.Cockpit Panel Main Control AP VOR</object-name>
+		<object-name>5.Cockpit Panel Main Control AP VS</object-name>
+        <emission>
+            <red>0.4</red>
+            <green>0.4</green>
+            <blue>0.4</blue>
+			<factor-prop>bell412/electrical/output/lights/conslt</factor-prop>
+        </emission>
+	</animation>
+	
+	
+	<!-- 
+		=================================================================
+		Shader Effect
+		=================================================================
+	-->
+	<animation>
+		<type>shader</type>
+		<shader>chrome</shader>
+		<texture>transparent.png</texture>
+		<object-name>5.Cockpit Panel OH Control Bus1</object-name>
+		<object-name>5.Cockpit Panel OH Control Bus2</object-name>
+		<object-name>5.Cockpit Panel OH Control BusNE</object-name>
+		<object-name>5.Cockpit Panel OH Control Inv1</object-name>
+		<object-name>5.Cockpit Panel OH Control Inv2</object-name>
+		<object-name>5.Cockpit Panel OH Control Gen1</object-name>
+		<object-name>5.Cockpit Panel OH Control Gen2</object-name>
+		<object-name>5.Cockpit Panel OH Control Beacon</object-name>
+		<object-name>5.Cockpit Panel OH Control Nav</object-name>
+		<object-name>5.Cockpit Panel OH Control EFIS</object-name>
+		<object-name>5.Cockpit Panel OH Control Dome</object-name>
+		<object-name>5.Cockpit Panel Main Cautions Control Test</object-name>
+		<object-name>5.Cockpit Panel Main Cautions Control Reset</object-name>
+		<object-name>5.Cockpit Panel Main Cautions Control Brt</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control IntCon</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Xfeed</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Trans1</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Trans2</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Pump1</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Pump2</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Valve1</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Valve2</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control TestBus</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control PartSep1</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control PartSep2</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Hydr1</object-name>
+		<object-name>5.Cockpit Panel Pedestal Control Hydr2</object-name>
+	</animation>
 
+	<!-- 
+		=================================================================
+		OH Panel
+		=================================================================
+	-->
 	<!-- Beacon -->	
 	<animation>
 		<type>rotate</type>
@@ -107,7 +363,6 @@
 			<z-m>0.99842</z-m>
 		</center>  
 	</animation>
-
 	<animation>
 		<type>pick</type>
 		<object-name>5.Cockpit Panel OH Control Beacon</object-name>
@@ -116,11 +371,11 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>/controls/lighting/switches/beacon</property>
+				<property>controls/lighting/switches/beacon</property>
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 		</action>
 		<!--
@@ -136,7 +391,7 @@
 		-->
 	</animation>
 
-	<!-- Nav -->	
+	<!-- Nav Light Switch -->	
 	<animation>
 		<type>rotate</type>
 		<object-name>5.Cockpit Panel OH Control Nav</object-name>
@@ -162,7 +417,6 @@
 			<z-m>0.99842</z-m>
 		</center>  
 	</animation>
-
 	<animation>
 		<type>pick</type>
 		<object-name>5.Cockpit Panel OH Control Nav</object-name>
@@ -175,7 +429,7 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 		</action>
 		<!--
@@ -191,11 +445,56 @@
 		-->
 	</animation>
 
-	<!-- 
-		=================================================================
-		OH Panel
-		=================================================================
-	-->
+	<!-- Dome Light Switch -->	
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel OH Control Dome</object-name>
+		<property>controls/lighting/switches/domlights</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>	<!-- off -->
+				<dep>0</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>-35</dep>	<!-- whyte lt -->
+			</entry>
+			<entry>
+				<ind>2</ind>
+				<dep>35</dep>	<!-- red lt -->
+			</entry>		
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.41174</x-m>
+			<y-m>-0.06723</y-m>
+			<z-m>0.99872</z-m>
+		</center>  
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel OH Control Dome</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/lighting/switches/domlights</property>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/switch</property>
+			</binding>
+		</action>
+	</animation>
+
 	<!-- bus1 -->
 	<animation>
 		<type>rotate</type>
@@ -234,14 +533,17 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
+			<!--
 			<binding>
 				<command>nasal</command>
 				<script>bell412.buses_check(0);</script>
 			</binding>
+			-->
 		</action>
 	</animation>
+
 	<!-- bus2 -->
 	<animation>
 		<type>rotate</type>
@@ -280,14 +582,66 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
+			<!--
 			<binding>
 				<command>nasal</command>
 				<script>bell412.buses_check(1);</script>
 			</binding>
+			-->
 		</action>
 	</animation>
+
+	<!-- busNE (non essential) -->
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel OH Control BusNE</object-name>
+		<property>controls/power/switches/busne</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>-10</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>35</dep>
+			</entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.35672</x-m>
+			<y-m>0.08575</y-m>
+			<z-m>0.99788</z-m>
+		</center>  
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel OH Control BusNE</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/power/switches/busne</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/switch</property>
+			</binding>
+			<!--
+			<binding>
+				<command>nasal</command>
+				<script>bell412.console_check();</script>
+			</binding>
+			-->
+		</action>
+	</animation>
+
 	<!-- inv1 -->
 	<animation>
 		<type>rotate</type>
@@ -326,14 +680,17 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
+			<!--
 			<binding>
 				<command>nasal</command>
 				<script>bell412.buses_check(0);</script>
 			</binding>
+			-->
 		</action>
 	</animation>
+
 	<!-- inv2 -->
 	<animation>
 		<type>rotate</type>
@@ -372,14 +729,114 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
+			<!--
 			<binding>
 				<command>nasal</command>
 				<script>bell412.buses_check(1);</script>
 			</binding>
+			-->
 		</action>
 	</animation>
+	<!-- Gen1 -->
+	<!-- TODO : model is reversed -->
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel OH Control Gen2</object-name>
+		<property>controls/power/switches/gen1</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>-10</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>35</dep>
+			</entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.40664</x-m>
+			<y-m>0.07087</y-m>
+			<z-m>0.99788</z-m>
+		</center>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel OH Control Gen2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/power/switches/gen1</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/switch</property>
+			</binding>
+			<!--
+			<binding>
+				<command>nasal</command>
+				<script>bell412.buses_check(0);</script>
+			</binding>
+			-->
+		</action>
+	</animation>
+	<!-- Gen2 -->
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel OH Control Gen1</object-name>
+		<property>controls/power/switches/gen2</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>-10</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>35</dep>
+			</entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.40664</x-m>
+			<y-m>0.03997</y-m>
+			<z-m>0.99788</z-m>
+		</center>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel OH Control Gen1</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/power/switches/gen2</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/switch</property>
+			</binding>
+			<!--
+			<binding>
+				<command>nasal</command>
+				<script>bell412.buses_check(0);</script>
+			</binding>
+			-->
+		</action>
+	</animation>
+
 	<!-- knob / dimmer pilotlt  -->
 	<animation>
 		<type>knob</type>
@@ -415,12 +872,59 @@
 				<max>1</max>                
 				<wrap>false</wrap>
 			</binding>
+			<!--
 			<binding>
 				<command>nasal</command>
 				<script>bell412.console_check();</script>
 			</binding>
+			-->
 		</action>
 	</animation>
+
+	<!-- knob / dimmer copilotlt  -->
+	<animation>
+		<type>knob</type>
+		<object-name>5.Cockpit Panel OH Control Light CopInstr</object-name>
+		<property>controls/lighting/switches/copilotlt</property>
+		<!-- <factor>1000</factor> -->
+		<center>
+			<x-m>-2.26212</x-m>
+			<y-m>0.04704</y-m>
+			<z-m>0.99008</z-m>
+		</center>  
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>0</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>250</dep>
+			</entry>
+		</interpolation>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/switches/copilotlt</property>
+				<factor>0.1</factor>
+				<min>0</min>
+				<max>1</max>                
+				<wrap>false</wrap>
+			</binding>
+			<!--
+			<binding>
+				<command>nasal</command>
+				<script>bell412.console_check();</script>
+			</binding>
+			-->
+		</action>
+	</animation>
+
 	<!-- knob / dimmer consolelt  -->
 	<animation>
 		<type>knob</type>
@@ -455,9 +959,48 @@
 				<max>1</max>                
 				<wrap>false</wrap>
 			</binding>
+			<!--
 			<binding>
 				<command>nasal</command>
 				<script>bell412.console_check();</script>
+			</binding>
+			-->
+		</action>
+	</animation>
+
+	<!-- knob / dimmer domlt  -->
+	<animation>
+		<type>knob</type>
+		<object-name>5.Cockpit Panel OH Control Light Dome</object-name>
+		<property>controls/lighting/switches/domlt</property>
+		<center>
+			<x-m>-2.40855</x-m>
+			<y-m>-0.11381</y-m>
+			<z-m>0.98836</z-m>
+		</center>  
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>0</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>250</dep>
+			</entry>
+		</interpolation>
+		<action>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/lighting/switches/domlt</property>
+				<factor>0.1</factor>
+				<min>0</min>
+				<max>1</max>                
+				<wrap>false</wrap>
 			</binding>
 		</action>
 	</animation>
@@ -466,20 +1009,21 @@
 		Console Panel
 		=================================================================
 	-->
-	<!-- console bat1 -->
+	<!-- console bat1 	24/01/18 16:55: v0.9: removed -->
+	<!--
 	<animation>
 		<type>translate</type>
 		<object-name>5.Cockpit Panel Main Control Bat1</object-name>
 		<property>controls/consoles/switches/bat1</property>
-		<factor>0.0035</factor>
+		<factor>0.0010</factor>
 		<axis>
-			<x>-1</x>
+			<x>-1.0</x>
 			<y>0</y>
 			<z>0</z>
 		</axis>
 		<center>
 			<x-m>-2.81704</x-m>
-			<y-m>0.31438</y-m>
+			<y-m>0.29462</y-m>
 			<z-m>0.40542</z-m>
 		</center>
 	</animation>
@@ -495,29 +1039,26 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/button</property>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>bell412.console_check();</script>
+				<property>controls/sound/button</property>
 			</binding>
 		</action>
 	</animation>
+	-->
 	<!-- console bat2 -->
 	<animation>
 		<type>translate</type>
 		<object-name>5.Cockpit Panel Main Control STBATT</object-name>
 		<property>controls/consoles/switches/bat2</property>
-		<factor>0.0035</factor>
+		<factor>0.0010</factor>
 		<axis>
-			<x>-1</x>
+			<x>-1.0</x>
 			<y>0</y>
 			<z>0</z>
 		</axis>
 		<center>
-			<x-m>-2.81704</x-m>
-			<y-m>0.3428</y-m>
-			<z-m>0.40542</z-m>
+			<x-m>-2.83587</x-m>
+			<y-m>0.21824</y-m>
+			<z-m>0.53437</z-m>
 		</center>
 	</animation>
 	<animation>
@@ -532,7 +1073,106 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/button</property>
+				<property>controls/sound/button</property>
+			</binding>
+		</action>
+	</animation>
+	<!-- console headset pilot -->
+	<animation>
+		<type>translate</type>
+		<object-name>5.Cockpit Panel Main Controls Headset_p</object-name>
+		<property>controls/sound/headset</property>
+		<factor>0.0035</factor>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>-1</z>
+		</axis>
+		<center>
+			<x-m>-2.7717</x-m>
+			<y-m>0.27516</y-m>
+			<z-m>0.15458</z-m>
+		</center>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Main Controls Headset_p</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/headset</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/button</property>
+			</binding>
+		</action>
+	</animation>
+	<!-- console DualMaster pilot -->
+	<animation>
+		<type>translate</type>
+		<object-name>5.Cockpit Panel Main Controls DualMaster</object-name>
+		<property>controls/dual-control/flight/master</property>
+		<factor>0.0035</factor>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>-1</z>
+		</axis>
+		<center>
+			<x-m>-2.7717</x-m>
+			<y-m>0.2957</y-m>
+			<z-m>0.15458</z-m>
+		</center>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Main Controls DualMaster</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/dual-control/flight/master</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/button</property>
+			</binding>
+		</action>
+	</animation>
+	<!-- console ai-stby cage -->
+	<animation>
+		<type>translate</type>
+		<object-name>5.Cockpit Panel Main Control STBATT Cage</object-name>
+		<property>instrumentation/ai-stby/caged</property>
+		<factor>-0.0040</factor>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.81825</x-m>
+			<y-m>0.26815</y-m>
+			<z-m>0.44509</z-m>
+		</center>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Main Control STBATT Cage</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>instrumentation/ai-stby/caged</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/button</property>
 			</binding>
 		</action>
 	</animation>
@@ -574,7 +1214,7 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 		</action>
 	</animation>
@@ -587,8 +1227,41 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>bell412/power/output/cautions/alarm</property>
+				<property>bell412/electrical/output/caution/alarm</property>
 				<value>0</value>
+			</binding>
+		</action>
+	</animation>
+	<!-- CAUTION FIRE  -->
+	<animation>
+		<type>translate</type>
+		<object-name>5.Cockpit Panel Main Control Fire Test</object-name>
+		<property>controls/cautions/switches/firetest</property>
+		<factor>0.0010</factor>
+		<axis>
+			<x>-1.0</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.83954</x-m>
+			<y-m>0.04188</y-m>
+			<z-m>0.54462</z-m>
+		</center>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Main Control Fire Test</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/cautions/switches/firetest</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/button</property>
 			</binding>
 		</action>
 	</animation>
@@ -630,6 +1303,43 @@
 			</binding>
 		</action>
 	</animation>
+	<animation>
+		<type>knob</type>
+		<object-name>5.Cockpit Panel Main Control Altimeter_c</object-name>
+		<property>instrumentation/altimeter/setting-inhg</property>
+		<center>
+			<x-m>-2.80949</x-m>
+			<y-m>-0.35368</y-m>
+			<z-m>0.4198</z-m>
+		</center>  
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<action>
+			<button>3</button>
+			<binding>
+				<command>property-adjust</command>
+				<property>instrumentation/altimeter/setting-inhg</property>
+				<factor>0.01</factor>
+				<min>26.0</min>
+				<max>33.0</max>                
+				<wrap>false</wrap>
+			</binding>
+		</action>
+		<action>
+			<button>4</button>
+			<binding>
+				<command>property-adjust</command>
+				<property>instrumentation/altimeter/setting-inhg</property>
+				<factor>-0.01</factor>
+				<min>26.0</min>
+				<max>33.0</max>                
+				<wrap>false</wrap>
+			</binding>
+		</action>
+	</animation>
 	<!-- RALT knob  -->
 	<animation>
 		<type>pick</type>
@@ -639,12 +1349,12 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-assign</command>
-				<property>controls/instruments/radioalt/alarm</property>
+				<property>instrumentation/radar-altimeter/caution</property>
 				<value>0</value>
 			</binding>
 			<binding>
 				<command>property-assign</command>
-				<property>controls/instruments/radioalt/set</property>
+				<property>instrumentation/radar-altimeter/dh</property>
 				<value>0</value>
 			</binding>
 		</action>
@@ -652,7 +1362,7 @@
 	<animation>
 		<type>knob</type>
 		<object-name>5.Cockpit Panel Main Control RALT DH</object-name>
-		<property>controls/instruments/radioalt/set</property>
+		<property>controls/instruments/radar-altimeter/dh</property>
 		<center>
 			<x-m>-2.77884</x-m>
 			<y-m>0.58665</y-m>
@@ -667,7 +1377,44 @@
 			<button>3</button>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/instruments/radioalt/set</property>
+				<property>/instrumentation/radar-altimeter/dh</property>
+				<factor>25</factor>
+				<min>0</min>
+				<max>1500</max>
+				<wrap>false</wrap>
+			</binding>
+		</action>
+		<action>
+			<button>4</button>
+			<binding>
+				<command>property-adjust</command>
+				<property>instrumentation/radar-altimeter/dh</property>
+				<factor>25</factor>
+				<min>0</min>
+				<max>1500</max>                
+				<wrap>false</wrap>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>knob</type>
+		<object-name>5.Cockpit Panel Main Control RALT DH_c</object-name>
+		<property>controls/instruments/radar-altimeter/dh</property>
+		<center>
+			<x-m>-2.7897</x-m>
+			<y-m>-0.52585</y-m>
+			<z-m>0.29171</z-m>
+		</center>  
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<action>
+			<button>3</button>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/instruments/radar-altimeter/dh</property>
 				<factor>25</factor>
 				<min>0</min>
 				<max>1500</max>                
@@ -678,11 +1425,203 @@
 			<button>4</button>
 			<binding>
 				<command>property-adjust</command>
-				<property>controls/instruments/radioalt/set</property>
+				<property>controls/instruments/radar-altimeter/dh</property>
 				<factor>25</factor>
 				<min>0</min>
 				<max>1500</max>                
 				<wrap>false</wrap>
+			</binding>
+		</action>
+	</animation>
+	<!-- FUEL QTY SELECTOR -->
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Main Control FUELQTY Selector</object-name>
+		<property>controls/fuel/qtyselector</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>	<!-- NORMAL -->
+				<dep>0</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>-35</dep>	<!-- FWD -->
+			</entry>
+			<entry>
+				<ind>2</ind>
+				<dep>35</dep>	<!-- MID -->
+			</entry>		
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.81375</x-m>
+			<y-m>-0.03935</y-m>
+			<z-m>0.39444</z-m>
+		</center>  
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Main Control FUELQTY Selector</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/fuel/qtyselector</property>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/switch</property>
+			</binding>
+		</action>
+	</animation>
+	<!-- BRGPTR SELECTOR -->
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Main Control BRGPTR</object-name>
+		<property>controls/instruments/brg-pointer</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>	<!-- NAV1 -->
+				<dep>-20</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>40</dep>	<!-- NAV2 -->
+			</entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.78428</x-m>
+			<y-m>0.46449</y-m>
+			<z-m>0.21197</z-m>
+		</center>  
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Main Control BRGPTR</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/instruments/brg-pointer</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/switch</property>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Main Control BRGPTR_c</object-name>
+		<property>controls/instruments/brg-pointer</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>	<!-- NAV1 -->
+				<dep>-20</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>40</dep>	<!-- NAV2 -->
+			</entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.78611</x-m>
+			<y-m>-0.43474</y-m>
+			<z-m>0.21185</z-m>
+		</center>  
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Main Control BRGPTR_c</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/instruments/brg-pointer</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/switch</property>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Main Cautions MASTER</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/consoles/switches/master-caution</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/button</property>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>5.Cockpit Panel Main Cautions OVERTORQUE</object-name>
+		<property>controls/consoles/switches/torque-caution</property>
+		<factor>0.0005</factor>
+		<axis>
+			<x>-1.0</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.83267</x-m>
+			<y-m>0.00996</y-m>
+			<z-m>0.51857</z-m>
+		</center>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Main Cautions OVERTORQUE</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/consoles/switches/torque-caution</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/button</property>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Main Texts Callsign</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>bell412.immat_dialog.toggle()</script>
 			</binding>
 		</action>
 	</animation>
@@ -729,7 +1668,11 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>bell412.iBell412.check_fuel(2);</script>
 			</binding>
 		</action>
 	</animation>
@@ -771,7 +1714,11 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>bell412.iBell412.check_fuel(2);</script>
 			</binding>
 		</action>
 	</animation>
@@ -813,11 +1760,11 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>bell412.iBell412.check_fuelpress(0);</script>
+				<script>bell412.iBell412.check_fuel(0);</script>
 			</binding>
 		</action>
 	</animation>
@@ -859,11 +1806,11 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>bell412.iBell412.check_fuelpress(0);</script>
+				<script>bell412.iBell412.check_fuel(0);</script>
 			</binding>
 		</action>
 	</animation>
@@ -905,11 +1852,11 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>bell412.iBell412.check_fuelpress(0);</script>
+				<script>bell412.iBell412.check_fuel(0);</script>
 				<!--
 				<script><![CDATA[
 					var state = props.globals.getNode("controls/fuel/engine[0]/valve").getBoolValue();
@@ -957,7 +1904,7 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 		</action>
 	</animation>
@@ -999,7 +1946,7 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 		</action>
 	</animation>
@@ -1041,7 +1988,7 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1087,11 +2034,11 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>bell412.iBell412.check_fuelpress(1);</script>
+				<script>bell412.iBell412.check_fuel(1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1133,11 +2080,11 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>bell412.iBell412.check_fuelpress(1);</script>
+				<script>bell412.iBell412.check_fuel(1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1179,11 +2126,11 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
-				<script>bell412.iBell412.check_fuelpress(1);</script>
+				<script>bell412.iBell412.check_fuel(1);</script>
 			</binding>
 		</action>
 	</animation>
@@ -1225,7 +2172,7 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 		</action>
 	</animation>
@@ -1267,7 +2214,7 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 		</action>
 	</animation>
@@ -1309,7 +2256,7 @@
 			</binding>
 			<binding>
 				<command>property-toggle</command>
-				<property>/sim/sound/switch</property>
+				<property>controls/sound/switch</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -1317,4 +2264,217 @@
 			</binding>
 		</action>
 	</animation>
+	<!-- AHRS 0 MAG/DG / default "true"=MAG -->
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Pedestal Control AHRS Mag0</object-name>
+		<property>instrumentation/ahrs/magdg-switch</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>50</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>0</dep>
+			</entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.37925</x-m>
+			<y-m>-0.11321</y-m>
+			<z-m>0.03525</z-m>
+		</center>  
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Pedestal Control AHRS Mag0</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>instrumentation/ahrs/magdg-switch</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/switch</property>
+			</binding>
+		</action>
+	</animation>
+	<!-- AHRS 1 MAG/DG / default "true"=MAG -->
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Pedestal Control AHRS Mag1</object-name>
+		<property>instrumentation/ahrs/magdg-switch</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>50</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>0</dep>
+			</entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.37925</x-m>
+			<y-m>0.03665</y-m>
+			<z-m>0.03525</z-m>
+		</center>  
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Pedestal Control AHRS Mag1</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>instrumentation/ahrs/magdg-switch</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/switch</property>
+			</binding>
+		</action>
+	</animation>
+	<!-- AHRS 0+1 Gain -->
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Pedestal Control AHRS Gain</object-name>
+		<property>instrumentation/ahrs/dg-variation-switch</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>	<!-- off -->
+				<dep>0</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>-35</dep>	<!-- + -->
+			</entry>
+			<entry>
+				<ind>2</ind>
+				<dep>35</dep>	<!-- 0 -->
+			</entry>		
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.38268</x-m>
+			<y-m>-0.11196</y-m>
+			<z-m>0.03662</z-m>
+		</center>  
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Pedestal Control AHRS Gain</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>true</repeatable>
+			<interval-sec>0.25</interval-sec>
+			<binding>
+				<command>property-adjust</command>
+				<property>instrumentation/ahrs/dg-variation-deg</property>
+				<step>-1</step>
+				<min>-180</min>
+				<max>180</max>
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>instrumentation/ahrs/dg-variation-switch</property>
+				<value>1</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>instrumentation/ahrs/dg-variation-switch</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+		<action>
+			<button>1</button>
+			<repeatable>true</repeatable>
+			<interval-sec>0.25</interval-sec>
+			<binding>
+				<command>property-adjust</command>
+				<property>instrumentation/ahrs/dg-variation-deg</property>
+				<step>1</step>
+				<min>-180</min>
+				<max>180</max>
+				<wrap>true</wrap>
+			</binding>
+			<binding>
+				<command>property-assign</command>
+				<property>instrumentation/ahrs/dg-variation-switch</property>
+				<value>2</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>instrumentation/ahrs/dg-variation-switch</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+	</animation>
+
+	<!-- Force Trim -->
+	<!-- Safe Cap -->
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Pedestal Control FTrimCap</object-name>
+		<property>controls/flight/cyclic/force-trim-cap</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>50</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>0</dep>
+			</entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-2.64533</x-m>
+			<y-m>0.10284</y-m>
+			<z-m>0.1266</z-m>
+		</center>  
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Pedestal Control FTrimCap</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/flight/cyclic/force-trim-cap</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/switch</property>
+			</binding>
+		</action>
+	</animation>
 </PropertyList>
+

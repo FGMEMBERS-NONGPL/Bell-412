@@ -4,7 +4,8 @@
 	<animation> 
 		<type>rotate</type>
 		<object-name>5.Cockpit Control Cyclic Copilot</object-name>
-		<property>controls/flight/elevator</property>
+		<!-- <property>controls/flight/elevator</property> -->
+		<property>controls/flight/servos/pitch</property>
 		<interpolation> 
 			<entry> 
 				<ind>-1.0</ind>
@@ -33,7 +34,8 @@
 	<animation> 
 		<type>rotate</type>
 		<object-name>5.Cockpit Control Cyclic Copilot</object-name>
-		<property>controls/flight/aileron</property>
+		<!-- <property>controls/flight/aileron</property>-->
+		<property>controls/flight/servos/roll</property>
 		<interpolation> 
 			<entry> 
 				<ind>-1.0</ind>

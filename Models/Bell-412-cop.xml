@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<PropertyList>
+	<path>412-cop.ac</path>
+	<nasal>
+		<load>
+			cmdarg().getNode("sim/model/ac-type", 1).setValue("Bell-412-cop");
+		</load>
+		<unload>
+			cmdarg().getNode("sim/model/ac-type", 1).setValue("");
+		</unload>
+	</nasal>
+</PropertyList>

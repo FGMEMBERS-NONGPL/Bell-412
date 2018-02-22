@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<PropertyList>
+	<path>ap_ms700.ac</path>
+	
+	<!-- STBY -->
+	<animation>
+		<type>translate</type>
+		<object-name>5.Cockpit Panel Main Control AP STBY</object-name>
+		<property>controls/flight/ap/stby</property>
+		<factor>0.0010</factor>
+		<axis>
+			<x>-1.0</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>0.00049</x-m>
+			<y-m>0.00131</y-m>
+			<z-m>-0.00118</z-m>
+		</center>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Main Control AP STBY</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/flight/ap/stby</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/button</property>
+			</binding>
+		</action>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>5.Cockpit Panel Main Control AP STBY.ON</object-name>
+		<condition>
+			<and>
+				<property>instrumentation/afcs[0]/powered</property>
+				<property>controls/flight/ap/stby</property>
+			</and>
+		</condition>
+	</animation>
+	
+	<!-- Rembrandt Transparency -->
+	<effect>
+    	<condition>
+      		<property>sim/rendering/rembrandt/enabled</property>
+    	</condition>
+    	<inherits-from>Effects/model-transparent</inherits-from>
+		<object-name>5.Cockpit Panel Main Control AP STBY.ON</object-name>
+	</effect>
+	
+	<animation>
+		<type>noshadow</type>
+		<object-name>5.Cockpit Panel Main Control AP STBY.ON</object-name>
+	</animation>
+
+	<!-- Lighting -->
+	<animation>
+		<type>material</type>
+		<object-name>5.Cockpit Panel Main Control AP STBY.ON</object-name>
+		<condition>
+			<or>
+				<property>instrumentation/afcs[0]/powered</property>
+				<property>instrumentation/afcs[1]/powered</property>
+			</or>
+    	</condition>
+		<ambient>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</ambient>
+		<diffuse>
+			<red>0.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+		</diffuse>
+		<emission>
+			<red>0.8</red>
+			<green>1.0</green>
+			<blue>0.8</blue>
+		</emission>
+	</animation>
+</PropertyList>

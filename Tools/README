@@ -1,0 +1,4 @@
+PT6T:
+	- Processing 1.5 sketch ; I don't try it with last Processing.org engine,
+	  so if something goes wrong, launch the sketch with Processing-1.5.
+	  all libraries included in the code/ folder.

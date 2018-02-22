@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<PropertyList>
+	<path>switch_generic.ac</path>
+	<animation>
+		<type>rotate</type>
+		<object-name>5.Cockpit Panel Switch Generic</object-name>
+		<property>controls/power/switches/bus1</property>
+		<interpolation> 
+			<entry>
+				<ind>0</ind>
+				<dep>-10</dep>
+			</entry>		
+			<entry>
+				<ind>1</ind>
+				<dep>35</dep>
+			</entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<!--
+		<center>
+			<x-m>-2.4077</x-m>
+			<y-m>0.10616</y-m>
+			<z-m>0.99788</z-m>
+		</center>  
+		-->
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>5.Cockpit Panel Switch Generic</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/power/switches/bus1</property>
+			</binding>
+			<binding>
+				<command>property-toggle</command>
+				<property>controls/sound/switch</property>
+			</binding>
+			<!--
+			<binding>
+				<command>nasal</command>
+				<script>bell412.buses_check(0);</script>
+			</binding>
+			-->
+		</action>
+	</animation>
+</PropertyList>

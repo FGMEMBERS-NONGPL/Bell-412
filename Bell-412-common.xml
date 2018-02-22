@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+# ======================================================================================================
+# Bell-412 Common Pilot / Copilot Properties 
+# 	(for the Flightgear Flight Simulator)
+# ======================================================================================================
+#
+# AUTHOR
+# 	Valery Seys		valery@vslash.com
+#
+# COPYRIGHT
+# 	Valery Seys, Paris /\
+# 	no distribution allowed
+# 	no commercial use
+# 	please contact the author for any use or question, thank you.
+# 	https://sourceforge.net/projects/bell-412/
+#
+# REFS
+# 	Flightgear Wiki: http://wiki.flightgear.org/
+#
+# CHANGELOG
+# 09/2017	: init
+# ======================================================================================================
+-->
+<PropertyList>
+	<sim>
+		<long-description>The Bell-412 is a 14 seats, twin-engine rotorcraft.
+			check for the last version at https://sourceforge.net/projects/bell-412/
+		</long-description>
+		<author>Valery Seys - Paris /\</author>
+		<status>in_progress</status>
+        <aircraft-version>0.9.1</aircraft-version>
+    	<license>notfree</license>
+        <rating>
+            <FDM type="int">4</FDM>
+            <systems type="int">4</systems>
+            <model type="int">5</model>
+            <cockpit type="int">5</cockpit>
+        </rating>
+		<minimum-fg-version>2016.1</minimum-fg-version>
+		
+		<hud>
+			<path n="1">Aircraft/Bell-412/Huds/Bell-412-hoverhud.xml</path>
+			<path n="2">Aircraft/Bell-412/Huds/Bell-412-mainhud.xml</path>
+			<path n="3">Aircraft/Bell-412/Huds/default.xml</path>
+			<palette>
+				<color n="0">
+					<alpha type="float">1</alpha>
+					<antialiased type="bool">true</antialiased>
+					<brightness type="float">1</brightness>
+					<transparent type="bool">true</transparent>
+					<red type="float">0.38</red>
+					<green type="float">1.0</green>
+					<blue type="float">0.22</blue>
+				</color>
+				<color n="1">
+					<alpha type="float">1</alpha>
+					<antialiased type="bool">true</antialiased>
+					<brightness type="float">1</brightness>
+					<transparent type="bool">true</transparent>
+					<red type="float">1.0</red>
+					<green type="float">0.2</green>
+					<blue type="float">0.0</blue>
+				</color>
+			</palette>
+			<extended-mode type="bool">false</extended-mode>
+			<font>
+				<size>9</size>
+			</font>
+			<!--
+			<clipping>
+				<left type="double">-80</left>
+				<right type="double">80</right>
+				<top type="double">38</top>
+				<bottom type="double">-130</bottom>
+			</clipping>
+			-->
+		</hud>
+		
+		<help include="Dialogs/Bell-412-help.xml"/>
+		<checklists include="Dialogs/Bell-412-checklists.xml"/>
+		<!-- <tutorials include="Dialogs/tutorials.xml"/> -->
+	</sim>
+</PropertyList>
+

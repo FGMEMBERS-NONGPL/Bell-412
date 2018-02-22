@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+# ======================================================================================================
+# Bell-412 Copilot Model Properties 
+# 	(for the Flightgear Flight Simulator)
+# ======================================================================================================
+#
+# AUTHOR
+# 	Valery Seys		valery@vslash.com
+#
+# COPYRIGHT
+# 	Valery Seys, Paris /\
+# 	no distribution allowed
+# 	no commercial use
+# 	please contact the author for any use or question, thank you.
+# 	https://sourceforge.net/projects/bell-412/
+#
+# REFS
+# 	Flightgear Wiki: http://wiki.flightgear.org/
+#
+# CHANGELOG
+# 09/2017	: init
+# ======================================================================================================
+-->
+<PropertyList include="Bell-412-common.xml">
+	<sim>
+		<description>Bell-412 Copilot</description>
+		<flight-model>null</flight-model>
+
+		<startup>
+			<splash-texture>Aircraft/Bell-412/Splash/splash-cop.png</splash-texture>
+		</startup>
+
+		<model>
+			<path archive="y">Aircraft/Bell-412/Models/Bell-412-cop.xml</path>
+			<immat>FGX412</immat>
+			<livery>
+				<name type="string"/>
+				<file type="string"/>
+				<amb type="float">1.0</amb>
+				<diff type="float">1.0</diff>
+				<spec type="float">0.12</spec>
+				<shine type="float">15.0</shine>
+			</livery>
+		</model>
+
+		<systems/>
+
+		<view n="0">
+			<name>CoPilot View</name>
+			<type>lookfrom</type>
+			<internal type="bool">true</internal>
+			<config>
+				<from-model type="bool">true</from-model>
+				<from-model-idx type="int">21</from-model-idx>
+				<limits>
+					<enabled type="bool">false</enabled>
+				</limits>
+				<x-offset-m type="double">-0.55</x-offset-m>			<!-- -left/+right -->
+				<y-offset-m type="double">0.90</y-offset-m>				<!-- -down/+up -->
+				<z-offset-m type="double">-2.1</z-offset-m>				<!-- -for/+back -->
+				<dynamic-view type="bool">true</dynamic-view>
+				<default-field-of-view-deg type="double">83</default-field-of-view-deg>
+				<field-of-view type="double">83</field-of-view>
+				<pitch-offset-deg type="double">-7</pitch-offset-deg>
+			</config>
+		</view>
+		
+		<sound>
+			<path>Aircraft/Bell-412/Sounds/Bell-412-sound.xml</path>
+		</sound>
+
+		<menubar include="Dialogs/Bell-412-menu-cop.xml"/>
+
+		<!-- needed by Generic/DualControl/dual-control-tools.nas -->
+		<remote>
+			<pilot-callsign type="string">1234567</pilot-callsign>		<!-- remote pilot callsign set by dialog -->
+			<connected type="bool">false</connected>
+			<master type="float">0</master>
+			<fc-synced type="bool">false</fc-synced>
+		</remote>
+
+		<multiplay>
+			<callsign>b412-copilot</callsign>
+			<role>copilot</role>
+			<chat_display>1</chat_display>
+			<hot>false</hot>	<!-- collision detection -->
+			<transmit-only-generics type="bool">true</transmit-only-generics>
+			<generic>
+				<string n="0" type="string" alias="/sim/multiplay/role"/>
+				<int n="0" type="int">0</int>						<!-- Dual Control -->
+				<int n="1" alias="/sim/remote/connected"/>
+				<int n="2" alias="/sim/remote/fc-synced"/>
+
+				<float n="0" alias="/controls/flight/elevator"/>
+				<float n="1" alias="/controls/flight/aileron"/>
+				<float n="2" alias="/controls/flight/rudder"/>
+				<float n="3" alias="/controls/flight/elevator-trim"/>
+				<float n="4" alias="/controls/flight/aileron-trim"/>
+				<float n="5" alias="/controls/flight/rudder-trim"/>
+				<float n="6" alias="/controls/engines/engine[0]/throttle"/>
+				<!-- Dual Control -->
+				<int 	n="18">0</int>	<!-- switch encoding -->
+				<int 	n="19">0</int>	<!-- switch encoding -->
+			</generic>
+		</multiplay>
+
+        <aircraft-data>
+			<path>/bell412/data/total-use</path>
+			<path>/bell412/data/total-flight-minutes</path>
+		</aircraft-data>
+	</sim>
+	
+	<input>
+		<keyboard include="Systems/Bell-412-keyboard.xml"/>
+		<!--
+		<mice include="Systems/Bell-412-mice.xml"/>										mouse output -->
+	</input>
+	<instrumentation/>
+	<controls/>
+	<rotors/>
+	<bell412>
+		<data>
+			<total-use>1</total-use>
+			<total-flight-minutes>0</total-flight-minutes>
+		</data>
+	</bell412>
+	<nasal>
+		<dual_control_tools><file>Aircraft/Bell-412/DualControl/dual-control-tools.nas</file></dual_control_tools>
+		<aircraft_dual_control><file>Aircraft/Bell-412/DualControl/bell412-dual-control.nas</file></aircraft_dual_control>
+		<dual_control><file>Aircraft/Bell-412/DualControl/copilot-dual-control.nas</file></dual_control>
+		<!-- Emesary MP -->
+		<!--
+		<emn><file>Aircraft/Bell-412/DualControl/em_notifications.nas</file></emn>
+		<emx><file>Aircraft/Bell-412/DualControl/em_xchange.nas</file></emx>
+		<emi><file>Aircraft/Bell-412/DualControl/em_interface.nas</file></emi>
+		-->
+	</nasal>
+</PropertyList>

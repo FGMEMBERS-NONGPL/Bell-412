@@ -11,7 +11,7 @@
     <animation>
         <type>rotate</type>
         <object-name>5.Cockpit Panel Main Instruments HYDR2 Needle T</object-name>
-		<property>/bell412/mechanics/engines/hydr[1]/temp</property>
+		<property>bell412/mechanics/engines/hydr[1]/temp</property>
         <axis>
             <x>-1</x>
             <y>0</y>
